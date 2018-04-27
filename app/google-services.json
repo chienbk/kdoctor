@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "287054056112",
+    "firebase_url": "https://kdoctor-1523466614208.firebaseio.com",
+    "project_id": "kdoctor-1523466614208",
+    "storage_bucket": "kdoctor-1523466614208.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287054056112:android:2aefc12d8919bed5",
+        "android_client_info": {
+          "package_name": "thebrightcompany.com.kdoctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287054056112-914uhclolat2d8a35l83tfte0vg0sc5b.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "287054056112-42k7t4m8ol46le1v92n42845436v2kb7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsYhOPHT1I60gWcg5A-6iUSu6To5HpfPs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287054056112-914uhclolat2d8a35l83tfte0vg0sc5b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "287054056112-0j7hip5a82dpcuvo6h7m2nd1ssv0tj99.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.brightcompany.kdoctor"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
