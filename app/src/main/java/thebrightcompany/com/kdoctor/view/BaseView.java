@@ -1,4 +1,4 @@
-package com.portalbeanz.ink4udev.view;
+package thebrightcompany.com.kdoctor.view;
 
 import android.content.Context;
 
@@ -13,10 +13,6 @@ public interface BaseView {
     void showProgress();
 
     void hideProgress();
-
-    void onCommonError(String msg);
-
-    void onApiMessage(String msg);
 
     void showMessage(String message);
 }
