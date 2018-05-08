@@ -9,4 +9,5 @@ public interface LoginView extends BaseView{
     void onPasswordError(String msg);
     void onLoginWithGoogle();
     void onLoginWithFacebook();
+    void onForgotPassword();
 }

@@ -7,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -50,6 +53,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
 
     @BindView(R.id.login_button) LoginButton btnLoginFacebook;
 
+    @BindView(R.id.txt_forGotPassWord) TextView txt_forGotPassword;
+
     private GoogleApiClient mGoogleApiClient;
     private CallbackManager mCallbackManager;
 
@@ -59,11 +64,24 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
-
+        mCallbackManager = CallbackManager.Factory.create();
+        initView();
         initGoogleSignIn();
         initFaceBookSignIn();
     }
 
+    /**
+     *
+     */
+    private void initView() {
+        SpannableString content = new SpannableString(getString(R.string.lb_for_got_password));
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        txt_forGotPassword.setText(content);
+    }
+
+    /**
+     *
+     */
     private void initFaceBookSignIn() {
         btnLoginFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -88,6 +106,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
         });
     }
 
+    /**
+     *
+     */
     private void initGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -152,6 +173,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
     }
 
     @Override
+    public void onForgotPassword() {
+
+    }
+
+    @Override
     public Context getContext() {
         return this;
     }
@@ -175,6 +201,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
     public void loginWithGoogle(){
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @OnClick(R.id.txt_forGotPassWord)
+    public void processForgotPassword(){
+        //todo something
+        showMessage("This is demo");
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
@@ -227,8 +259,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
