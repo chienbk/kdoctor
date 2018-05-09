@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="dimen_button">8dp</dimen>
+    <dimen name="padding_logo_login">30dp</dimen>
+    <dimen name="padding_register_new_account">30dp</dimen>
 </resources>

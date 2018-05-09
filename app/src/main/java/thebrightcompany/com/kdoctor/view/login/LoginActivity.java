@@ -11,7 +11,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
 
     @BindView(R.id.sign_in_button) SignInButton btnSignIn;
 
-    @BindView(R.id.email) AutoCompleteTextView txt_email;
+    @BindView(R.id.email) EditText txt_email;
 
     @BindView(R.id.login_button) LoginButton btnLoginFacebook;
 
@@ -209,6 +209,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
         showMessage("This is demo");
     }
 
+    @OnClick(R.id.layout_create_new_account)
+    public void processCreateAccount(){
+        //todo something
+        showMessage("Create  new account");
+    }
+
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -222,6 +228,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
             String email = acct.getEmail();
 
             txt_email.setText(email);
+            txt_email.setSelection(email.length());
             String token = result.getSignInAccount().getServerAuthCode();
             Log.d(TAG, "Token: " + token);
 
