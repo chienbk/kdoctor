@@ -1,4 +1,4 @@
-package com.portalbeanz.ink4udev.networkutils.base;
+package thebrightcompany.com.kdoctor.api.base;
 
 import android.util.Log;
 
@@ -11,13 +11,14 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import com.portalbeanz.ink4udev.networkutils.BaseRequest;
-import com.portalbeanz.ink4udev.networkutils.OnResponseListener;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+
+import thebrightcompany.com.kdoctor.api.BaseRequest;
+import thebrightcompany.com.kdoctor.api.OnResponseListener;
 
 /**
  * Created by thainh on 12/2/16.

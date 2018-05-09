@@ -1,5 +1,5 @@
 
-package com.globmove.chuhang.utils;
+package thebrightcompany.com.kdoctor.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
