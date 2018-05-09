@@ -112,7 +112,8 @@
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_button"
+                    android:clickable="true"
+                    android:background="@drawable/ripple"
                     android:layout_marginTop="16dp"
                     android:text="@string/action_sign_in"
                     android:textColor="@android:color/white"
@@ -164,7 +165,8 @@
                 <ImageView
                     android:background="@drawable/ic_next_arrow"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"/>
 
                 <TextView
                     android:text="@string/lb_register_new_account"
