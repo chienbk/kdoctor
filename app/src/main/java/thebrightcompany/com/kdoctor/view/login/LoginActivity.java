@@ -215,6 +215,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
         showMessage("Create  new account");
     }
 
+    @OnClick(R.id.btn_login)
+    public void processLogin(){
+        //todo something
+        showMessage("Login app");
+    }
+
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
