@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/lb_welcome"
+                android:textSize="@dimen/txt_normal"
                 android:gravity="center"
                 android:textColor="@android:color/white"/>
 
@@ -60,6 +61,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_email"
+                        android:textSize="@dimen/txt_normal"
                         android:background="@android:color/white"
                         android:drawableLeft="@drawable/ic_email_login"
                         android:inputType="textEmailAddress"
@@ -77,6 +79,7 @@
                         android:drawablePadding="8dp"
                         android:padding="10dp"
                         android:layout_marginTop="10dp"
+                        android:textSize="@dimen/txt_normal"
                         android:gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -100,6 +103,7 @@
                         android:id="@+id/txt_forGotPassWord"
                         android:text="@string/lb_for_got_password"
                         android:textColor="@android:color/white"
+                        android:textSize="@dimen/txt_link"
                         android:layout_marginTop="10dp"
                         android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
@@ -112,6 +116,7 @@
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/txt_normal"
                     android:clickable="true"
                     android:background="@drawable/ripple"
                     android:layout_marginTop="16dp"
@@ -170,6 +175,7 @@
 
                 <TextView
                     android:text="@string/lb_register_new_account"
+                    android:textSize="@dimen/txt_link"
                     android:textColor="@android:color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

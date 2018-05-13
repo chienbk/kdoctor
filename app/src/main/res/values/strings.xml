@@ -5,6 +5,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Mật khẩu</string>
+    <string name="re_prompt_password">Nhắc lại mật khẩu</string>
     <string name="action_sign_in">ĐĂNG NHẬP</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -20,4 +21,21 @@
     <string name="lb_welcome">CHÀO MỪNG BẠN ĐẾN VỚI K-DOCTOR</string>
     <string name="lb_for_got_password">Quên mật khẩu?</string>
     <string name="lb_register_new_account">Đăng ký tài khoản mới</string>
+    <string name="lb_tittle_register">ĐĂNG KÝ TÀI KHOẢN</string>
+    <string name="lb_full_name">Họ và tên</string>
+    <string name="lb_phone">Số điện thoại</string>
+    <string name="lb_avatar">Ảnh đại diện</string>
+    <string name="lb_btn_back">Quay lại</string>
+    <string name="lb_btn_register">Đăng ký</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Use to forgot password -->
+    <string name="lb_title_forgot_password">QUÊN MẬT KHẨU</string>
+    <string name="lb_description_forgot_password">Nếu quên mật khẩu, điền email của bạn vào ô dưới
+        đây, chúng tôi sẽ gửi vào email cho bạn một mật khẩu mới</string>
+
+    <string name="lb_btn_get_password">Lấy lại mật khẩu</string>
+
 </resources>
