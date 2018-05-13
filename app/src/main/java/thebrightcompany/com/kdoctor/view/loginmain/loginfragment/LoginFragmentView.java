@@ -8,7 +8,4 @@ public interface LoginFragmentView extends LoginScreenView{
     void onLoginSuccess();
     void onEmailError(String msg);
     void onPasswordError(String msg);
-    void onLoginWithGoogle();
-    void onLoginWithFacebook();
-    void onForgotPassword();
 }

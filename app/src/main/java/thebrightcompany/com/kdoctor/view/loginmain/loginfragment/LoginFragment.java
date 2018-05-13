@@ -7,13 +7,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,7 +41,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
+import thebrightcompany.com.kdoctor.view.loginmain.forgotpasswordfragment.ForgotPasswordFragment;
+import thebrightcompany.com.kdoctor.view.loginmain.registerfragment.RegisterFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,8 +56,6 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     private LoginScreenActivity mActivity;
     private static final int RC_SIGN_IN = 007;
 
-    @BindView(R.id.login_progress) ProgressBar progressBar;
-
     @BindView(R.id.sign_in_button) SignInButton btnSignIn;
 
     @BindView(R.id.email) EditText txt_email;
@@ -58,8 +64,13 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
 
     @BindView(R.id.txt_forGotPassWord) TextView txt_forGotPassword;
 
+    @BindView(R.id.layout_login) LinearLayout layout_login;
+
     private GoogleApiClient mGoogleApiClient;
     private CallbackManager mCallbackManager;
+
+    private static Animation shakeAnimation;
+    private static FragmentManager fragmentManager;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -70,12 +81,24 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        ButterKnife.bind(this, view);
         mCallbackManager = CallbackManager.Factory.create();
-        initGoogleSignIn();
-        initFaceBookSignIn();
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        ButterKnife.bind(this, view);
         initView(view);
+
+        try {
+            initGoogleSignIn();
+        }catch (Exception e){
+            Log.d(TAG, e.toString());
+        }
+
+        try {
+            initFaceBookSignIn();
+        }catch (Exception e){
+            Log.d(TAG, e.toString());
+        }
+
         return view;
     }
 
@@ -130,9 +153,15 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
      */
     private void initView(View view) {
         //todo something
+        fragmentManager = getActivity().getSupportFragmentManager();
+
         SpannableString content = new SpannableString(getString(R.string.lb_for_got_password));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         txt_forGotPassword.setText(content);
+
+        // Load ShakeAnimation
+        shakeAnimation = AnimationUtils.loadAnimation(getActivity(),
+                R.anim.shake);
     }
 
     @Override
@@ -144,6 +173,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @Override
     public void onLoginError(String msg) {
 
+        layout_login.startAnimation(shakeAnimation);
     }
 
     @Override
@@ -154,26 +184,13 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @Override
     public void onEmailError(String msg) {
 
+        layout_login.startAnimation(shakeAnimation);
     }
 
     @Override
     public void onPasswordError(String msg) {
 
-    }
-
-    @Override
-    public void onLoginWithGoogle() {
-
-    }
-
-    @Override
-    public void onLoginWithFacebook() {
-
-    }
-
-    @Override
-    public void onForgotPassword() {
-
+        layout_login.startAnimation(shakeAnimation);
     }
 
     @Override
@@ -220,19 +237,44 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @OnClick(R.id.layout_forgotPassword)
     public void processForgotPassword(){
         //todo something
-        showMessage("This is demo");
+        // Replace forgot password fragment with animation
+       /* fragmentManager
+                .beginTransaction()
+                .setCustomAnimations(R.animator.right_enter, R.animator.left_out)
+                .replace(R.id.frameContainer,
+                        new ForgotPasswordFragment(),
+                        Utils.ForgotPassword_Fragment).commit();*/
+
+       replaceFragment(new ForgotPasswordFragment());
     }
 
     @OnClick(R.id.btn_login)
     public void processLogin(){
         //todo something
-        showMessage("Login app");
+        showMessage("Process login!");
     }
 
     @OnClick(R.id.layout_create_new_account)
     public void processCreateNewAccount(){
         //todo something
-        showMessage("Create  new account");
+        // Replace signup frgament with animation
+       /* fragmentManager
+                .beginTransaction()
+                .setCustomAnimations(R.animator.right_enter, R.animator.left_out)
+                .replace(R.id.frameContainer, new RegisterFragment(),
+                        Utils.SignUp_Fragment).commit();*/
+        replaceFragment(new RegisterFragment());
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        if (fragment != null) {
+            FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.animator.right_enter, R.animator.left_out);
+            fragmentTransaction.replace(R.id.frameContainer, fragment);
+            fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+            fragmentTransaction.commitAllowingStateLoss();
+        }
     }
 
     @OnClick(R.id.sign_in_button)
@@ -268,26 +310,30 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @Override
     public void onStart() {
         super.onStart();
-
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-        if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            Log.d(TAG, "Got cached sign-in");
-            GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-            showProgress();
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    hideProgress();
-                    handleSignInResult(googleSignInResult);
-                }
-            });
+        OptionalPendingResult<GoogleSignInResult> opr;
+        try {
+            opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+            if (opr.isDone()) {
+                // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+                // and the GoogleSignInResult will be available instantly.
+                Log.d(TAG, "Got cached sign-in");
+                GoogleSignInResult result = opr.get();
+                handleSignInResult(result);
+            } else {
+                // If the user has not previously signed in on this device or the sign-in has expired,
+                // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+                // single sign-on will occur in this branch.
+                showProgress();
+                opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(GoogleSignInResult googleSignInResult) {
+                        hideProgress();
+                        handleSignInResult(googleSignInResult);
+                    }
+                });
+            }
+        }catch (Exception e){
+            Log.d(TAG, e.toString());
         }
     }
 }

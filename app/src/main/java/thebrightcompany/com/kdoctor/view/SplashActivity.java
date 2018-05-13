@@ -9,6 +9,7 @@ import android.view.View;
 
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.view.login.LoginActivity;
+import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -35,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent i = new Intent(SplashActivity.this, LoginScreenActivity.class);
                 startActivity(i);
 
                 // close this activity
