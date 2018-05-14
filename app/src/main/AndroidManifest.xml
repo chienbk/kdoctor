@@ -54,7 +54,25 @@
             android:name=".view.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".view.register.RegisterActivity" />
-        <activity android:name=".view.loginmain.LoginScreenActivity"></activity>
+        <activity android:name=".view.loginmain.LoginScreenActivity" />
+        <activity
+            android:name=".view.home.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppThemeHome"></activity>
+
+        <!-- Firebase Notifications -->
+        <service android:name=".pushnotification.service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".pushnotification.service.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- ./Firebase Notifications -->
     </application>
 
 </manifest>

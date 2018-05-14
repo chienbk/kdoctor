@@ -1,8 +1,8 @@
-package com.portalbeanz.ink4udev.networkutils.forgotpassword;
+package thebrightcompany.com.kdoctor.api.forgotpassword;
 
-import com.portalbeanz.ink4udev.App;
-import com.portalbeanz.ink4udev.model.forgotpassword.ForgotPasswordResponse;
-import com.portalbeanz.ink4udev.networkutils.OnResponseListener;
+import thebrightcompany.com.kdoctor.App;
+import thebrightcompany.com.kdoctor.api.OnResponseListener;
+import thebrightcompany.com.kdoctor.model.forgotpassword.ForgotPasswordResponse;
 
 /**
  * Created by ChienNV on 10/25/16.
