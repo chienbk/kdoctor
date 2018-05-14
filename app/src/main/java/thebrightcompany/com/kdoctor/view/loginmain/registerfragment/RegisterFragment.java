@@ -101,17 +101,13 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
 
     @Override
     public void onRegisterError(String msg) {
-        layout_register.startAnimation(shakeAnimation);
+        //layout_register.startAnimation(shakeAnimation);
+        showMessage(msg);
     }
 
     @Override
     public void onRegisterSuccess(String msg) {
         // Replace signup frgament with animation
-        /*fragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.animator.right_enter, R.animator.left_out)
-                .replace(R.id.frameContainer, new LoginFragment(),
-                        Utils.Login_Fragment).commit();*/
         replaceFragment(new LoginFragment());
     }
 
@@ -119,11 +115,6 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     public void processBackLoginScreen(){
         //todo something
         // Replace signup frgament with animation
-        /*fragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.animator.right_enter, R.animator.left_out)
-                .replace(R.id.frameContainer, new LoginFragment(),
-                        Utils.Login_Fragment).commit();*/
         replaceFragment(new LoginFragment());
     }
 
@@ -142,5 +133,10 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
             fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
             fragmentTransaction.commitAllowingStateLoss();
         }
+    }
+
+    @Override
+    public void onCommonError(String msg) {
+        showMessage(msg);
     }
 }

@@ -30,6 +30,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -241,6 +242,14 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Googl
             Log.e(TAG, "Name: " + personName + ", email: " + email
                     + ", token: " + token);
         } else {
+            showMessage("Login with google fail");
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+                            showMessage("Logout success!");
+                        }
+                    });
         }
     }
 

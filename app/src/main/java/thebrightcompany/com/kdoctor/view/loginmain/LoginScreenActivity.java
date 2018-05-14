@@ -1,7 +1,6 @@
 package thebrightcompany.com.kdoctor.view.loginmain;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,8 +30,8 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
         setContentView(R.layout.activity_login_screen);
 
         ButterKnife.bind(this);
-
         initView();
+        fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
             fragmentManager
                     .beginTransaction()
@@ -46,38 +45,6 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
      */
     private void initView() {
 
-        fragmentManager = getSupportFragmentManager();
-
-    }
-
-    // Replace Login Fragment with animation
-    protected void replaceLoginFragment() {
-        fragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.animator.left_enter, R.animator.right_out)
-                .replace(R.id.frameContainer, new LoginFragment(),
-                        Utils.Login_Fragment).commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        // Find the tag of signup and forgot password fragment
-        Fragment SignUp_Fragment = fragmentManager
-                .findFragmentByTag(Utils.SignUp_Fragment);
-        Fragment ForgotPassword_Fragment = fragmentManager
-                .findFragmentByTag(Utils.ForgotPassword_Fragment);
-
-        // Check if both are null or not
-        // If both are not null then replace login fragment else do backpressed
-        // task
-
-        if (SignUp_Fragment != null)
-            replaceLoginFragment();
-        else if (ForgotPassword_Fragment != null)
-            replaceLoginFragment();
-        else
-            super.onBackPressed();
     }
 
     @Override
@@ -98,5 +65,10 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCommonError(String msg) {
+        showMessage(msg);
     }
 }

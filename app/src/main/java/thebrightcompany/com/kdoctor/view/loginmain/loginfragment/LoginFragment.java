@@ -3,6 +3,9 @@ package thebrightcompany.com.kdoctor.view.loginmain.loginfragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,10 +21,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -36,15 +41,21 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
-import thebrightcompany.com.kdoctor.utils.Utils;
+import thebrightcompany.com.kdoctor.utils.ImageHelper;
+import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.forgotpasswordfragment.ForgotPasswordFragment;
 import thebrightcompany.com.kdoctor.view.loginmain.registerfragment.RegisterFragment;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,7 +65,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     public static final String TAG = LoginFragment.class.getSimpleName();
 
     private LoginScreenActivity mActivity;
-    private static final int RC_SIGN_IN = 007;
+    public static final int RC_SIGN_IN = 007;
 
     @BindView(R.id.sign_in_button) SignInButton btnSignIn;
 
@@ -118,8 +129,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
             public void onCancel() {
 
                 Log.d(TAG, "Login canceled.");
-
-            }
+                }
 
             @Override
             public void onError(FacebookException error) {
@@ -141,10 +151,11 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
                 .enableAutoManage(mActivity, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        mGoogleApiClient.connect();
 
         // Customizing G+ button
-        btnSignIn.setSize(SignInButton.SIZE_STANDARD);
-        btnSignIn.setScopes(gso.getScopeArray());
+       /* btnSignIn.setSize(SignInButton.SIZE_STANDARD);
+        btnSignIn.setScopes(gso.getScopeArray());*/
     }
 
     /**
@@ -164,6 +175,12 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
                 R.anim.shake);
     }
 
+    @Nullable
+    @Override
+    public Context getContext() {
+        return super.getContext();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -173,12 +190,15 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @Override
     public void onLoginError(String msg) {
 
-        layout_login.startAnimation(shakeAnimation);
+        //layout_login.startAnimation(shakeAnimation);
+        showMessage(msg);
     }
 
     @Override
     public void onLoginSuccess() {
-
+        //todo something
+        startActivity(new Intent(mActivity, HomeActivity.class));
+        mActivity.finish();
     }
 
     @Override
@@ -228,6 +248,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -238,13 +259,6 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     public void processForgotPassword(){
         //todo something
         // Replace forgot password fragment with animation
-       /* fragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.animator.right_enter, R.animator.left_out)
-                .replace(R.id.frameContainer,
-                        new ForgotPasswordFragment(),
-                        Utils.ForgotPassword_Fragment).commit();*/
-
        replaceFragment(new ForgotPasswordFragment());
     }
 
@@ -252,23 +266,20 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     public void processLogin(){
         //todo something
         showMessage("Process login!");
+        startActivity(new Intent(mActivity, HomeActivity.class));
+        mActivity.finish();
     }
 
     @OnClick(R.id.layout_create_new_account)
     public void processCreateNewAccount(){
         //todo something
         // Replace signup frgament with animation
-       /* fragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.animator.right_enter, R.animator.left_out)
-                .replace(R.id.frameContainer, new RegisterFragment(),
-                        Utils.SignUp_Fragment).commit();*/
         replaceFragment(new RegisterFragment());
     }
 
     private void replaceFragment(Fragment fragment) {
         if (fragment != null) {
-            FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.animator.right_enter, R.animator.left_out);
             fragmentTransaction.replace(R.id.frameContainer, fragment);
@@ -279,8 +290,9 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
 
     @OnClick(R.id.sign_in_button)
     public void loginWithGoogle(){
+        showMessage("Login with google");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
@@ -288,31 +300,41 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
+            txt_email.setText(acct.getEmail());
+            //Similarly you can get the email and photourl using acct.getEmail() and  acct.getPhotoUrl()
 
-            Log.e(TAG, "display name: " + acct.getDisplayName());
+           /* if (acct.getPhotoUrl() != null)
+                new LoadProfileImage(imgProfilePic).execute(acct.getPhotoUrl().toString());*/
 
-            String personName = acct.getDisplayName();
-            //String personPhotoUrl = acct.getPhotoUrl().toString();
-            String email = acct.getEmail();
+            /*Glide.with(getApplicationContext()).load(acct.getPhotoUrl())
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgProfilePic);*/
 
-            txt_email.setText(email);
-            txt_email.setSelection(email.length());
-            String token = result.getSignInAccount().getServerAuthCode();
-            Log.d(TAG, "Token: " + token);
 
-            Log.e(TAG, "Name: " + personName + ", email: " + email
-                    + ", token: " + token);
+            //updateUI(true);
         } else {
-            //todo something
+            // Signed out, show unauthenticated UI.
+            //updateUI(false);
+            showMessage("Login with google fail!");
+            Log.d(TAG, "Login with google fail");
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(Status status) {
+                            showMessage("Logout success!");
+                        }
+                    });
         }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        OptionalPendingResult<GoogleSignInResult> opr;
+
         try {
-            opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
             if (opr.isDone()) {
                 // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
                 // and the GoogleSignInResult will be available instantly.
@@ -334,6 +356,47 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
             }
         }catch (Exception e){
             Log.d(TAG, e.toString());
+            hideProgress();
+        }
+
+    }
+
+    @Override
+    public void onCommonError(String msg) {
+        showMessage(msg);
+    }
+
+    /**
+     * Background Async task to load user profile picture from url
+     * */
+    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public LoadProfileImage(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... uri) {
+            String url = uri[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(url).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+
+            if (result != null) {
+                Bitmap resized = Bitmap.createScaledBitmap(result,200,200, true);
+                bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(getContext(),resized,250,200,200, false, false, false, false));
+
+            }
         }
     }
+
 }
