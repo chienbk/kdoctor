@@ -17,6 +17,7 @@
             android:textColor="#000000"
             android:text="Toyota 3000"
             android:textSize="18sp"
+            android:textStyle="bold"
             android:layout_alignParentLeft="true"
             android:maxLines="1"
             android:ellipsize="end"
