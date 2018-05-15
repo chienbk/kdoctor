@@ -9,4 +9,7 @@
     <color name="bg_drawable_menu">#083745</color>
     <color name="nav_select">#fefefe</color>
     <color name="nav_normal">#ffffff</color>
+    <color name="color_connection">#b25d5b</color>
+    <color name="state_pressed_connection">#eeeeee</color>
+    <color name="state_selected_connection">#</color>
 </resources>

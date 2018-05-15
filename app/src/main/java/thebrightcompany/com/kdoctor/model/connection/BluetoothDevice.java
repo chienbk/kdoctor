@@ -5,12 +5,22 @@ public class BluetoothDevice {
     private String macAddress;
     private String expireDate;
     private boolean isConnected;
+    private boolean isExpired;
 
-    public BluetoothDevice(String nameOfDevice, String macAddress, String expireDate, boolean isConnected) {
+    public BluetoothDevice(String nameOfDevice, String macAddress, String expireDate, boolean isConnected, boolean isExpired) {
         this.nameOfDevice = nameOfDevice;
         this.macAddress = macAddress;
         this.expireDate = expireDate;
         this.isConnected = isConnected;
+        this.isExpired = isExpired;
+    }
+
+    public boolean isExpired() {
+        return isExpired;
+    }
+
+    public void setExpired(boolean expired) {
+        isExpired = expired;
     }
 
     public String getNameOfDevice() {
