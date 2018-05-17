@@ -1,4 +1,4 @@
-package chienbk.com.garainthepocket.model;
+package thebrightcompany.com.kdoctor.model.connection;
 
 /**
  * Created by ChienNv9 on 1/24/2018.

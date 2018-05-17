@@ -1,4 +1,4 @@
-package chienbk.com.bluetoothnrfuart.service;
+package thebrightcompany.com.kdoctor.service;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -61,7 +61,6 @@ public class BluetoothService extends Service {
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             String intentAction;
@@ -94,7 +93,6 @@ public class BluetoothService extends Service {
             }
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic,
@@ -104,7 +102,6 @@ public class BluetoothService extends Service {
             }
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic) {
@@ -117,7 +114,6 @@ public class BluetoothService extends Service {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void broadcastUpdate(final String action,
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
@@ -144,7 +140,6 @@ public class BluetoothService extends Service {
         return mBinder;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public boolean onUnbind(Intent intent) {
         // After using a given device, you should make sure that BluetoothGatt.close() is called
@@ -161,7 +156,6 @@ public class BluetoothService extends Service {
      *
      * @return Return true if the initialization is successful.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public boolean initialize() {
         // For API level 18 and above, get a reference to BluetoothAdapter through
         // BluetoothManager.
@@ -192,7 +186,7 @@ public class BluetoothService extends Service {
      *         {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
      *         callback.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+
     public boolean connect(final String address) {
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
@@ -231,7 +225,6 @@ public class BluetoothService extends Service {
      * {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
      * callback.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void disconnect() {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
@@ -245,7 +238,6 @@ public class BluetoothService extends Service {
      * After using a given BLE device, the app must call this method to ensure resources are
      * released properly.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void close() {
         if (mBluetoothGatt == null) {
             return;
@@ -263,7 +255,6 @@ public class BluetoothService extends Service {
      *
      * @param characteristic The characteristic to read from.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
@@ -283,7 +274,6 @@ public class BluetoothService extends Service {
      *
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void enableTXNotification() {
     	/*
     	if (mBluetoothGatt == null) {
@@ -312,7 +302,6 @@ public class BluetoothService extends Service {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void writeRXCharacteristic(byte[] value) {
 
 
@@ -344,7 +333,6 @@ public class BluetoothService extends Service {
      *
      * @return A {@code List} of supported services.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public List<BluetoothGattService> getSupportedGattServices() {
         if (mBluetoothGatt == null) return null;
 
