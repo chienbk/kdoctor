@@ -17,7 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
-import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.loginfragment.LoginFragment;
 

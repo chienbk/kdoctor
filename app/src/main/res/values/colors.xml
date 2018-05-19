@@ -11,5 +11,7 @@
     <color name="nav_normal">#ffffff</color>
     <color name="color_connection">#b25d5b</color>
     <color name="state_pressed_connection">#eeeeee</color>
-    <color name="state_selected_connection">#eeeeee</color>
+    <color name="state_selected_connection">#01687c</color>
+    <color name="color_expired">#e30000</color>
+    <color name="color_background_button">#074151</color>
 </resources>

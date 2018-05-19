@@ -1,4 +1,7 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.connection;
 
-public interface ConnectionView {
+import thebrightcompany.com.kdoctor.view.BaseView;
+
+public interface ConnectionView extends BaseView{
+    void onRefreshList();
 }

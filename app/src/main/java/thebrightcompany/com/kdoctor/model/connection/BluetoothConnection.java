@@ -1,13 +1,13 @@
 package thebrightcompany.com.kdoctor.model.connection;
 
-public class BluetoothDevice {
+public class BluetoothConnection {
     private String nameOfDevice;
     private String macAddress;
     private String expireDate;
     private boolean isConnected;
     private boolean isExpired;
 
-    public BluetoothDevice(String nameOfDevice, String macAddress, String expireDate, boolean isConnected, boolean isExpired) {
+    public BluetoothConnection(String nameOfDevice, String macAddress, String expireDate, boolean isConnected, boolean isExpired) {
         this.nameOfDevice = nameOfDevice;
         this.macAddress = macAddress;
         this.expireDate = expireDate;

@@ -1,6 +1,5 @@
 package thebrightcompany.com.kdoctor.view.home;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -56,12 +55,13 @@ public class HomeActivity extends AppCompatActivity
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     private static final int REQUEST_ENABLE_BT = 2;
-    private static final int UART_PROFILE_CONNECTED = 20;
-    private static final int UART_PROFILE_DISCONNECTED = 21;
+    public static final int UART_PROFILE_CONNECTED = 20;
+    public static final int UART_PROFILE_DISCONNECTED = 21;
 
     private static final int REQUEST_CODE_LOC = 22;
 
-    public int mState = UART_PROFILE_DISCONNECTED;
+    public static int mState = UART_PROFILE_DISCONNECTED;
+
     @BindView(R.id.progress) ProgressBar progressBar;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;

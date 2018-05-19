@@ -1,6 +1,7 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.garageonmap;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,12 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FindGarageFragment extends Fragment {
 
+    public static final String TAG = FindGarageFragment.class.getSimpleName();
+    private HomeActivity homeActivity;
 
     public FindGarageFragment() {
         // Required empty public constructor
@@ -27,4 +31,9 @@ public class FindGarageFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_find_garage, container, false);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.homeActivity = (HomeActivity) context;
+    }
 }
