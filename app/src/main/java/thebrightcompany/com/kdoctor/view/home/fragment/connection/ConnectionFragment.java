@@ -72,9 +72,9 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_connection, container, false);
         ButterKnife.bind(this, view);
+        initView(view);
         initBluetooth();
         getData();
-        initView(view);
         return view;
     }
 
@@ -217,13 +217,13 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
                         @Override
                         public void run() {
 
-                            addDevice(device,rssi);
+                            addDevice(device);
                         }
                     });
                 }
             };
 
-    private void addDevice(BluetoothDevice device, int rssi) {
+    private void addDevice(BluetoothDevice device) {
         boolean deviceFound = false;
 
         for (BluetoothConnection listDev : mLists) {
@@ -234,7 +234,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         }
 
 
-        devRssiValues.put(device.getAddress(), rssi);
+        //devRssiValues.put(device.getAddress(), rssi);
         if (!deviceFound) {
             BluetoothConnection connection = new BluetoothConnection(device.getName(),
                     device.getAddress(), "12/12/2018", false, true);

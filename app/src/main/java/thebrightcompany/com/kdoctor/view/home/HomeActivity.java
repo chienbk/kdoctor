@@ -105,6 +105,8 @@ public class HomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        lastFragment = new ConnectionFragment();
+        replaceFragment(lastFragment);
     }
 
     /**
