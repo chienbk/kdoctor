@@ -46,6 +46,13 @@ import thebrightcompany.com.kdoctor.model.connection.MessageEvent;
 import thebrightcompany.com.kdoctor.pushnotification.app.Config;
 import thebrightcompany.com.kdoctor.pushnotification.utils.NotificationUtils;
 import thebrightcompany.com.kdoctor.service.BluetoothService;
+import thebrightcompany.com.kdoctor.view.home.fragment.connection.ConnectionFragment;
+import thebrightcompany.com.kdoctor.view.home.fragment.diagnostic.DiagnosticFragment;
+import thebrightcompany.com.kdoctor.view.home.fragment.garageonmap.FindGarageFragment;
+import thebrightcompany.com.kdoctor.view.home.fragment.history.HistoryFragment;
+import thebrightcompany.com.kdoctor.view.home.fragment.setting.SettingFragment;
+import thebrightcompany.com.kdoctor.view.home.fragment.support.SupportFragment;
+import thebrightcompany.com.kdoctor.view.home.fragment.troublecode.TroubleCodeFragment;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeView {
@@ -384,21 +391,21 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_connection) {
             // Handle the camera action
-            showMessage("nav_connection");
+            fragment = new ConnectionFragment();
         } else if (id == R.id.nav_diagnostic) {
-            showMessage("nav_diagnostic");
+            fragment = new DiagnosticFragment();
         } else if (id == R.id.nav_trouble_code) {
-            showMessage("nav_trouble_code");
+            fragment = new TroubleCodeFragment();
         } else if (id == R.id.nav_add_of_garage) {
-            showMessage("nav_add_of_garage");
+            fragment = new FindGarageFragment();
         } else if (id == R.id.nav_history) {
-            showMessage("nav_history");
+            fragment = new HistoryFragment();
         } else if (id == R.id.nav_setting) {
-            showMessage("nav_setting");
+            fragment = new SettingFragment();
         } else if (id == R.id.nav_support) {
-            showMessage("nav_support");
+            fragment = new SupportFragment();
         } else if (id == R.id.nav_exit) {
-            showMessage("nav_exit");
+            processLogout();
         }
 
         replaceFragment(fragment);

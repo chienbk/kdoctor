@@ -25,11 +25,13 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
 
     private Context mContext;
     private List<BluetoothConnection> mListBLE;
+    private ItemOnClickListener mListener;
 
 
-    public ConnectionAdapter(Context mContext, List<BluetoothConnection> mListBLE) {
+    public ConnectionAdapter(Context mContext, List<BluetoothConnection> mListBLE, ItemOnClickListener listener) {
         this.mContext = mContext;
         this.mListBLE = mListBLE;
+        this.mListener = listener;
     }
 
     @Override
@@ -134,5 +136,25 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
 
             });
 
+    }
+
+    public void notifyDataSetChanged(List<BluetoothConnection> connections) {
+        if(mListBLE != null){
+            mListBLE.clear();
+            this.mListBLE.addAll(connections);
+            this.notifyDataSetChanged();
+        }
+    }
+
+    public void clearDataSetChanged() {
+        this.mListBLE.clear();
+        this.notifyDataSetChanged();
+    }
+
+    public void notifyItemChange(int position, BluetoothConnection connection){
+        mListBLE.remove(position);
+        notifyItemRemoved(position);
+        mListBLE.add(position, connection);
+        notifyItemInserted(position);
     }
 }

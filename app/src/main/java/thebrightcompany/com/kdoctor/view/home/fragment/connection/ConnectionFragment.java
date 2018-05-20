@@ -11,12 +11,15 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +30,9 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.adapter.ConnectionAdapter;
+import thebrightcompany.com.kdoctor.adapter.ItemOnClickListener;
 import thebrightcompany.com.kdoctor.model.connection.BluetoothConnection;
-import thebrightcompany.com.kdoctor.service.BluetoothService;
+import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
@@ -36,7 +40,7 @@ import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ConnectionFragment extends Fragment implements ConnectionView{
+public class ConnectionFragment extends Fragment implements ConnectionView, ItemOnClickListener{
 
     public static final String TAG = ConnectionFragment.class.getSimpleName();
 
@@ -51,10 +55,9 @@ public class ConnectionFragment extends Fragment implements ConnectionView{
     private BluetoothAdapter mBluetoothAdapter;
     Map<String, Integer> devRssiValues;
     private static final long SCAN_PERIOD = 10000; //scanning for 10 seconds
-    private Handler mHandler;
     private boolean mScanning;
-    private BluetoothDevice mDevice;
-
+    private BluetoothConnection mDevice;
+    private Handler mHandler;
     private String lastDeviceConnected = "";
 
     private SharedPreferencesUtils sharedPreferencesUtils;
@@ -103,13 +106,19 @@ public class ConnectionFragment extends Fragment implements ConnectionView{
      *
      */
     private void getData() {
-        if (homeActivity.mState == homeActivity.UART_PROFILE_CONNECTED){
-            //todo something
+        Log.d(TAG, "populateList");
+        mLists = new ArrayList<BluetoothConnection>();
+        //devRssiValues = new HashMap<String, Integer>();
 
-        }else {
-            //todo something
+        adapter = new ConnectionAdapter(homeActivity, mLists, this);
 
-        }
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLisView.setLayoutManager(mLayoutManager);
+        mLisView.setItemAnimator(new SlideInDownAnimator());
+        mLisView.setAdapter(new SlideInLeftAnimationAdapter(adapter));
+        mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));
+
+        scanLeDevice(true);
     }
 
     /**
@@ -117,14 +126,26 @@ public class ConnectionFragment extends Fragment implements ConnectionView{
      * @param view
      */
     private void initView(View view) {
+
         sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
-        adapter = new ConnectionAdapter(homeActivity, mLists);
+        if (sharedPreferencesUtils != null){
+            lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_NAME, "");
+        }
+        homeActivity.setTitle("Connection");
+
+        android.view.WindowManager.LayoutParams layoutParams = homeActivity.getWindow().getAttributes();
+        layoutParams.gravity = Gravity.TOP;
+        layoutParams.y = 200;
+
+        mHandler = new Handler();
+        sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
+        /*adapter = new ConnectionAdapter(homeActivity, mLists, this);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLisView.setLayoutManager(mLayoutManager);
         mLisView.setItemAnimator(new SlideInDownAnimator());
         mLisView.setAdapter(new SlideInLeftAnimationAdapter(adapter));
-        mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));
+        mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));*/
     }
 
     @Override
@@ -156,5 +177,82 @@ public class ConnectionFragment extends Fragment implements ConnectionView{
     @OnClick(R.id.btn_scan)
     public void processScan(){
         //todo something
+    }
+
+    @Override
+    public void onItemClickListener(int position, BluetoothConnection bluetoothConnection) {
+        //todo something
+        mBluetoothAdapter.stopLeScan(mLeScanCallback);
+        mDevice = mLists.get(position);
+        mDevice.setConnected(true);
+        adapter.notifyItemChange(position, mDevice);
+    }
+
+    private void scanLeDevice(final boolean enable) {
+        if (enable) {
+            // Stops scanning after a pre-defined scan period.
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mScanning = false;
+                    mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                }
+            }, SCAN_PERIOD);
+
+            mScanning = true;
+            mBluetoothAdapter.startLeScan(mLeScanCallback);
+        } else {
+            mScanning = false;
+            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+        }
+
+    }
+
+    private BluetoothAdapter.LeScanCallback mLeScanCallback =
+            new BluetoothAdapter.LeScanCallback() {
+
+                @Override
+                public void onLeScan(final BluetoothDevice device, final int rssi, byte[] scanRecord) {
+                    homeActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            addDevice(device,rssi);
+                        }
+                    });
+                }
+            };
+
+    private void addDevice(BluetoothDevice device, int rssi) {
+        boolean deviceFound = false;
+
+        for (BluetoothConnection listDev : mLists) {
+            if (listDev.getMacAddress().equals(device.getAddress())) {
+                deviceFound = true;
+                break;
+            }
+        }
+
+
+        devRssiValues.put(device.getAddress(), rssi);
+        if (!deviceFound) {
+            BluetoothConnection connection = new BluetoothConnection(device.getName(),
+                    device.getAddress(), "12/12/2018", false, true);
+            mLists.add(connection);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sharedPreferencesUtils != null){
+            lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_NAME, "");
+        }
+        if (homeActivity.mState == homeActivity.UART_PROFILE_CONNECTED){
+           //todo something
+        }
+
+        homeActivity.setTitle("Connection");
     }
 }
