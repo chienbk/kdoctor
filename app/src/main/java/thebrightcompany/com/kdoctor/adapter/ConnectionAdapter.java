@@ -8,11 +8,13 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,8 @@ import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.model.connection.BluetoothConnection;
 
 public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.MyViewHolder>{
+
+    public static final String TAG = ConnectionAdapter.class.getSimpleName();
 
     private Context mContext;
     private List<BluetoothConnection> mListBLE;
@@ -37,41 +41,60 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_ble_connection, parent, false);
+                .inflate(R.layout.item_connection, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        Log.d(TAG, "Size: " + mListBLE.size());
         final BluetoothConnection device = mListBLE.get(position);
-        holder.txt_nameOfDevice.setText(device.getNameOfDevice());
-        holder.txt_macOfDevice.setText(device.getMacAddress());
-        if (device.isExpired()){
-            holder.txt_dateTime.setVisibility(View.INVISIBLE);
-            holder.txt_date.setText(mContext.getText(R.string.lb_is_expired));
-            holder.txt_date.setTextColor(mContext.getColor(R.color.color_expired));
-            holder.layout_connected.setVisibility(View.VISIBLE);
-        }else {
-            holder.txt_date.setText(mContext.getString(R.string.lb_expire_date));
-            holder.txt_dateTime.setText(device.getExpireDate());
-            holder.layout_connected.setVisibility(View.INVISIBLE);
-        }
 
-        holder.img_menu_connection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //todo something
-                showPopupMenu(device,view, position);
-            }
-        });
+       try {
+           holder.txt_nameOfDevice.setText(device.getNameOfDevice());
+           holder.txt_macOfDevice.setText(device.getMacAddress());
 
+           if (device.isExpired()){
+               holder.txt_dateTime.setVisibility(View.INVISIBLE);
+               holder.txt_date.setText(mContext.getText(R.string.lb_is_expired));
+               holder.txt_date.setTextColor(mContext.getColor(R.color.color_expired));
+           }else {
+               holder.txt_date.setText(mContext.getString(R.string.lb_expire_date));
+               holder.txt_dateTime.setText(device.getExpireDate());
+           }
+
+           if (device.isConnected()){
+               holder.layout_connected.setVisibility(View.VISIBLE);
+           }else {
+               holder.layout_connected.setVisibility(View.INVISIBLE);
+           }
+
+           holder.img_menu_connection.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   //todo something
+                   showPopupMenu(device,view, position);
+               }
+           });
+
+           if (!device.isExpired()){
+               holder.layout_connection.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       mListener.onItemClickListener(position, device);
+                   }
+               });
+           }
+       }catch (Exception e){
+           Log.d(TAG, e.toString());
+       }
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mListBLE.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -79,6 +102,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
         public TextView txt_nameOfDevice, txt_macOfDevice, txt_dateTime, txt_date;
         public RelativeLayout layout_connected;
         public ImageButton img_menu_connection;
+        public LinearLayout layout_connection;
 
         public MyViewHolder(View view) {
             super(view);
@@ -88,6 +112,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
             txt_date = (TextView) view.findViewById(R.id.date);
             layout_connected = (RelativeLayout) view.findViewById(R.id.layout_connected);
             img_menu_connection = (ImageButton) view.findViewById(R.id.img_menu_connection);
+            layout_connection = (LinearLayout) view.findViewById(R.id.layout_item_connection);
         }
     }
 

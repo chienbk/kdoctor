@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -18,6 +19,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
@@ -28,9 +30,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -115,7 +122,6 @@ public class HomeActivity extends AppCompatActivity
     private void initService() {
         Intent bindIntent = new Intent(this, BluetoothService.class);
         bindService(bindIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
-
         LocalBroadcastManager.getInstance(this).registerReceiver(UARTStatusChangeReceiver, makeGattUpdateIntentFilter());
     }
 
@@ -299,17 +305,12 @@ public class HomeActivity extends AppCompatActivity
                     // gcm successfully registered
                     // now subscribe to `global` topic to receive app wide notifications
                     FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-
                     displayFirebaseRegId();
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
-
                     String message = intent.getStringExtra("message");
-
                     Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-
-                    //txtMessage.setText(message);
                 }
             }
         };
@@ -317,7 +318,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -392,27 +393,34 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_connection) {
-            // Handle the camera action
+
             fragment = new ConnectionFragment();
         } else if (id == R.id.nav_diagnostic) {
+
             fragment = new DiagnosticFragment();
         } else if (id == R.id.nav_trouble_code) {
+
             fragment = new TroubleCodeFragment();
         } else if (id == R.id.nav_add_of_garage) {
+
             fragment = new FindGarageFragment();
         } else if (id == R.id.nav_history) {
+
             fragment = new HistoryFragment();
         } else if (id == R.id.nav_setting) {
+
             fragment = new SettingFragment();
         } else if (id == R.id.nav_support) {
+
             fragment = new SupportFragment();
         } else if (id == R.id.nav_exit) {
+
             processLogout();
         }
 
         replaceFragment(fragment);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -463,7 +471,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void processLogout() {
-
+        showLogoutDialog();
     }
 
     @Override
@@ -473,16 +481,55 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void showProgress() {
-
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * The method use to show dialog
+     */
+    private void showLogoutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+        TextView title = new TextView(HomeActivity.this);
+        title.setTextColor(ContextCompat.getColor(HomeActivity.this, android.R.color.black));
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        title.setTypeface(Typeface.DEFAULT_BOLD);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, 20, 0, 0);
+        title.setPadding(0, 30, 0, 0);
+        title.setLayoutParams(lp);
+        title.setText("Logout");
+        title.setGravity(Gravity.CENTER);
+        builder.setCustomTitle(title);
+        builder.setMessage(getString(R.string.msg_logout));
+        builder.setPositiveButton(getString(R.string.msg_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.msg_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
+    }
+
+    /**
+     *
+     */
+    private void logout() {
+        showMessage("Logout");
     }
 }

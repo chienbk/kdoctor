@@ -79,4 +79,7 @@
     <string name="popup_no">NO</string>
 
     <string name="ble_not_supported">Bluetooth Low Energy không được hỗ trợ</string>
+    <string name="msg_logout">Bạn có muốn thoát chương trình?</string>
+    <string name="msg_ok">Đồng ý</string>
+    <string name="msg_cancel">Hủy</string>
 </resources>

@@ -19,9 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,12 +51,13 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     private ConnectionAdapter adapter;
 
     private BluetoothAdapter mBluetoothAdapter;
-    Map<String, Integer> devRssiValues;
+    //Map<String, Integer> devRssiValues;
     private static final long SCAN_PERIOD = 10000; //scanning for 10 seconds
     private boolean mScanning;
     private BluetoothConnection mDevice;
     private Handler mHandler;
     private String lastDeviceConnected = "";
+    int count = 0;
 
     private SharedPreferencesUtils sharedPreferencesUtils;
     public ConnectionFragment() {
@@ -106,17 +105,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
      *
      */
     private void getData() {
-        Log.d(TAG, "populateList");
-        mLists = new ArrayList<BluetoothConnection>();
-        //devRssiValues = new HashMap<String, Integer>();
-
-        adapter = new ConnectionAdapter(homeActivity, mLists, this);
-
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mLisView.setLayoutManager(mLayoutManager);
-        mLisView.setItemAnimator(new SlideInDownAnimator());
-        mLisView.setAdapter(new SlideInLeftAnimationAdapter(adapter));
-        mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));
 
         scanLeDevice(true);
     }
@@ -139,13 +127,14 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
 
         mHandler = new Handler();
         sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
-        /*adapter = new ConnectionAdapter(homeActivity, mLists, this);
+        mLists = new ArrayList<BluetoothConnection>();
+        adapter = new ConnectionAdapter(homeActivity, mLists, this);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLisView.setLayoutManager(mLayoutManager);
         mLisView.setItemAnimator(new SlideInDownAnimator());
         mLisView.setAdapter(new SlideInLeftAnimationAdapter(adapter));
-        mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));*/
+        mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));
     }
 
     @Override
@@ -156,7 +145,9 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
 
     @Override
     public void onRefreshList() {
-
+        mLists.clear();
+        scanLeDevice(true);
+        adapter.notifyDataSetChanged(mLists);
     }
 
     @Override
@@ -177,6 +168,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     @OnClick(R.id.btn_scan)
     public void processScan(){
         //todo something
+        scanLeDevice(true);
     }
 
     @Override
@@ -216,14 +208,17 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
                     homeActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
-                            addDevice(device);
+                            if (device != null){
+                                addDevice(device);
+                                Log.d(TAG, device.getAddress());
+                            }
                         }
                     });
                 }
             };
 
     private void addDevice(BluetoothDevice device) {
+
         boolean deviceFound = false;
 
         for (BluetoothConnection listDev : mLists) {
@@ -233,13 +228,18 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
             }
         }
 
-
-        //devRssiValues.put(device.getAddress(), rssi);
         if (!deviceFound) {
-            BluetoothConnection connection = new BluetoothConnection(device.getName(),
-                    device.getAddress(), "12/12/2018", false, true);
+            BluetoothConnection connection;
+            if (device.getName() != null){
+                connection = new BluetoothConnection(device.getName(),
+                        device.getAddress(), "12/12/2018", false, true);
+            }else {
+                connection = new BluetoothConnection("Unknown device",
+                        device.getAddress(), "12/12/2018", false, true);
+            }
+
             mLists.add(connection);
-            adapter.notifyDataSetChanged();
+                      adapter.notifyDataSetChanged();
         }
     }
 
