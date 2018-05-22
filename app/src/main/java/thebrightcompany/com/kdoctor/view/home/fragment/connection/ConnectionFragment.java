@@ -118,7 +118,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         if (sharedPreferencesUtils != null){
             lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_NAME, "");
         }
-        homeActivity.setTitle("Connection");
+        homeActivity.setTitle("Kết nối");
 
         android.view.WindowManager.LayoutParams layoutParams = homeActivity.getWindow().getAttributes();
         layoutParams.gravity = Gravity.TOP;
@@ -233,10 +233,10 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
             BluetoothConnection connection;
             if (device.getName() != null){
                 connection = new BluetoothConnection(device.getName(),
-                        device.getAddress(), "12/12/2018", false, true);
+                        device.getAddress(), "12/12/2018", false, false);
             }else {
                 connection = new BluetoothConnection("Unknown device",
-                        device.getAddress(), "12/12/2018", false, true);
+                        device.getAddress(), "12/12/2018", false, false);
             }
 
             mLists.add(connection);
@@ -254,6 +254,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
            //todo something
         }
 
-        homeActivity.setTitle("Connection");
+        homeActivity.setTitle("Kết nối");
     }
 }

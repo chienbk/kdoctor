@@ -1,4 +1,6 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.garageonmap;
 
-public interface FindGarageView {
+import thebrightcompany.com.kdoctor.view.BaseView;
+
+public interface FindGarageView extends BaseView{
 }
