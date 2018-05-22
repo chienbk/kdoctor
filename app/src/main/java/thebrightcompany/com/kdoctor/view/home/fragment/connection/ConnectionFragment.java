@@ -57,7 +57,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     private BluetoothConnection mDevice;
     private Handler mHandler;
     private String lastDeviceConnected = "";
-    int count = 0;
 
     private SharedPreferencesUtils sharedPreferencesUtils;
     public ConnectionFragment() {
@@ -168,6 +167,8 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     @OnClick(R.id.btn_scan)
     public void processScan(){
         //todo something
+        mLists.clear();
+        adapter.notifyDataSetChanged(mLists);
         scanLeDevice(true);
     }
 
