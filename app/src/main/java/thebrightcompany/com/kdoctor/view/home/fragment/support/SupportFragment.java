@@ -2,14 +2,22 @@ package thebrightcompany.com.kdoctor.view.home.fragment.support;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.model.support.CompanyInfomation;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
 /**
@@ -19,6 +27,13 @@ public class SupportFragment extends Fragment implements SupportView{
 
     public static final String TAG = SupportFragment.class.getSimpleName();
     private HomeActivity homeActivity;
+
+    @BindView(R.id.txt_nameOfCompany) TextView txt_nameOfCompany;
+    @BindView(R.id.txt_address_support) TextView txt_address_support;
+    @BindView(R.id.layout_call) LinearLayout layout_call;
+    @BindView(R.id.txt_hot_line_support) TextView txt_hot_line_support;
+    @BindView(R.id.txt_email_support) TextView txt_email_support;
+    @BindView(R.id.txt_web) TextView txt_web;
 
     public SupportFragment() {
         // Required empty public constructor
@@ -68,5 +83,28 @@ public class SupportFragment extends Fragment implements SupportView{
     public void onResume() {
         super.onResume();
         homeActivity.setTitle("Hỗ trợ");
+    }
+
+    @Override
+    public void getInformationOfCompany(CompanyInfomation companyInfomation) {
+        if (companyInfomation != null){
+            try {
+                txt_nameOfCompany.setText(companyInfomation.getName());
+                txt_address_support.setText(companyInfomation.getAddress());
+                txt_hot_line_support.setText(companyInfomation.getPhone());
+                txt_email_support.setText(companyInfomation.getEmail());
+                txt_web.setText(companyInfomation.getEmail());
+            }catch (Exception e){
+                Log.d(TAG, e.toString());
+            }
+        }
+    }
+
+    @OnClick(R.id.layout_call)
+    public void processCall(){
+        //todo something
+        Intent callSupport = new Intent(Intent.ACTION_CALL, Uri
+                .parse("tel:" + txt_hot_line_support.getText().toString()));
+        startActivity(callSupport);
     }
 }

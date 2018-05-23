@@ -104,7 +104,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
      *
      */
     private void getData() {
-
         scanLeDevice(true);
     }
 
@@ -183,18 +182,21 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
 
     private void scanLeDevice(final boolean enable) {
         if (enable) {
+            homeActivity.showProgress();
             // Stops scanning after a pre-defined scan period.
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mScanning = false;
                     mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    homeActivity.hideProgress();
                 }
             }, SCAN_PERIOD);
 
             mScanning = true;
             mBluetoothAdapter.startLeScan(mLeScanCallback);
         } else {
+            homeActivity.hideProgress();
             mScanning = false;
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
         }

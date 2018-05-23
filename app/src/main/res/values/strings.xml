@@ -48,7 +48,7 @@
     <!--Use to navigate menu-->
 
     <string name="nav_connection">Kết nối thiết bị</string>
-    <string name="nav_diagnostic">Chấn đoán</string>
+    <string name="nav_diagnostic">Chuẩn đoán</string>
     <string name="nav_trouble_code">Mã lỗi</string>
     <string name="nav_add_of_garage">Địa chỉ garage</string>
     <string name="nav_history">Lịch sử sửa chữa</string>

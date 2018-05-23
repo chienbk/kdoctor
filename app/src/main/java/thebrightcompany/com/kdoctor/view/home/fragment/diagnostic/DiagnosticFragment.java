@@ -37,7 +37,7 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView{
     }
 
     private void initView(View view) {
-        homeActivity.setTitle("Chẩn đoán");
+        homeActivity.setTitle("Chuẩn đoán");
     }
 
     @Override
@@ -64,6 +64,6 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView{
     @Override
     public void onResume() {
         super.onResume();
-        homeActivity.setTitle("Chẩn đoán");
+        homeActivity.setTitle("Chuẩn đoán");
     }
 }
