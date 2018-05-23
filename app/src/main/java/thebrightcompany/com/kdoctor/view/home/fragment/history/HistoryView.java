@@ -1,4 +1,6 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.history;
 
-public interface HistoryView {
+import thebrightcompany.com.kdoctor.view.BaseView;
+
+public interface HistoryView extends BaseView{
 }

@@ -83,4 +83,10 @@
     <string name="msg_ok">Đồng ý</string>
     <string name="msg_cancel">Hủy</string>
     <string name="title_activity_maps">Map</string>
+    
+    <string name="lb_support_tittle">THÔNG TIN HỖ TRỢ</string>
+    <string name="lb_support_address">Địa chỉ: </string>
+    <string name="lb_support_hot_line">Hot line: </string>
+    <string name="lb_support_email">Email: </string>
+    <string name="lb_support_web">Website: </string>
 </resources>

@@ -1,4 +1,6 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.setting;
 
-public interface SettingView {
+import thebrightcompany.com.kdoctor.view.BaseView;
+
+public interface SettingView extends BaseView{
 }

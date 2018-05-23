@@ -8,13 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HistoryFragment extends Fragment {
+public class HistoryFragment extends Fragment implements HistoryView{
 
     public static final String TAG = HistoryFragment.class.getSimpleName();
     private HomeActivity homeActivity;
@@ -28,7 +29,14 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        ButterKnife.bind(this, view);
+        initView(view);
+        return view;
+    }
+
+    private void initView(View view) {
+        homeActivity.setTitle("Lịch sử sửa chữa");
     }
 
     @Override
@@ -37,4 +45,24 @@ public class HistoryFragment extends Fragment {
         this.homeActivity = (HomeActivity) context;
     }
 
+    @Override
+    public void showProgress() {
+        homeActivity.showProgress();
+    }
+
+    @Override
+    public void hideProgress() {
+        homeActivity.hideProgress();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        homeActivity.showMessage(message);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        homeActivity.setTitle("Lịch sử sửa chữa");
+    }
 }

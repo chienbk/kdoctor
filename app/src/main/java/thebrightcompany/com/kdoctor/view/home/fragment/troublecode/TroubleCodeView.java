@@ -1,4 +1,6 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.troublecode;
 
-public interface TroubleCodeView {
+import thebrightcompany.com.kdoctor.view.BaseView;
+
+public interface TroubleCodeView extends BaseView{
 }

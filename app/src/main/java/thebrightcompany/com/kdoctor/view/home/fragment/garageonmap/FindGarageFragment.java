@@ -90,4 +90,10 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     public void showMessage(String message) {
         homeActivity.showMessage(message);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        homeActivity.setTitle("Địa chỉ garage");
+    }
 }

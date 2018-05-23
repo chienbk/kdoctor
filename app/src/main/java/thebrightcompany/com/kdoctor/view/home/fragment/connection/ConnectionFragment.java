@@ -118,7 +118,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         if (sharedPreferencesUtils != null){
             lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_NAME, "");
         }
-        homeActivity.setTitle("Kết nối");
+        homeActivity.setTitle("Kết nối thiết bị");
 
         android.view.WindowManager.LayoutParams layoutParams = homeActivity.getWindow().getAttributes();
         layoutParams.gravity = Gravity.TOP;
@@ -254,6 +254,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
            //todo something
         }
 
-        homeActivity.setTitle("Kết nối");
+        homeActivity.setTitle("Kết nối thiết bị");
     }
 }

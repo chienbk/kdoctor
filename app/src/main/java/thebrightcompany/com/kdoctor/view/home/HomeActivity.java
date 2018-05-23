@@ -60,6 +60,7 @@ import thebrightcompany.com.kdoctor.view.home.fragment.history.HistoryFragment;
 import thebrightcompany.com.kdoctor.view.home.fragment.setting.SettingFragment;
 import thebrightcompany.com.kdoctor.view.home.fragment.support.SupportFragment;
 import thebrightcompany.com.kdoctor.view.home.fragment.troublecode.TroubleCodeFragment;
+import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeView {
@@ -363,7 +364,7 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
@@ -383,7 +384,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -507,7 +508,7 @@ public class HomeActivity extends AppCompatActivity
         lp.setMargins(0, 20, 0, 0);
         title.setPadding(0, 30, 0, 0);
         title.setLayoutParams(lp);
-        title.setText("Logout");
+        title.setText("Thoát");
         title.setGravity(Gravity.CENTER);
         builder.setCustomTitle(title);
         builder.setMessage(getString(R.string.msg_logout));
@@ -527,9 +528,10 @@ public class HomeActivity extends AppCompatActivity
     }
 
     /**
-     *
+     * The method use to logout
      */
     private void logout() {
-        showMessage("Logout");
+        startActivity(new Intent(this, LoginScreenActivity.class));
+        finish();
     }
 }

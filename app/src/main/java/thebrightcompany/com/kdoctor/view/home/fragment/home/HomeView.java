@@ -1,4 +1,6 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.home;
 
-public interface HomeView {
+import thebrightcompany.com.kdoctor.view.BaseView;
+
+public interface HomeView extends BaseView{
 }

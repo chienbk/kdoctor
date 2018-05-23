@@ -1,4 +1,6 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.support;
 
-public interface SupportView {
+import thebrightcompany.com.kdoctor.view.BaseView;
+
+public interface SupportView extends BaseView{
 }

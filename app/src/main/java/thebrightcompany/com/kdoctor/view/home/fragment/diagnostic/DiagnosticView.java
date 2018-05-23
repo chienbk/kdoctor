@@ -1,4 +1,6 @@
 package thebrightcompany.com.kdoctor.view.home.fragment.diagnostic;
 
-public interface DiagnosticView {
+import thebrightcompany.com.kdoctor.view.BaseView;
+
+public interface DiagnosticView extends BaseView{
 }

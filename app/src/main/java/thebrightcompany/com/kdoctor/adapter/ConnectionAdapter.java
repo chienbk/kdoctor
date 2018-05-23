@@ -9,6 +9,7 @@ import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,8 +120,8 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
     @SuppressLint("RestrictedApi")
     private void showPopupMenu(final BluetoothConnection device, View v, final int position) {
 
-        final PopupMenu popupMenu = new PopupMenu(mContext, v);
-
+        final PopupMenu popupMenu = new PopupMenu(mContext, v, Gravity.RIGHT);
+            popupMenu.setGravity(Gravity.END);
             popupMenu.getMenuInflater().inflate(R.menu.popup_menu_connection, popupMenu.getMenu());
             MenuPopupHelper menuHelper = new MenuPopupHelper(mContext, (MenuBuilder) popupMenu.getMenu(), v);
             menuHelper.setForceShowIcon(true);
