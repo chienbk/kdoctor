@@ -4,6 +4,7 @@ public class BluetoothConnection {
     private String nameOfDevice;
     private String macAddress;
     private String expireDate;
+    private String addressOfVin;
     private boolean isConnected;
     private boolean isExpired;
 
@@ -13,6 +14,23 @@ public class BluetoothConnection {
         this.expireDate = expireDate;
         this.isConnected = isConnected;
         this.isExpired = isExpired;
+    }
+
+    public BluetoothConnection(String nameOfDevice, String macAddress, String expireDate, String addressOfVin, boolean isConnected, boolean isExpired) {
+        this.nameOfDevice = nameOfDevice;
+        this.macAddress = macAddress;
+        this.expireDate = expireDate;
+        this.addressOfVin = addressOfVin;
+        this.isConnected = isConnected;
+        this.isExpired = isExpired;
+    }
+
+    public String getAddressOfVin() {
+        return addressOfVin;
+    }
+
+    public void setAddressOfVin(String addressOfVin) {
+        this.addressOfVin = addressOfVin;
     }
 
     public boolean isExpired() {

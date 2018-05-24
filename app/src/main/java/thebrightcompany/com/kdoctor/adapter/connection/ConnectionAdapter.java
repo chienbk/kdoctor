@@ -1,6 +1,7 @@
-package thebrightcompany.com.kdoctor.adapter;
+package thebrightcompany.com.kdoctor.adapter.connection;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -14,6 +15,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,12 +36,17 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
     private Context mContext;
     private List<BluetoothConnection> mListBLE;
     private ItemOnClickListener mListener;
+    private EditDeviceListener mEditDeviceListener;
+    private ExtensionDateListener mExtensionDateListener;
 
 
-    public ConnectionAdapter(Context mContext, List<BluetoothConnection> mListBLE, ItemOnClickListener listener) {
+    public ConnectionAdapter(Context mContext, List<BluetoothConnection> mListBLE, ItemOnClickListener listener,
+                             EditDeviceListener editDeviceListener, ExtensionDateListener extensionDateListener) {
         this.mContext = mContext;
         this.mListBLE = mListBLE;
         this.mListener = listener;
+        this.mEditDeviceListener = editDeviceListener;
+        this.mExtensionDateListener = extensionDateListener;
     }
 
     @Override
@@ -133,28 +143,16 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
                     switch (item.getItemId()) {
                         case R.id.menu_connection:
                             //todo something
+                            mListener.onItemClickListener(position, device);
                             break;
                         case R.id.menu_edit_device:
                             //todo something
-                            /*final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                            builder.setTitle(AppContrains.USER.getName());
-                            builder.setMessage("Are you sure you want delete : " + "<" + todo.getTitle() + ">");
-                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    mListener.onDeleteToDo(todo, position);
-                                }
-                            });
-                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                            builder.create().show();*/
+
+                            showDialog(position, device);
                             break;
                         case R.id.menu_add_date:
                             //todo something
+                            mExtensionDateListener.onExtensionListener();
                             break;
                     }
                     return true;
@@ -162,6 +160,56 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
 
             });
 
+    }
+
+    /**
+     * The method use to show dialog to update device
+     *
+     * @param position
+     * @param device
+     */
+    private void showDialog(final int position, final BluetoothConnection device) {
+
+        final Dialog dialog = new Dialog(mContext, R.style.Theme_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        dialog.setContentView(R.layout.dialog_layout_edit_device);
+
+        final EditText edit_nameOfCar = (EditText) dialog.findViewById(R.id.edit_nameOfCar);
+        EditText edit_addressOfMac = (EditText) dialog.findViewById(R.id.edit_addressOfMac);
+        EditText edit_vin = (EditText) dialog.findViewById(R.id.edit_vin);
+
+        Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        Button btn_update = (Button) dialog.findViewById(R.id.btn_update);
+
+        edit_addressOfMac.setText(device.getMacAddress());
+        if (device.getAddressOfVin() != null){
+            edit_vin.setText(device.getAddressOfVin());
+        }else {
+            edit_vin.setText("");
+        }
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                device.setNameOfDevice(edit_nameOfCar.getText().toString());
+
+                //todo update
+                mEditDeviceListener.onEditItemListener(position, device);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     public void notifyDataSetChanged(List<BluetoothConnection> connections) {

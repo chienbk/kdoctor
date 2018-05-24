@@ -4,13 +4,18 @@ package thebrightcompany.com.kdoctor.view.home.fragment.diagnostic;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
+import thebrightcompany.com.kdoctor.view.home.fragment.troublecode.TroubleCodeFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +25,9 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView{
     public static final String TAG = DiagnosticFragment.class.getSimpleName();
 
     private HomeActivity homeActivity;
+
+    @BindView(R.id.listViewDiagnostic) RecyclerView listViewDiagnostic;
+    @BindView(R.id.layout_find_trouble_code) LinearLayout layout_find_trouble_code;
 
     public DiagnosticFragment() {
         // Required empty public constructor
@@ -65,5 +73,11 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView{
     public void onResume() {
         super.onResume();
         homeActivity.setTitle("Chuẩn đoán");
+    }
+
+    @OnClick(R.id.layout_find_trouble_code)
+    public void processRedirectTroubleCodeScreen(){
+        //todo redirect trouble code screen
+        homeActivity.replaceFragment(new TroubleCodeFragment());
     }
 }

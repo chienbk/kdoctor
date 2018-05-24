@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.home.fragment.diagnostic.DiagnosticFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listViewDiagnostic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_above="@+id/layout_find_trouble_code">
+    </android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_find_trouble_code"
+        android:layout_marginTop="@dimen/padding_register_new_account"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:background="@drawable/selector_find_trouble_code"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/lb_diagnostic_find_trouble_code"
+            android:textSize="@dimen/txt_link"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:background="@drawable/ic_double_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+    <!--<Button
+        android:id="@+id/btn_find_trouble_code"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_background_button"
+        android:text="@string/lb_diagnostic_find_trouble_code"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />-->
+
+</RelativeLayout>

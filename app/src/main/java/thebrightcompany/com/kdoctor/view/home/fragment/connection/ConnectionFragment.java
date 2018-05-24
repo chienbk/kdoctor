@@ -27,8 +27,10 @@ import butterknife.OnClick;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import thebrightcompany.com.kdoctor.R;
-import thebrightcompany.com.kdoctor.adapter.ConnectionAdapter;
-import thebrightcompany.com.kdoctor.adapter.ItemOnClickListener;
+import thebrightcompany.com.kdoctor.adapter.connection.ConnectionAdapter;
+import thebrightcompany.com.kdoctor.adapter.connection.EditDeviceListener;
+import thebrightcompany.com.kdoctor.adapter.connection.ExtensionDateListener;
+import thebrightcompany.com.kdoctor.adapter.connection.ItemOnClickListener;
 import thebrightcompany.com.kdoctor.model.connection.BluetoothConnection;
 import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
@@ -38,7 +40,8 @@ import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ConnectionFragment extends Fragment implements ConnectionView, ItemOnClickListener{
+public class ConnectionFragment extends Fragment implements ConnectionView, ItemOnClickListener, EditDeviceListener,
+        ExtensionDateListener{
 
     public static final String TAG = ConnectionFragment.class.getSimpleName();
 
@@ -126,7 +129,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         mHandler = new Handler();
         sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
         mLists = new ArrayList<BluetoothConnection>();
-        adapter = new ConnectionAdapter(homeActivity, mLists, this);
+        adapter = new ConnectionAdapter(homeActivity, mLists, this, this, this);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLisView.setLayoutManager(mLayoutManager);
@@ -178,6 +181,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         mDevice = mLists.get(position);
         mDevice.setConnected(true);
         adapter.notifyItemChange(position, mDevice);
+        homeActivity.connectBluetooth(bluetoothConnection.getMacAddress());
     }
 
     private void scanLeDevice(final boolean enable) {
@@ -235,10 +239,10 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
             BluetoothConnection connection;
             if (device.getName() != null){
                 connection = new BluetoothConnection(device.getName(),
-                        device.getAddress(), "12/12/2018", false, false);
+                        device.getAddress(), "12/12/2018", "34:RF:6G:23:G6:HY",false, false);
             }else {
                 connection = new BluetoothConnection("Unknown device",
-                        device.getAddress(), "12/12/2018", false, false);
+                        device.getAddress(), "12/12/2018", "34:RF:6G:23:G6:HY",false, false);
             }
 
             mLists.add(connection);
@@ -257,5 +261,15 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         }
 
         homeActivity.setTitle("Kết nối thiết bị");
+    }
+
+    @Override
+    public void onEditItemListener(int position, BluetoothConnection bluetoothConnection) {
+        adapter.notifyItemChange(position, bluetoothConnection);
+    }
+
+    @Override
+    public void onExtensionListener() {
+        showMessage("Redirect to Extension screen");
     }
 }

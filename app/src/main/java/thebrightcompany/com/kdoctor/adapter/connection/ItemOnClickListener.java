@@ -1,4 +1,4 @@
-package thebrightcompany.com.kdoctor.adapter;
+package thebrightcompany.com.kdoctor.adapter.connection;
 
 import thebrightcompany.com.kdoctor.model.connection.BluetoothConnection;
 

@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.home.fragment.troublecode.TroubleCodeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/layout_totals_of_error"
+        android:orientation="vertical"
+        android:background="@drawable/bg_trouble_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listTroubleCode"
+        android:layout_below="@+id/layout_totals_of_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_above="@+id/layout_find_garage">
+    </android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_find_garage"
+        android:layout_marginTop="@dimen/padding_register_new_account"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:background="@drawable/selector_find_trouble_code"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:background="@drawable/ic_double_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:text="@string/lb_trouble_code_find_garage"
+            android:textSize="@dimen/txt_link"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>

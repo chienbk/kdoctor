@@ -1,5 +1,6 @@
 package thebrightcompany.com.kdoctor.view.loginmain;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
@@ -75,6 +76,7 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
     private void accessLocationPermission() {
         int accessCoarseLocation = checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION);
         int accessFineLocation   = checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
+        int accessWriteToExternal = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         List<String> listRequestPermission = new ArrayList<String>();
 
@@ -83,6 +85,10 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
         }
         if (accessFineLocation != PackageManager.PERMISSION_GRANTED) {
             listRequestPermission.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+
+        if (accessWriteToExternal != PackageManager.PERMISSION_GRANTED) {
+            listRequestPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
 
         if (!listRequestPermission.isEmpty()) {
