@@ -7,5 +7,5 @@ import thebrightcompany.com.kdoctor.model.connection.BluetoothConnection;
  */
 
 public interface ItemOnClickListener {
-    void onItemClickListener(int position, BluetoothConnection bluetoothConnection);
+    void onItemClickListener(int position, BluetoothConnection bluetoothConnection, boolean isConnected);
 }
