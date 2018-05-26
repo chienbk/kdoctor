@@ -66,6 +66,7 @@
     <string name="lb_is_expired">Hết hạn sử dụng</string>
     <string name="lb_is_connected">Đang kết nối</string>
     <string name="menu_connection">Kết nối</string>
+    <string name="menu_disconnect">Ngắt kết nối</string>
     <string name="menu_edit_device">Sửa thông tin</string>
     <string name="menu_add_date">Gia hạn thiết bị</string>
     <string name="lb_btn_scan">Quét lại</string>
