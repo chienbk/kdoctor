@@ -179,7 +179,12 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         //todo something
         mBluetoothAdapter.stopLeScan(mLeScanCallback);
         mDevice = mLists.get(position);
-        mDevice.setConnected(true);
+        if (!bluetoothConnection.isConnected()){
+            mDevice.setConnected(true);
+        }else {
+            homeActivity.disconnectBluetooth();
+            mDevice.setConnected(false);
+        }
         adapter.notifyItemChange(position, mDevice);
         homeActivity.connectBluetooth(bluetoothConnection.getMacAddress());
     }

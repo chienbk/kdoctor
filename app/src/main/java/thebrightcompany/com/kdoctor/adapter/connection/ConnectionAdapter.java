@@ -1,13 +1,13 @@
 package thebrightcompany.com.kdoctor.adapter.connection;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -127,12 +128,16 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("RestrictedApi")
     private void showPopupMenu(final BluetoothConnection device, View v, final int position) {
 
         final PopupMenu popupMenu = new PopupMenu(mContext, v, Gravity.RIGHT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             popupMenu.setGravity(Gravity.END);
-            popupMenu.getMenuInflater().inflate(R.menu.popup_menu_connection, popupMenu.getMenu());
+        }
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_connection, popupMenu.getMenu());
             MenuPopupHelper menuHelper = new MenuPopupHelper(mContext, (MenuBuilder) popupMenu.getMenu(), v);
             menuHelper.setForceShowIcon(true);
             menuHelper.show();

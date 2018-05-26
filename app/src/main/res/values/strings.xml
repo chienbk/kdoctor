@@ -70,6 +70,15 @@
     <string name="menu_edit_device">Sửa thông tin</string>
     <string name="menu_add_date">Gia hạn thiết bị</string>
     <string name="lb_btn_scan">Quét lại</string>
+    <string name="lb_edit_device">SỬA THÔNG TIN</string>
+    <string name="lb_address_of_mac">Địa chỉ MAC</string>
+    <string name="lb_code_of_vin">Mã VIN</string>
+    <string name="lb_name_of_car">Tên xe</string>
+    <string name="lb_btn_cancel">Hủy</string>
+    <string name="lb_btn_update">Cập nhật</string>
+
+    <string name="lb_diagnostic_find_trouble_code">Tìm lỗi</string>
+    <string name="lb_trouble_code_find_garage">Tìm garage</string>
 
     <string name="msg_ble_is_not_available">Bluetooth không khả dụng</string>
     <string name="msg_ble_do_not_support">Device does not support UART. Disconnecting</string>

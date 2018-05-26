@@ -262,7 +262,7 @@ public class HomeActivity extends AppCompatActivity
     /**
      * The method use to disconnect bluetooth
      */
-    public static void disconnectBluetooth(){
+    public void disconnectBluetooth(){
         mService.disconnect();
     }
 
