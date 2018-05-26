@@ -48,7 +48,7 @@
     <!--Use to navigate menu-->
 
     <string name="nav_connection">Kết nối thiết bị</string>
-    <string name="nav_diagnostic">Chuẩn đoán</string>
+    <string name="nav_diagnostic">Chấn đoán</string>
     <string name="nav_trouble_code">Mã lỗi</string>
     <string name="nav_add_of_garage">Địa chỉ garage</string>
     <string name="nav_history">Lịch sử sửa chữa</string>
@@ -70,13 +70,6 @@
     <string name="menu_edit_device">Sửa thông tin</string>
     <string name="menu_add_date">Gia hạn thiết bị</string>
     <string name="lb_btn_scan">Quét lại</string>
-    <string name="lb_edit_device">SỬA THÔNG TIN</string>
-    <string name="lb_address_of_mac">Địa chỉ MAC</string>
-    <string name="lb_code_of_vin">Mã VIN</string>
-    <string name="lb_name_of_car">Tên xe</string>
-    <string name="lb_btn_cancel">HỦY</string>
-    <string name="lb_btn_update">CẬP NHẬT</string>
-
 
     <string name="msg_ble_is_not_available">Bluetooth không khả dụng</string>
     <string name="msg_ble_do_not_support">Device does not support UART. Disconnecting</string>
@@ -91,22 +84,13 @@
     <string name="msg_ok">Đồng ý</string>
     <string name="msg_cancel">Hủy</string>
     <string name="title_activity_maps">Map</string>
-    
+
     <string name="lb_support_tittle">THÔNG TIN HỖ TRỢ</string>
     <string name="lb_support_address">Địa chỉ: </string>
     <string name="lb_support_hot_line">Hot line: </string>
     <string name="lb_support_email">Email: </string>
     <string name="lb_support_web">Website: </string>
 
-    <!--Use to diagnostic screen-->
-    <string name="lb_diagnostic_min">Nhỏ nhất</string>
-    <string name="lb_diagnostic_max">Lớn nhất</string>
-    <string name="lb_diagnostic_greater">Vượt hạn mức</string>
-    <string name="lb_diagnostic_less">Dưới hạn mức</string>
-    <string name="lb_diagnostic_find_trouble_code">Tìm lỗi</string>
-
-    <!--Use to diagnostic screen-->
-    <string name="lb_trouble_code_total_error">Số mã lỗi:</string>
-    <string name="lb_trouble_code_view_detail">Xem chi tiết</string>
-    <string name="lb_trouble_code_find_garage">Tìm garage</string>
+    <string name="direct">Chỉ đường</string>
+    <string name="contact">Liên hệ</string>
 </resources>
