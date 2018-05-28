@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +36,7 @@ import thebrightcompany.com.kdoctor.model.connection.BluetoothConnection;
 import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
+import thebrightcompany.com.kdoctor.view.extensiondate.ExtensionDateActivity;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
 /**
@@ -275,6 +277,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
 
     @Override
     public void onExtensionListener() {
-        showMessage("Redirect to Extension screen");
+        startActivity(new Intent(homeActivity, ExtensionDateActivity.class));
     }
 }
