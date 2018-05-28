@@ -57,7 +57,7 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
         return new MyViewHolder(itemView);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         Log.d(TAG, "Size: " + mListBLE.size());
@@ -128,20 +128,36 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("RestrictedApi")
     private void showPopupMenu(final BluetoothConnection device, View v, final int position) {
 
-        final PopupMenu popupMenu = new PopupMenu(mContext, v, Gravity.RIGHT);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            popupMenu.setGravity(Gravity.END);
-        }
-        popupMenu.getMenuInflater().inflate(R.menu.popup_menu_connection, popupMenu.getMenu());
-            MenuPopupHelper menuHelper = new MenuPopupHelper(mContext, (MenuBuilder) popupMenu.getMenu(), v);
-            menuHelper.setForceShowIcon(true);
-            menuHelper.show();
+        final PopupMenu popupMenu = new PopupMenu(mContext, v);
+        if (device.isConnected()){
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu_disconnect, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.menu_disconnect:
+                            //todo something
+                            mListener.onItemClickListener(position, device);
+                            break;
+                        case R.id.menu_edit_device:
+                            //todo something
 
+                            showDialog(position, device);
+                            break;
+                        case R.id.menu_add_date:
+                            //todo something
+                            mExtensionDateListener.onExtensionListener();
+                            break;
+                    }
+                    return true;
+                }
+
+            });
+        }else {
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu_connection, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
@@ -164,6 +180,9 @@ public class ConnectionAdapter extends RecyclerView.Adapter<ConnectionAdapter.My
                 }
 
             });
+        }
+
+        popupMenu.show();
 
     }
 

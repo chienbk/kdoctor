@@ -3,124 +3,141 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:id="@+id/layout_item_connection"
     android:layout_height="wrap_content"
-    android:background="@drawable/item_connection_selector"
-    android:paddingLeft="15dp"
-    android:paddingTop="7dp"
-    android:paddingBottom="5dp">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/txt_nameOfDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:text="Toyota 3000"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_alignParentLeft="true"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_marginLeft="5dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/img_menu_connection"
-            android:layout_marginRight="5dp" />
-
-        <ImageButton
-            android:id="@+id/img_menu_connection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@null"
-            android:src="@drawable/ic_menu_dot"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
-
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal">
-
-       <TextView
-           android:layout_marginTop="1dp"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/lb_address_mac"
-           android:textColor="#000000"
-           android:textSize="14sp"
-           android:layout_marginRight="2dp"
-           android:layout_marginLeft="5dp"
-           android:ellipsize="end" />
-
-       <TextView
-           android:id="@+id/txt_macOfDevice"
-           android:paddingRight="10dp"
-           android:layout_marginTop="1dp"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="KIA MORNING"
-           android:textColor="#000000"
-           android:textSize="14sp"
-           android:layout_marginRight="2dp"
-           android:layout_marginLeft="5dp"
-           android:ellipsize="end" />
-   </LinearLayout>
+    android:background="@drawable/item_connection_selector">
 
     <LinearLayout
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_drawable_menu">
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:textSize="13sp"
-            android:textColor="#000000"
-            android:text="@string/lb_expire_date"/>
-
-        <TextView
-            android:id="@+id/txt_dateTime"
-            android:layout_marginLeft="5dp"
-            android:textColor="#000000"
-            android:text="20/11/2018"
-            android:singleLine="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <RelativeLayout
-            android:id="@+id/layout_connected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentRight="true">
-
-                <ImageView
-                    android:id="@+id/imgIsPublic"
-                    android:padding="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_connecting"/>
+            android:paddingTop="7dp"
+            android:paddingBottom="5dp"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/txt_nameOfDevice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:text="Toyota 3000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_alignParentLeft="true"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:layout_marginLeft="5dp"
-                    android:textColor="#16aa7a"
-                    android:paddingRight="5dp"
-                    android:text="@string/lb_is_connected"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/img_menu_connection"
+                    android:layout_marginRight="5dp" />
+
+                <ImageButton
+                    android:id="@+id/img_menu_connection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_menu_dot"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lb_address_mac"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/txt_macOfDevice"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="KIA MORNING"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:ellipsize="end" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="13sp"
+                    android:textColor="#000000"
+                    android:text="@string/lb_expire_date"/>
+
+                <TextView
+                    android:id="@+id/txt_dateTime"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#000000"
+                    android:text="20/11/2018"
+                    android:singleLine="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_connected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/imgIsPublic"
+                            android:padding="3dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_connecting"/>
+
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:textColor="#16aa7a"
+                            android:paddingRight="5dp"
+                            android:text="@string/lb_is_connected"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
 
 </LinearLayout>
