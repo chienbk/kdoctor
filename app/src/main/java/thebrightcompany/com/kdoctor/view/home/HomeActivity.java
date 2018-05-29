@@ -32,7 +32,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -76,6 +75,7 @@ public class HomeActivity extends AppCompatActivity
     private static final int REQUEST_CODE_LOC = 22;
 
     public static int mState = UART_PROFILE_DISCONNECTED;
+    public static boolean isConnected = false;
 
     @BindView(R.id.progress) ProgressBar progressBar;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -178,6 +178,7 @@ public class HomeActivity extends AppCompatActivity
                     public void run() {
                         Log.d(TAG, "UART_CONNECT_MSG");
                         mState = UART_PROFILE_CONNECTED;
+                        isConnected = true;
                     }
                 });
             }
@@ -188,6 +189,7 @@ public class HomeActivity extends AppCompatActivity
                     public void run() {
                         Log.d(TAG, "UART_DISCONNECT_MSG");
                         mState = UART_PROFILE_DISCONNECTED;
+                        isConnected = false;
                         mService.close();
                         //setUiState();
                         //todo something
@@ -206,10 +208,11 @@ public class HomeActivity extends AppCompatActivity
                 runOnUiThread(new Runnable() {
                     public void run() {
                         try {
-                            String text = new String(txValue, "UTF-8").replaceAll("\\s+","");
-
+                            String data = new String(txValue, "UTF-8").replaceAll("\\s+","");
+                            data = data.replaceAll("\\s+","");
+                            processReceiveData(data);
                             Log.d(TAG, "dataReceive: " + txValue.toString());
-                            Log.d(TAG, "data After format: " + text);
+                            Log.d(TAG, "data After format: " + data);
                         } catch (Exception e) {
                             Log.e(TAG, e.toString());
                         }
@@ -219,6 +222,7 @@ public class HomeActivity extends AppCompatActivity
             //*********************//
             if (action.equals(BluetoothService.DEVICE_DOES_NOT_SUPPORT_UART)){
                 showMessage(getString(R.string.msg_ble_do_not_support));
+                isConnected = false;
                 mService.disconnect();
             }
 
