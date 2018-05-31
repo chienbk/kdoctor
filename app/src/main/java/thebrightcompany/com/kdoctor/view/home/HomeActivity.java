@@ -40,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,6 +49,7 @@ import java.io.UnsupportedEncodingException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.model.connection.DeviceConnect;
 import thebrightcompany.com.kdoctor.model.connection.MessageEvent;
 import thebrightcompany.com.kdoctor.pushnotification.app.Config;
 import thebrightcompany.com.kdoctor.pushnotification.utils.NotificationUtils;
@@ -179,6 +181,8 @@ public class HomeActivity extends AppCompatActivity
                         Log.d(TAG, "UART_CONNECT_MSG");
                         mState = UART_PROFILE_CONNECTED;
                         isConnected = true;
+                        EventBus.getDefault().post(new DeviceConnect(isConnected, "Đã kết nối"));
+
                     }
                 });
             }
@@ -190,6 +194,7 @@ public class HomeActivity extends AppCompatActivity
                         Log.d(TAG, "UART_DISCONNECT_MSG");
                         mState = UART_PROFILE_DISCONNECTED;
                         isConnected = false;
+                        EventBus.getDefault().post(new DeviceConnect(isConnected, "Ngắt kết nối với thiết bị"));
                         mService.close();
                         //setUiState();
                         //todo something
@@ -223,6 +228,7 @@ public class HomeActivity extends AppCompatActivity
             if (action.equals(BluetoothService.DEVICE_DOES_NOT_SUPPORT_UART)){
                 showMessage(getString(R.string.msg_ble_do_not_support));
                 isConnected = false;
+                EventBus.getDefault().post(new DeviceConnect(isConnected, "Thiết bị này không được hỗ trợ!"));
                 mService.disconnect();
             }
 
@@ -383,11 +389,18 @@ public class HomeActivity extends AppCompatActivity
 
             fragment = new ConnectionFragment();
         } else if (id == R.id.nav_diagnostic) {
-
-            fragment = new DiagnosticFragment();
+            if (!isConnected){
+                fragment = new DiagnosticFragment();
+            }else {
+                showMessage("Please connect to device");
+            }
         } else if (id == R.id.nav_trouble_code) {
 
-            fragment = new TroubleCodeFragment();
+            if (!isConnected){
+                fragment = new TroubleCodeFragment();
+            }else {
+                showMessage("Please connect to device");
+            }
         } else if (id == R.id.nav_add_of_garage) {
 
             fragment = new FindGarageFragment();
@@ -414,6 +427,7 @@ public class HomeActivity extends AppCompatActivity
 
     public void replaceFragment(Fragment fragment) {
         if (fragment != null) {
+            hideProgress();
             lastFragment = fragment;
 
             FragmentManager fragmentManager = getSupportFragmentManager();

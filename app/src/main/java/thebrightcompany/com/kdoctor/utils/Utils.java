@@ -109,21 +109,21 @@ public class Utils {
      */
     public static List<Diagnostic> getListDiagnostic(){
         List<Diagnostic> mList = new ArrayList<>();
-        Diagnostic diagnostic1 = new Diagnostic("Vận tốc phương tiện", "01 0D", "410D", "0", "km/h","Min value -> Max value : 0 -> 255km/h");
-        Diagnostic diagnostic2 = new Diagnostic("Vòng tua RPM", "01 0C", "410C", "0", "rpm","Min value -> Max value : 0 -> 16383.75rpm");
-        Diagnostic diagnostic3 = new Diagnostic("Nhiệt độ làm mát động cơ", "01 05", "4105", "0", "°C","Min value -> Max value : -40 -> 215°C");
-        Diagnostic diagnostic4 = new Diagnostic("Calculated engine load", "01 04", "4104", "0", "%","Min value -> Max value : 0 -> 100%");
-        Diagnostic diagnostic5 = new Diagnostic("Nhiên liệu đầu vào", "01 2F", "412F", "0", "%","Min value -> Max value : 0 -> 100%");
-        Diagnostic diagnostic6 = new Diagnostic("Áp suất nhiên liệu", "01 0A", "410A", "0", "kPa","Min value -> Max value : 0 ->765kPa");
-        Diagnostic diagnostic7 = new Diagnostic("Nhiệt độ không khí vào", "01 0F", "410F", "0", "°C","Min value -> Max value : -40 -> 215°C");
-        Diagnostic diagnostic8 = new Diagnostic("Nồng độ % Ethanol", "01 52", "4152", "0", "%","Min value -> Max value : 0 -> 100%");
-        Diagnostic diagnostic9 = new Diagnostic("Nhiệt độ dầu động cơ", "01 5C", "415C", "0", "°C","Min value -> Max value : -40 -> 210°C");
-        Diagnostic diagnostic10 = new Diagnostic("Short term fuel trim—Bank 1", "01 06", "4106", "0", "%","Min value -> Max value : -100 -> 99.2%");
-        Diagnostic diagnostic11 = new Diagnostic("Long term fuel trim—Bank 1", "01 07", "4107", "0", "%","Min value -> Max value : -100 -> 99.2%");
-        Diagnostic diagnostic12 = new Diagnostic("Catalyst Temperature: Bank 1, Sensor 1", "01 3C", "413C", "0", "°C","Min value -> Max value : -40 -> 6513.5°C");
-        Diagnostic diagnostic13 = new Diagnostic("Catalyst Temperature: Bank 2, Sensor 1", "01 3D", "413D", "0", "°C","Min value -> Max value : -40 -> 6513.5°C");
-        Diagnostic diagnostic14 = new Diagnostic("Ambient air temperature", "01 46", "4146", "0", "°C","Min value -> Max value : -40 -> 215°C");
-        Diagnostic diagnostic15 = new Diagnostic("Absolute throttle position B", "01 47", "4147", "0", "%","Min value -> Max value : 0 -> 100%");
+        Diagnostic diagnostic1 = new Diagnostic("Vận tốc phương tiện", "01 0D", "410D", "0", "km/h", "0", "255", "Min value -> Max value : 0 -> 255km/h");
+        Diagnostic diagnostic2 = new Diagnostic("Vòng tua RPM", "01 0C", "410C", "0", "rpm", "0", "16383", "Min value -> Max value : 0 -> 16383.75rpm");
+        Diagnostic diagnostic3 = new Diagnostic("Nhiệt độ làm mát động cơ", "01 05", "4105", "0", "°C", "-40", "215", "Min value -> Max value : -40 -> 215°C");
+        Diagnostic diagnostic4 = new Diagnostic("Calculated engine load", "01 04", "4104", "0", "%", "0", "100","Min value -> Max value : 0 -> 100%");
+        Diagnostic diagnostic5 = new Diagnostic("Nhiên liệu đầu vào", "01 2F", "412F", "0", "%","0", "100", "Min value -> Max value : 0 -> 100%");
+        Diagnostic diagnostic6 = new Diagnostic("Áp suất nhiên liệu", "01 0A", "410A", "0", "kPa","0", "765", "Min value -> Max value : 0 ->765kPa");
+        Diagnostic diagnostic7 = new Diagnostic("Nhiệt độ không khí vào", "01 0F", "410F", "0", "°C", "-40", "215", "Min value -> Max value : -40 -> 215°C");
+        Diagnostic diagnostic8 = new Diagnostic("Nồng độ % Ethanol", "01 52", "4152", "0", "%", "0", "100", "Min value -> Max value : 0 -> 100%");
+        Diagnostic diagnostic9 = new Diagnostic("Nhiệt độ dầu động cơ", "01 5C", "415C", "0", "°C", "-40", "210", "Min value -> Max value : -40 -> 210°C");
+        Diagnostic diagnostic10 = new Diagnostic("Short term fuel trim—Bank 1", "01 06", "4106", "0", "%", "-100", "99", "Min value -> Max value : -100 -> 99.2%");
+        Diagnostic diagnostic11 = new Diagnostic("Long term fuel trim—Bank 1", "01 07", "4107", "0", "%", "-100", "99", "Min value -> Max value : -100 -> 99.2%");
+        Diagnostic diagnostic12 = new Diagnostic("Catalyst Temperature: Bank 1, Sensor 1", "01 3C", "413C", "0", "°C", "-40", "6513", "Min value -> Max value : -40 -> 6513.5°C");
+        Diagnostic diagnostic13 = new Diagnostic("Catalyst Temperature: Bank 2, Sensor 1", "01 3D", "413D", "0", "°C", "-40", "6513", "Min value -> Max value : -40 -> 6513.5°C");
+        Diagnostic diagnostic14 = new Diagnostic("Ambient air temperature", "01 46", "4146", "0", "°C", "-40", "215", "Min value -> Max value : -40 -> 215°C");
+        Diagnostic diagnostic15 = new Diagnostic("Absolute throttle position B", "01 47", "4147", "0", "%","0", "100", "Min value -> Max value : 0 -> 100%");
 
 
         mList.add(diagnostic1);

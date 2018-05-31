@@ -8,6 +8,9 @@ public class BluetoothConnection {
     private boolean isConnected;
     private boolean isExpired;
 
+    public BluetoothConnection() {
+    }
+
     public BluetoothConnection(String nameOfDevice, String macAddress, String expireDate, boolean isConnected, boolean isExpired) {
         this.nameOfDevice = nameOfDevice;
         this.macAddress = macAddress;

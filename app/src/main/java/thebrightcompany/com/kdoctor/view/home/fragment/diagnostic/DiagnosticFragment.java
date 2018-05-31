@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
-import thebrightcompany.com.kdoctor.adapter.diagnostic.DiagnosticAdapter;
+import thebrightcompany.com.kdoctor.adapter.diagnostic.DiagnosticsAdapter;
 import thebrightcompany.com.kdoctor.adapter.diagnostic.ItemDiagnosticOnClickListener;
 import thebrightcompany.com.kdoctor.model.connection.MessageEvent;
 import thebrightcompany.com.kdoctor.model.diagnostic.Diagnostic;
@@ -50,10 +50,11 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
     @BindView(R.id.swipeLayout) SwipeRefreshLayout swipeLayout;
 
     private List<Diagnostic> mList = new ArrayList<>();
-    private DiagnosticAdapter adapter;
+    private DiagnosticsAdapter adapter;
     private EndlessRecyclerViewScrollListener scrollListener;
     private int position;
     private Diagnostic mDiagnostic;
+
     public DiagnosticFragment() {
         // Required empty public constructor
     }
@@ -77,7 +78,7 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
 
         getData();
 
-        adapter = new DiagnosticAdapter(mList, this);
+        adapter = new DiagnosticsAdapter(homeActivity, mList, this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         listViewDiagnostic.setLayoutManager(mLayoutManager);
         listViewDiagnostic.setItemAnimator(new SlideInDownAnimator());
@@ -116,6 +117,7 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
      * The method use to get list Data
      */
     private void getData() {
+        mList.clear();
         mList = Utils.getListDiagnostic();
     }
 
@@ -171,6 +173,8 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
     @OnClick(R.id.swipeLayout)
     public void processRefreshDiagnostic(){
         //todo something
+        getData();
+        adapter.notifyDataSetChanged(mList);
     }
 
     @Override
@@ -178,8 +182,6 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
         //todo something
         this.mDiagnostic = diagnostic;
         this.position = position;
-        //showMessage("Position: " + position + " name: " + mDiagnostic.getCode());
-
         senDataToDevice(mDiagnostic.getCode());
     }
 

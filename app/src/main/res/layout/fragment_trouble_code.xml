@@ -14,6 +14,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <TextView
+                android:id="@+id/txt_lb_errors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"
+                android:text="@string/lb_totals_errors"/>
+
+            <TextView
+                android:id="@+id/txt_totalsOfErrors"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#00a99d"
+                android:textSize="50dp"
+                android:text="--"/>
+        </LinearLayout>
+
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listTroubleCode"

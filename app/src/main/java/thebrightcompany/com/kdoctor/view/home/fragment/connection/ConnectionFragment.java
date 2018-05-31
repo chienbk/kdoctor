@@ -19,6 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.security.cert.Extension;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +32,7 @@ import butterknife.OnClick;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.model.connection.DeviceConnect;
 import thebrightcompany.com.kdoctor.adapter.connection.ConnectionAdapter;
 import thebrightcompany.com.kdoctor.adapter.connection.EditDeviceListener;
 import thebrightcompany.com.kdoctor.adapter.connection.ExtensionDateListener;
@@ -38,6 +43,10 @@ import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
 import thebrightcompany.com.kdoctor.view.extensiondate.ExtensionDateActivity;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import com.google.gson.Gson;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,11 +66,12 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
 
     private BluetoothAdapter mBluetoothAdapter;
     //Map<String, Integer> devRssiValues;
-    private static final long SCAN_PERIOD = 10000; //scanning for 10 seconds
+    private static final long SCAN_PERIOD = 6000; //scanning for 6 seconds
     private boolean mScanning;
     private BluetoothConnection mDevice;
     private Handler mHandler;
     private String lastDeviceConnected = "";
+    private int position;
 
     private SharedPreferencesUtils sharedPreferencesUtils;
     public ConnectionFragment() {
@@ -122,6 +132,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         if (sharedPreferencesUtils != null){
             lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_NAME, "");
         }
+
         homeActivity.setTitle("Kết nối thiết bị");
 
         android.view.WindowManager.LayoutParams layoutParams = homeActivity.getWindow().getAttributes();
@@ -138,6 +149,18 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         mLisView.setItemAnimator(new SlideInDownAnimator());
         mLisView.setAdapter(new SlideInLeftAnimationAdapter(adapter));
         mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -171,6 +194,8 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     @OnClick(R.id.btn_scan)
     public void processScan(){
         //todo something
+        homeActivity.disconnectBluetooth();
+        sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, "");
         mLists.clear();
         adapter.notifyDataSetChanged(mLists);
         scanLeDevice(true);
@@ -181,17 +206,21 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         //todo something
         mBluetoothAdapter.stopLeScan(mLeScanCallback);
         mDevice = mLists.get(position);
+        this.position = position;
 
         if (!bluetoothConnection.isConnected()){
-
-            mDevice.setConnected(true);
+            //mDevice.setConnected(true);
+            showProgress();
+            homeActivity.connectBluetooth(bluetoothConnection.getMacAddress());
         }else {
 
             homeActivity.disconnectBluetooth();
             mDevice.setConnected(false);
+            //adapter.notifyItemChange(position, mDevice);
         }
-        adapter.notifyItemChange(position, mDevice);
-        homeActivity.connectBluetooth(bluetoothConnection.getMacAddress());
+
+        //adapter.notifyItemChange(position, mDevice);
+
     }
 
     private void scanLeDevice(final boolean enable) {
@@ -203,6 +232,25 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
                 public void run() {
                     mScanning = false;
                     mBluetoothAdapter.stopLeScan(mLeScanCallback);
+
+                    String device = sharedPreferencesUtils.readStringPreference(Contains.PREF_OBJECT_CONNECTION, "");
+                    Gson gson = new Gson();
+                    BluetoothConnection ble = new BluetoothConnection();
+                    if (device != null && device.length() > 0){
+                        ble = gson.fromJson(device, BluetoothConnection.class);
+                        boolean found = false;
+                        for (BluetoothConnection listDev : mLists) {
+                            if (listDev.getMacAddress().equals(ble.getMacAddress())) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if(!found){
+                            mLists.add(ble);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
                     homeActivity.hideProgress();
                 }
             }, SCAN_PERIOD);
@@ -281,5 +329,27 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     @Override
     public void onExtensionListener() {
         startActivity(new Intent(homeActivity, ExtensionDateActivity.class));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(DeviceConnect device){
+        //showMessage("connect/dissconect");
+        //todo something
+        hideProgress();
+        Gson gson = new Gson();
+        if(device.isConnected()){
+            mDevice.setConnected(true);
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, gson.toJson(mDevice));
+            adapter.notifyItemChange(position, mDevice);
+        }else {
+            mDevice.setConnected(false);
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, "");
+            try {
+                adapter.notifyItemChange(position, mDevice);
+            }catch (Exception extension){
+                Log.d(TAG, extension.toString());
+            }
+            showMessage(device.getMsg());
+        }
     }
 }

@@ -2,6 +2,7 @@ package thebrightcompany.com.kdoctor.utils;
 
 public class Contains {
     public static final String PREF_DEVICE_NAME = "PREF_DEVICE_NAME";
+    public static final String PREF_OBJECT_CONNECTION = "PREF_OBJECT_CONNECTION";
 
     //Tốc độ xe
     public static final String VERHICLE_SPEED = " 01 0D\n";

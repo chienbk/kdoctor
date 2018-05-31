@@ -64,7 +64,7 @@
     <string name="lb_address_mac">MAC: </string>
     <string name="lb_expire_date">Hạn sử dụng: </string>
     <string name="lb_is_expired">Hết hạn sử dụng</string>
-    <string name="lb_is_connected">Đang kết nối</string>
+    <string name="lb_is_connected">Đã kết nối</string>
     <string name="menu_connection">Kết nối</string>
     <string name="menu_disconnect">Ngắt kết nối</string>
     <string name="menu_edit_device">Sửa thông tin</string>
@@ -102,4 +102,30 @@
 
     <string name="direct">Chỉ đường</string>
     <string name="contact">Liên hệ</string>
+
+    <string name="lb_diagnostic_min">Nhỏ nhất</string>
+    <string name="lb_diagnostic_max">Lớn nhất</string>
+    <string name="lb_diagnostic_greater">Vượt hạn mức</string>
+    <string name="lb_diagnostic_less">Dưới hạn mức</string>
+
+    <string name="lb_totals_errors">Số mã lỗi:</string>
+    <string name="action_clear_codes">Clear Codes</string>
+    <string name="obd_clearcodes">Clear fault codes</string>
+    <string name="obd_clear_info">
+This will reset the MIL and clear all emission-related diagnostic\n
+information, including:\n
+ - Diagnostic trouble codes\n
+ - Freeze frame data\n
+ - Oxygen sensor test data\n
+ - Status of system monitoring tests\n
+ - On-board monitoring tests results\n
+ - Distance travelled while MIL activated\n
+ - Number of warm-ups since DTCs cleared\n
+ - Distance travelled since DTCs cleared\n
+ - Engine run time while MIL activated\n
+ - Time since DTCs cleared\n\n
+Other manufacturer specific clearing/resetting actions may occur.\n
+The loss of data may cause the vehicle to run poorly for a short \n
+period of time while the ECU recalibrates itself.
+     </string>
 </resources>

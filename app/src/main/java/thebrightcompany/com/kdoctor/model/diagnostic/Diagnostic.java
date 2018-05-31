@@ -11,18 +11,38 @@ public class Diagnostic {
     private String codeResult;
     private String value;
     private String unit;
+    private String min;
+    private String max;
     private String description;
 
     public Diagnostic() {
     }
 
-    public Diagnostic(String name, String code, String codeResult, String value, String unit, String description) {
+    public Diagnostic(String name, String code, String codeResult, String value, String unit, String min, String max, String description) {
         this.name = name;
         this.code = code;
         this.codeResult = codeResult;
         this.value = value;
         this.unit = unit;
         this.description = description;
+        this.min = min;
+        this.max = max;
+    }
+
+    public String getMin() {
+        return min;
+    }
+
+    public void setMin(String min) {
+        this.min = min;
+    }
+
+    public String getMax() {
+        return max;
+    }
+
+    public void setMax(String max) {
+        this.max = max;
     }
 
     public String getDescription() {
