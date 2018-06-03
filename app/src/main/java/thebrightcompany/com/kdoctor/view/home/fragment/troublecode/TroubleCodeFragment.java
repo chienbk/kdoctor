@@ -22,6 +22,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,6 +49,7 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView{
 
 
     private static AlertDialog.Builder dlgBuilder;
+    private GetTroubleCodeAsynTask troubleCodeAsynTask;
     public TroubleCodeFragment() {
         // Required empty public constructor
     }
@@ -68,9 +72,14 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView{
      */
     private void getData() {
 
+        List<String> mList = new ArrayList<>();
+        mList.add("01 01");
+        mList.add("03");
+
         if (homeActivity.isConnected){
             showProgress();
-            homeActivity.sendDataToBLE("01 01");
+            troubleCodeAsynTask = new GetTroubleCodeAsynTask(homeActivity, mList);
+            troubleCodeAsynTask.execute();
         }else {
             showMessage("Please connect device...");
         }
@@ -165,8 +174,6 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_clear_codes:
-                //mHomeActivity.sendData("");
-                //mHomeActivity.showMessage("Coming soon!!!");
                 clearObdFaultCodes();
                 break;
         }
@@ -212,5 +219,12 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView{
                 hideProgress();
             }
         }, time );
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (troubleCodeAsynTask != null)
+            troubleCodeAsynTask.cancel(true);
     }
 }
