@@ -14,9 +14,13 @@ import thebrightcompany.com.kdoctor.model.diagnostic.Diagnostic;
 
 public class Utils {
 
-    public static final String ROOT_URL = "http://kdoctor.puma-soft.com/api";
-    public static final String URL_FORGOT_PASSWORD = ROOT_URL + "/v1/forgotpass";
-    public static final String URL_LOGIN = ROOT_URL + "/v1/login";
+    public static final String ROOT_URL = "http://kdoctor.puma-soft.com/";
+    public static final String URL_FORGOT_PASSWORD = ROOT_URL + "v1/forgotpass";
+    public static final String URL_LOGIN = ROOT_URL + "v1/login";
+    public static final String URL_REGISTER = ROOT_URL + "v1/register";
+    public static final String URL_TROUBLE_CODE = ROOT_URL + "v1/trouble-code";
+
+    public static String APP_TOKEN = "";
 
     //Email Validation pattern
     public static final String regEx = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
@@ -101,6 +105,16 @@ public class Utils {
      */
     public static boolean isTextEmpty(String data) {
         return TextUtils.isEmpty(data.trim());
+    }
+
+    /**
+     * The method use to check lengh of data
+     * @param data
+     * @param count
+     * @return
+     */
+    public static boolean isGreaterThan(String data, int count) {
+        return (data.trim().length() >= count);
     }
 
     /**

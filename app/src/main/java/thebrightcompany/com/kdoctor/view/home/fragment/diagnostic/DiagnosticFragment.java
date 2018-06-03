@@ -3,10 +3,12 @@ package thebrightcompany.com.kdoctor.view.home.fragment.diagnostic;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,7 @@ import thebrightcompany.com.kdoctor.view.home.fragment.troublecode.TroubleCodeFr
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DiagnosticFragment extends Fragment implements DiagnosticView, ItemDiagnosticOnClickListener{
+public class DiagnosticFragment extends Fragment implements DiagnosticView, ItemDiagnosticOnClickListener, OnGetDataFinish{
 
     public static final String TAG = DiagnosticFragment.class.getSimpleName();
 
@@ -54,6 +56,8 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
     private EndlessRecyclerViewScrollListener scrollListener;
     private int position;
     private Diagnostic mDiagnostic;
+
+    private GetDiagnosticAsynTask getDiagnosticAsynTask;
 
     public DiagnosticFragment() {
         // Required empty public constructor
@@ -119,6 +123,18 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
     private void getData() {
         mList.clear();
         mList = Utils.getListDiagnostic();
+
+        if (!homeActivity.isConnected){
+            try {
+                getDiagnosticAsynTask = new GetDiagnosticAsynTask(mList, homeActivity, this);
+                getDiagnosticAsynTask.execute();
+            }catch (Exception e){
+                Log.d(TAG, e.toString());
+                getDiagnosticAsynTask.cancel(true);
+            }
+        }else {
+            showMessage("Please connect to device!");
+        }
     }
 
     private void initView(View view) {
@@ -188,7 +204,7 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event){
         //todo something
-        //showMessage(event.getMessage());
+        showMessage(event.getMessage());
         String data = event.getMessage();
         if (data.contains(Contains.CONS_VERHICLE_SPEED)){
             data = Utils.convertDataReceiveToString(data);
@@ -306,6 +322,29 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
             homeActivity.sendDataToBLE(msg);
         }else {
             showMessage("Please connect to device!");
+        }
+    }
+
+    @Override
+    public void onGetDataFinish(Boolean aBoolean) {
+        //todo something
+        //Process send data to ble
+        if (homeActivity.isConnected){
+            try {
+                getDiagnosticAsynTask = new GetDiagnosticAsynTask(mList, homeActivity, this);
+                getDiagnosticAsynTask.execute();
+            }catch (Exception e){
+                Log.d(TAG, e.toString());
+                getDiagnosticAsynTask.cancel(true);
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (getDiagnosticAsynTask != null){
+            getDiagnosticAsynTask.cancel(true);
         }
     }
 }

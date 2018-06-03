@@ -40,7 +40,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -389,14 +388,14 @@ public class HomeActivity extends AppCompatActivity
 
             fragment = new ConnectionFragment();
         } else if (id == R.id.nav_diagnostic) {
-            if (!isConnected){
+            if (isConnected){
                 fragment = new DiagnosticFragment();
             }else {
                 showMessage("Please connect to device");
             }
         } else if (id == R.id.nav_trouble_code) {
 
-            if (!isConnected){
+            if (isConnected){
                 fragment = new TroubleCodeFragment();
             }else {
                 showMessage("Please connect to device");

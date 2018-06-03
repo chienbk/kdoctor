@@ -128,4 +128,7 @@ Other manufacturer specific clearing/resetting actions may occur.\n
 The loss of data may cause the vehicle to run poorly for a short \n
 period of time while the ECU recalibrates itself.
      </string>
+
+    <string name="error_password_required">Chưa nhập mật khẩu.</string>
+    <string name="error_password_invalid">Mật khẩu phải lớn hơn 6 ký tự.</string>
 </resources>
