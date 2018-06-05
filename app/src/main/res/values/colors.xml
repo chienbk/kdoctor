@@ -19,4 +19,5 @@
     <color name="color_diagnostic_normal">#007c89</color>
     <color name="color_diagnostic_less">#dd971a</color>
     <color name="color_diagnostic_greater">#f04937</color>
+    <color name="color_border_frame">#C0C0C0</color>
 </resources>
