@@ -110,6 +110,11 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
         replaceFragment(new LoginFragment());
     }
 
+    @Override
+    public void onAvatarError(String msg) {
+        showMessage(msg);
+    }
+
     @OnClick(R.id.btn_back)
     public void processBackLoginScreen(){
         //todo something

@@ -13,6 +13,7 @@ import java.io.File;
 
 import cz.msebera.android.httpclient.Header;
 import thebrightcompany.com.kdoctor.utils.Utils;
+import thebrightcompany.com.kdoctor.view.loginmain.registerfragment.RegisterFragmentView;
 import thebrightcompany.com.kdoctor.view.register.RegisterView;
 
 /**
@@ -21,10 +22,10 @@ import thebrightcompany.com.kdoctor.view.register.RegisterView;
 
 public class RegisterInteractorImpl implements RegisterInteractor {
 
-    private RegisterView mViews;
+    private RegisterFragmentView mViews;
     private OnRegisterFinishedListener mListener;
 
-    public RegisterInteractorImpl(RegisterView mViews, OnRegisterFinishedListener mListener) {
+    public RegisterInteractorImpl(RegisterFragmentView mViews, OnRegisterFinishedListener mListener) {
         this.mViews = mViews;
         this.mListener = mListener;
     }

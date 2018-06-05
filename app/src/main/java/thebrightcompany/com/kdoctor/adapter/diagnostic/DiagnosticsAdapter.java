@@ -48,6 +48,9 @@ public class DiagnosticsAdapter extends RecyclerView.Adapter<DiagnosticsAdapter.
         final Diagnostic diagnostic = mList.get(position);
 
         try {
+            if (diagnostic.getValue().equals("--")){
+                diagnostic.setValue("0");
+            }
             int value = Integer.parseInt(diagnostic.getValue());
             int maxValue = Integer.parseInt(diagnostic.getMax());
             int minValue = Integer.parseInt(diagnostic.getMin());
@@ -80,6 +83,9 @@ public class DiagnosticsAdapter extends RecyclerView.Adapter<DiagnosticsAdapter.
                 holder.layout_min.setVisibility(View.INVISIBLE);
             }
 
+            if (diagnostic.getValue().equals("0")){
+                diagnostic.setValue("--");
+            }
             holder.txt_data.setText(diagnostic.getValue() + " " + diagnostic.getUnit());
             holder.txt_title.setText(diagnostic.getName());
             holder.txt_min.setText(diagnostic.getMin() + " " + diagnostic.getUnit());

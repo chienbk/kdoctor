@@ -3,7 +3,6 @@ package thebrightcompany.com.kdoctor.view.home.fragment.diagnostic;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -107,6 +106,9 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                if (getDiagnosticAsynTask != null){
+                    getDiagnosticAsynTask.cancel(true);
+                }
                 mList.clear();
                 adapter.clearDataSetChanged();
                 getData();
@@ -124,7 +126,7 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
         mList.clear();
         mList = Utils.getListDiagnostic();
 
-        if (!homeActivity.isConnected){
+        if (homeActivity.isConnected){
             try {
                 getDiagnosticAsynTask = new GetDiagnosticAsynTask(mList, homeActivity, this);
                 getDiagnosticAsynTask.execute();

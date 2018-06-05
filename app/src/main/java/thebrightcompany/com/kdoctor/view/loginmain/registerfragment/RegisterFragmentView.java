@@ -9,4 +9,5 @@ public interface RegisterFragmentView extends LoginScreenView {
     void onPhoneError(String msg);
     void onRegisterError(String msg);
     void onRegisterSuccess(String msg);
+    void onAvatarError(String msg);
 }
