@@ -20,6 +20,10 @@ public class Utils {
     public static final String URL_REGISTER = ROOT_URL + "v1/register";
     public static final String URL_TROUBLE_CODE = ROOT_URL + "v1/trouble-code";
 
+    public static final int LOGIN_NORMAL = 0;
+    public static final int LOGIN_FACEBOOK = 1;
+    public static final int LOGIN_GOOGLE = 2;
+
     public static String APP_TOKEN = "";
 
     //Email Validation pattern

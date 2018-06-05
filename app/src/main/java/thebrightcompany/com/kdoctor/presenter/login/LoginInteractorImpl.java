@@ -7,11 +7,11 @@ import com.android.volley.VolleyError;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.api.OnResponseListener;
 import thebrightcompany.com.kdoctor.api.login.LoginCallAPI;
-import thebrightcompany.com.kdoctor.api.login.LoginRequest;
 import thebrightcompany.com.kdoctor.model.login.LoginResponse;
-import thebrightcompany.com.kdoctor.presenter.forgotpassword.ForgotPasswordInteractor;
+import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.login.LoginView;
+import thebrightcompany.com.kdoctor.view.loginmain.loginfragment.LoginFragmentView;
 
 /**
  * Created by ChienNV on 11/23/16.
@@ -19,10 +19,10 @@ import thebrightcompany.com.kdoctor.view.login.LoginView;
 
 public class LoginInteractorImpl implements LoginInteractor {
 
-    private LoginView mView;
+    private LoginFragmentView mView;
     private OnLoginFinishedListener mListener;
 
-    public LoginInteractorImpl(LoginView mViews, OnLoginFinishedListener mListener) {
+    public LoginInteractorImpl(LoginFragmentView mViews, OnLoginFinishedListener mListener) {
 
         this.mView = mViews;
         this.mListener = mListener;
@@ -50,7 +50,7 @@ public class LoginInteractorImpl implements LoginInteractor {
             mView.onPasswordError(mView.getContext().getResources().getString(R.string.error_password_invalid));
             return;
         }
-        if (type != 0 && third_token.isEmpty()){
+        if (type != Utils.LOGIN_NORMAL && third_token.isEmpty()){
             mListener.onLoginError("Login with FB of Google fail!");
             return;
         }

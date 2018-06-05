@@ -14,8 +14,6 @@ import java.io.File;
 import cz.msebera.android.httpclient.Header;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.loginmain.registerfragment.RegisterFragmentView;
-import thebrightcompany.com.kdoctor.view.register.RegisterView;
-
 /**
  * Created by ChienNV on 4/18/17.
  */
@@ -34,11 +32,11 @@ public class RegisterInteractorImpl implements RegisterInteractor {
     public void processRegister(String full_name, String email, String phone, String password, String rePassword, File avatar) {
 
         //Process validate form
-        if (avatar == null) {
+        /*if (avatar == null) {
             mListener.onAvatarError();
             //mViews.setAvatarError(mViews.getContext().getResources().getString(R.string.err_register_avatar));
             return;
-        }
+        }*/
 
         if (Utils.isTextEmpty(phone)) {
             mListener.onPhoneError();
@@ -89,6 +87,7 @@ public class RegisterInteractorImpl implements RegisterInteractor {
 
 //        Map<String, String> params = new HashMap<String, String>();
 
+        params.put("email", email);
         params.put("phone_number", phone);
         params.put("pass", password);
         params.put("full_name", full_name);

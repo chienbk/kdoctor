@@ -11,12 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.presenter.register.RegisterPresenter;
+import thebrightcompany.com.kdoctor.presenter.register.RegisterPresenterImpl;
 import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.loginfragment.LoginFragment;
 
@@ -28,11 +33,24 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     public static final String TAG = RegisterFragment.class.getSimpleName();
 
     @BindView(R.id.layout_register) LinearLayout layout_register;
+    @BindView(R.id.fullName)
+    EditText txt_fullName;
+    @BindView(R.id.email)
+    EditText txt_email;
+    @BindView(R.id.phone)
+    EditText txt_phone;
+    @BindView(R.id.password)
+    EditText txt_password;
+    @BindView(R.id.re_password)
+    EditText txt_re_password;
+
+    private String fullName, email, phone, password, rePassword;
 
     private LoginScreenActivity mActivity;
 
     private static Animation shakeAnimation;
     private static FragmentManager fragmentManager;
+    private RegisterPresenter presenter;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -51,6 +69,7 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
 
     private void initView(View view) {
         //todo something
+        presenter = new RegisterPresenterImpl(this);
         fragmentManager = getActivity().getSupportFragmentManager();
         // Load ShakeAnimation
         shakeAnimation = AnimationUtils.loadAnimation(getActivity(),
@@ -107,6 +126,7 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     @Override
     public void onRegisterSuccess(String msg) {
         // Replace signup frgament with animation
+        showMessage(msg);
         replaceFragment(new LoginFragment());
     }
 
@@ -125,7 +145,14 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     @OnClick(R.id.btn_register)
     public void processRegister(){
         //todo something
-        showMessage("Process register");
+        fullName = txt_fullName.getText().toString();
+        email = txt_email.getText().toString();
+        phone = txt_phone.getText().toString();
+        password = txt_password.getText().toString();
+        rePassword = txt_re_password.getText().toString();
+        File file = null;
+
+        presenter.processRegister(fullName, email, phone, password, rePassword, file);
     }
 
     private void replaceFragment(Fragment fragment) {

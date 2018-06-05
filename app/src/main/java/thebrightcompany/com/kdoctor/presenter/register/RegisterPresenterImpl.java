@@ -5,7 +5,6 @@ import java.io.File;
 
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.view.loginmain.registerfragment.RegisterFragmentView;
-import thebrightcompany.com.kdoctor.view.register.RegisterView;
 
 /**
  * Created by ChienNV on 4/18/17.
@@ -58,6 +57,7 @@ public class RegisterPresenterImpl implements RegisterPresenter, RegisterInterac
     public void onEmailError() {
         if (mViews != null) {
             mViews.hideProgress();
+            mViews.onEmailError(mViews.getContext().getResources().getString(R.string.error_email_invalid));
         }
     }
 
@@ -65,7 +65,7 @@ public class RegisterPresenterImpl implements RegisterPresenter, RegisterInterac
     public void onFullNameError() {
         if (mViews != null) {
             mViews.hideProgress();
-
+            mViews.onEmailError(mViews.getContext().getResources().getString(R.string.error_full_name));
         }
     }
 

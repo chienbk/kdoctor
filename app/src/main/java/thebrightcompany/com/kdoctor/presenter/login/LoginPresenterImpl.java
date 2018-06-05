@@ -1,31 +1,32 @@
-package com.globmove.chuhang.presenter.login;
+package thebrightcompany.com.kdoctor.presenter.login;
 
-import com.globmove.chuhang.fragment.LoginView;
+
+import thebrightcompany.com.kdoctor.view.loginmain.loginfragment.LoginFragmentView;
 
 /**
  * Created by ChienNV on 4/17/17.
  */
 
-public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnFinishedListener{
+public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLoginFinishedListener{
 
-    private LoginView mViews;
+    private LoginFragmentView mViews;
     private LoginInteractor interactor;
 
-    public LoginPresenterImpl(LoginView mViews) {
+    public LoginPresenterImpl(LoginFragmentView mViews) {
         this.mViews = mViews;
         interactor = new LoginInteractorImpl(mViews, this);
     }
 
     @Override
-    public void processLogin(String phone, String password, String registration_id) {
+    public void processLogin(String email, String password, int type, String device_token, String third_token, String full_name) {
         if (mViews != null){
             mViews.showProgress();
-            interactor.processLogin(phone, password, registration_id);
+            interactor.processLogin(email, password, type, device_token, third_token, full_name);
         }
     }
 
     @Override
-    public void onPhonelError() {
+    public void onEmailError() {
         if (mViews != null){
             mViews.hideProgress();
         }
@@ -46,26 +47,16 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnFin
     }
 
     @Override
-    public void onApiError() {
+    public void onLoginError(String msg) {
         if (mViews != null){
             mViews.hideProgress();
         }
     }
 
     @Override
-    public void onSuccess() {
+    public void onLoginSuccess() {
         if (mViews != null){
-            //mViews.registerService();
             mViews.hideProgress();
-            mViews.redirectToHomeView();
-        }
-    }
-
-    @Override
-    public void onActiveUser() {
-        if(mViews != null){
-            mViews.hideProgress();
-            mViews.redirectToActiveView();
         }
     }
 }

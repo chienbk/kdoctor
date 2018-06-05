@@ -1,4 +1,4 @@
-package com.globmove.chuhang.presenter.login;
+package thebrightcompany.com.kdoctor.presenter.login;
 
 /**
  * Created by ChienNV on 4/17/17.
@@ -6,5 +6,5 @@ package com.globmove.chuhang.presenter.login;
 
 public interface LoginPresenter {
 
-    void processLogin(String phone, String password, String registration_id);
+    void processLogin(String email, String password, int type, String device_token, String third_token, String full_name);
 }
