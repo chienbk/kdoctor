@@ -54,9 +54,10 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
     }
 
     @Override
-    public void onLoginSuccess() {
+    public void onLoginSuccess(String token) {
         if (mViews != null){
             mViews.hideProgress();
+            mViews.onLoginSuccess(token);
         }
     }
 }

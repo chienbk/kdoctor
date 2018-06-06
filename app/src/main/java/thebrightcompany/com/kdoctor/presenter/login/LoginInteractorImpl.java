@@ -8,9 +8,7 @@ import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.api.OnResponseListener;
 import thebrightcompany.com.kdoctor.api.login.LoginCallAPI;
 import thebrightcompany.com.kdoctor.model.login.LoginResponse;
-import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.Utils;
-import thebrightcompany.com.kdoctor.view.login.LoginView;
 import thebrightcompany.com.kdoctor.view.loginmain.loginfragment.LoginFragmentView;
 
 /**
@@ -87,7 +85,7 @@ public class LoginInteractorImpl implements LoginInteractor {
 
             if (status_code == 0){
                 Utils.APP_TOKEN = response.getData().getToken();
-                mListener.onLoginSuccess();
+                mListener.onLoginSuccess(response.getData().getToken());
             }else {
                 mListener.onLoginError(response.getMessage());
                 return;

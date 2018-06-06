@@ -3,6 +3,11 @@ package thebrightcompany.com.kdoctor.utils;
 public class Contains {
     public static final String PREF_DEVICE_NAME = "PREF_DEVICE_NAME";
     public static final String PREF_OBJECT_CONNECTION = "PREF_OBJECT_CONNECTION";
+    public static final String PREF_USER_LOGIN = "PREF_USER_LOGIN";
+    public static final String PREF_PASSWORD = "PREF_PASSWORD";
+    public static final String PREF_DEVICE_TOKEN = "PREF_DEVICE_TOKEN";
+    public static final String PREF_GOOGLE_TOKEN = "PREF_GOOGLE_TOKEN";
+    public static final String PREF_FACEBOOK_TOKEN = "PREF_FACEBOOK_TOKEN";
 
     //Tốc độ xe
     public static final String VERHICLE_SPEED = " 01 0D\n";

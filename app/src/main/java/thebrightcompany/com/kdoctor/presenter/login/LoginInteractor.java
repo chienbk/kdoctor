@@ -16,7 +16,7 @@ public interface LoginInteractor {
 
         void onLoginError(String msg);
 
-        void onLoginSuccess();
+        void onLoginSuccess(String device_token);
     }
 
     void processLogin(String email, String password, int type, String device_token, String third_token, String full_name);

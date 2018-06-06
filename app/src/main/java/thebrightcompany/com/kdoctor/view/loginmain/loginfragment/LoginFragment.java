@@ -25,8 +25,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -49,13 +47,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.presenter.login.LoginPresenter;
+import thebrightcompany.com.kdoctor.presenter.login.LoginPresenterImpl;
+import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.ImageHelper;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.forgotpasswordfragment.ForgotPasswordFragment;
 import thebrightcompany.com.kdoctor.view.loginmain.registerfragment.RegisterFragment;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,6 +71,8 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
 
     @BindView(R.id.email) EditText txt_email;
 
+    @BindView(R.id.password) EditText txt_password;
+
     @BindView(R.id.login_button) LoginButton btnLoginFacebook;
 
     @BindView(R.id.txt_forGotPassWord) TextView txt_forGotPassword;
@@ -82,6 +84,11 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
 
     private static Animation shakeAnimation;
     private static FragmentManager fragmentManager;
+    private String fullName, email, password, device_token, third_token;
+    private int type;
+
+    private SharedPreferencesUtils sharedPreferencesUtils;
+    private LoginPresenter presenter;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -164,6 +171,9 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
      */
     private void initView(View view) {
         //todo something
+        presenter = new LoginPresenterImpl(this);
+        sharedPreferencesUtils = new SharedPreferencesUtils(mActivity);
+
         fragmentManager = getActivity().getSupportFragmentManager();
 
         SpannableString content = new SpannableString(getString(R.string.lb_for_got_password));
@@ -195,22 +205,41 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     }
 
     @Override
-    public void onLoginSuccess() {
+    public void onLoginSuccess(String device_token) {
         //todo something
+        if (type == 0){
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, device_token);
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_USER_LOGIN, email);
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_PASSWORD, password);
+        }
         startActivity(new Intent(mActivity, HomeActivity.class));
         mActivity.finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        email = sharedPreferencesUtils.readStringPreference(Contains.PREF_USER_LOGIN, "");
+        password = sharedPreferencesUtils.readStringPreference(Contains.PREF_PASSWORD, "");
+
+        txt_email.setText(email);
+        txt_password.setText(password);
     }
 
     @Override
     public void onEmailError(String msg) {
 
         layout_login.startAnimation(shakeAnimation);
+        txt_email.setError(msg);
+        txt_email.requestFocus();
     }
 
     @Override
     public void onPasswordError(String msg) {
 
         layout_login.startAnimation(shakeAnimation);
+        txt_password.setError(msg);
+        txt_password.requestFocus();
     }
 
     @Override
@@ -301,6 +330,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             txt_email.setText(acct.getEmail());
+
             //Similarly you can get the email and photourl using acct.getEmail() and  acct.getPhotoUrl()
 
            /* if (acct.getPhotoUrl() != null)
@@ -323,7 +353,8 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
                     new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
-                            showMessage("Logout success!");
+                            //showMessage("Logout success!");
+                            Log.d(TAG, "Logout success");
                         }
                     });
         }
