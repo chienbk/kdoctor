@@ -100,10 +100,10 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-
         initView();
         initBLE();
         initService();
+        startService(new Intent(this, GPSTracker.class));
     }
 
     /**

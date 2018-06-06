@@ -3,14 +3,234 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.home.fragment.garageonmap.FindGarageFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <fragment
-        android:id="@+id/map"
-        android:layout_marginTop="0dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        android:layout_height="match_parent">
+
+       <FrameLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_above="@+id/layout_get_ten_garage">
+
+           <fragment
+               android:id="@+id/map"
+               android:layout_marginTop="0dp"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               class="com.google.android.gms.maps.SupportMapFragment" />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp"
+               android:background="@drawable/border_item_search_gara">
+
+               <AutoCompleteTextView
+                   android:id="@+id/txt_auto_search"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:padding="10dp"
+                   android:layout_alignParentEnd="true"
+                   android:layout_alignParentLeft="true"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentStart="true"
+                   android:drawableRight="@drawable/ic_search_gara"
+                   android:hint="Tìm kiếm"
+                   android:background="@android:color/transparent"
+                   android:lines="1"
+                   android:textSize="14sp"
+                   android:maxLines="1"
+                   android:singleLine="true">
+               </AutoCompleteTextView>
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@android:color/transparent"
+               android:layout_marginRight="15dp"
+               android:layout_marginLeft="15dp"
+               android:layout_gravity="bottom"
+               android:orientation="vertical">
+
+               <android.support.design.widget.FloatingActionButton
+                   android:id="@+id/fab_add"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="bottom|end"
+                   android:layout_marginRight="16dp"
+                   android:layout_marginBottom="20dp"
+                   android:background="@android:color/transparent"
+                   android:src="@drawable/ic_add_circle_outline_white_48dp" />
+
+               <LinearLayout
+                   android:id="@+id/layout_detail"
+                   android:visibility="gone"
+                   android:background="#ffffff"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical">
+
+                   <LinearLayout
+                       android:layout_margin="@dimen/magin_default"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal">
+
+                       <FrameLayout
+                           android:id="@+id/imgAvatar"
+                           android:layout_width="130dp"
+                           android:layout_height="130dp"
+                           android:background="@mipmap/ic_launcher" >
+
+                           <ImageView
+                               android:id="@+id/img_exit"
+                               android:layout_gravity="top|left"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/ic_search_close"/>
+
+                       </FrameLayout>
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="@dimen/magin_default"
+                           android:layout_marginRight="@dimen/magin_default"
+                           android:layout_marginBottom="5dp"
+                           android:orientation="vertical">
+
+                           <RelativeLayout
+                               android:id="@+id/layout_header"
+                               android:padding="5dp"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content">
+
+                               <TextView
+                                   android:id="@+id/txt_nameOfGarage"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:textColor="@android:color/black"
+                                   android:textStyle="bold"
+                                   android:text="Garage otô Vĩnh Tín"
+                                   android:textSize="@dimen/txt_normal"
+                                   android:layout_alignParentLeft="true"
+                                   android:maxLines="1"
+                                   android:ellipsize="end"
+                                   android:layout_centerVertical="true"
+                                   android:layout_toLeftOf="@+id/layout_distance"
+                                   android:layout_marginRight="5dp" />
+
+                               <LinearLayout
+                                   android:id="@+id/layout_distance"
+                                   android:layout_alignParentRight="true"
+                                   android:layout_centerVertical="true"
+                                   android:background="@drawable/border_item_gara_on_map"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content">
+
+                                   <TextView
+                                       android:id="@+id/txt_distance"
+                                       android:padding="5dp"
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:textColor="@android:color/black"
+                                       android:maxLines="1"
+                                       android:text="30 km/h"
+                                       android:textSize="@dimen/txt_normal" />
+                               </LinearLayout>
+                           </RelativeLayout>
+
+                           <RatingBar
+                               android:id="@+id/rate_garage"
+                               android:isIndicator="true"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:numStars="5"
+                               android:progressDrawable="@drawable/ratingbar"
+                               android:rating="0" />
+
+                           <TextView
+                               android:id="@+id/txt_addressOfGarage"
+                               android:text="Hello android fffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:textSize="@dimen/txt_normal"
+                               android:textStyle="normal" />
+                       </LinearLayout>
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_marginLeft="@dimen/magin_default"
+                       android:layout_marginRight="@dimen/magin_default"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_marginBottom="8dp"
+                       android:weightSum="2">
+
+                       <Button
+                           android:id="@+id/btn_direct"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                           android:text="@string/direct"
+                           android:textColor="@android:color/white"
+                           android:background="#999999"
+                           android:textAllCaps="false"
+                           android:layout_marginRight="5dp"
+                           android:textSize="@dimen/txt_tittle" />
+
+                       <Button
+                           android:id="@+id/btn_contact"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:background="#007c89"
+                           android:layout_weight="1"
+                           android:text="@string/contact"
+                           android:layout_marginLeft="5dp"
+                           android:textColor="@android:color/white"
+                           android:textAllCaps="false"
+                           android:textSize="@dimen/txt_tittle" />
+                   </LinearLayout>
+               </LinearLayout>
+
+
+           </LinearLayout>
+       </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_get_ten_garage"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:background="@drawable/selector_find_trouble_code"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="@string/lb_get_ten_garage"
+                android:textSize="@dimen/txt_link"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:background="@drawable/ic_double_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

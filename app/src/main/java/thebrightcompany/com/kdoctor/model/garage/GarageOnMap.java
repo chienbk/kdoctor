@@ -19,9 +19,9 @@ public class GarageOnMap implements Serializable{
     @SerializedName("rate")
     private float rate;
     @SerializedName("lat")
-    private long lat;
+    private double lat;
     @SerializedName("lng")
-    private long lng;
+    private double lng;
 
     public int getId() {
         return id;
@@ -71,7 +71,7 @@ public class GarageOnMap implements Serializable{
         this.rate = rate;
     }
 
-    public long getLat() {
+    public double getLat() {
         return lat;
     }
 
@@ -79,7 +79,7 @@ public class GarageOnMap implements Serializable{
         this.lat = lat;
     }
 
-    public long getLng() {
+    public double getLng() {
         return lng;
     }
 

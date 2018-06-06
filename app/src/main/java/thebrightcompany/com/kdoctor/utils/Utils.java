@@ -6,6 +6,9 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -372,15 +375,56 @@ public class Utils {
         return convertIntegerToAbsoluteThrottle(data);
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public static String convertDataReceiveToString(String data) {
         String newData = data.replaceAll(">", "");
         newData = newData.replaceAll("\\s+","");
         return newData.substring(4, newData.length());
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public static String convertDataReceiveToStringTroubleCode(String data) {
         String newData = data.replaceAll(">", "");
         newData = newData.replaceAll("\\s+","");
         return newData.substring(2, newData.length());
+    }
+
+    /**
+     * The method use to convert lat lng to kilometres
+     * @param StartP
+     * @param EndP
+     * @return
+     */
+    public static int calculationByDistance(LatLng StartP, LatLng EndP) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartP.latitude;
+        double lat2 = EndP.latitude;
+        double lon1 = StartP.longitude;
+        double lon2 = EndP.longitude;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+        return kmInDec;
     }
 }

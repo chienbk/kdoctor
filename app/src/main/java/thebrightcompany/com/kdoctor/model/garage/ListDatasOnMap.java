@@ -8,7 +8,7 @@ import java.util.List;
 public class ListDatasOnMap implements Serializable{
     @SerializedName("token")
     private String token;
-    @SerializedName("data")
+    @SerializedName("list_garages")
     private List<GarageOnMap> garageOnMaps;
 
     public String getToken() {
