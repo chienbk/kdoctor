@@ -1,6 +1,7 @@
 package thebrightcompany.com.kdoctor.model.garage;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by CongVC on 5/25/2018.
@@ -12,6 +13,10 @@ public class Garage implements Serializable{
     private String vote;
     private String distance;
     private String imageUrl;
+    private String phoneNumber;
+    private String mail;
+    private ArrayList<String> imageArray;
+    private String serviceContent;
 
     public String getName() {
         return name;
@@ -51,5 +56,37 @@ public class Garage implements Serializable{
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public ArrayList<String> getImageArray() {
+        return imageArray;
+    }
+
+    public void setImageArray(ArrayList<String> imageArray) {
+        this.imageArray = imageArray;
+    }
+
+    public String getServiceContent() {
+        return serviceContent;
+    }
+
+    public void setServiceContent(String serviceContent) {
+        this.serviceContent = serviceContent;
     }
 }
