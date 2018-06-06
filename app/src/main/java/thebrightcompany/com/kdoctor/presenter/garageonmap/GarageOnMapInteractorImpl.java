@@ -25,7 +25,7 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
     }
 
     @Override
-    public void processGetGarageOnMap(String token, long lat, long lng, int distance) {
+    public void processGetGarageOnMap(String token, double lat, double lng, int distance) {
 
         //Validate network
         if (!Utils.isNetworkAvailable(mViews.getContext())) {
@@ -45,7 +45,7 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
      * @param lng
      * @param distance
      */
-    private void processGetGarage(String token, long lat, long lng, int distance) {
+    private void processGetGarage(String token, double lat, double lng, int distance) {
 
         //todo something
         GetGarageListener listener = new GetGarageListener();

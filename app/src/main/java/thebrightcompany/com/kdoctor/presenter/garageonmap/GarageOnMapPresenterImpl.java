@@ -61,7 +61,7 @@ public class GarageOnMapPresenterImpl implements GarageOnMapPresenter, GarageOnM
     }
 
     @Override
-    public void processGetGarageOnMap(String token, long lat, long lng, int distance) {
+    public void processGetGarageOnMap(String token, double lat, double lng, int distance) {
         if (mView != null){
             mView.showProgress();
             interactor.processGetGarageOnMap(token, lat, lng, distance);

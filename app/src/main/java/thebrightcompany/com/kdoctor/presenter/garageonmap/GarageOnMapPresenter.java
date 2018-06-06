@@ -6,6 +6,6 @@ package thebrightcompany.com.kdoctor.presenter.garageonmap;
 
 public interface GarageOnMapPresenter {
 
-    void processGetGarageOnMap(String token, long lat, long lng, int distance);
+    void processGetGarageOnMap(String token, double lat, double lng, int distance);
     void processSearchGarageOnMap(String token, String key, int limit, int start);
 }

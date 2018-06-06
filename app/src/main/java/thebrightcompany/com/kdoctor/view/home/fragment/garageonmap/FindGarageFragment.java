@@ -12,6 +12,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -26,6 +27,9 @@ import butterknife.ButterKnife;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.model.garage.GarageOnMap;
 import thebrightcompany.com.kdoctor.model.garage.LatLongMessage;
+import thebrightcompany.com.kdoctor.presenter.garageonmap.GarageOnMapPresenter;
+import thebrightcompany.com.kdoctor.presenter.garageonmap.GarageOnMapPresenterImpl;
+import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
 /**
@@ -43,6 +47,8 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     private double mLat = 0;
     private Marker currentMarker;
     private boolean isFirstOpen = true;
+
+    private GarageOnMapPresenter presenter;
 
     public FindGarageFragment() {
         // Required empty public constructor
@@ -65,6 +71,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
      * @param view
      */
     private void initView(View view) {
+        presenter = new GarageOnMapPresenterImpl(this);
         homeActivity.setTitle("Tìm Garage");
     }
 
@@ -148,7 +155,17 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
      * @param garageOnMaps
      */
     private void addGarageToMap(List<GarageOnMap> garageOnMaps) {
-
+        if (garageOnMaps.size() > 0 && garageOnMaps != null){
+            for (GarageOnMap gara : garageOnMaps){
+                Marker marker =
+                        mGoogleMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(gara.getLat(), gara.getLng()))
+                                //.title(title)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_garage_location))
+                                .alpha(0.7f));
+                marker.setTag(gara.getId());
+            }
+        }
     }
 
     @Override
@@ -162,6 +179,8 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         //todo something
         mLat = event.getLat();
         mLon = event.getLng();
+
+        presenter.processGetGarageOnMap(Utils.APP_TOKEN, mLat, mLon, 5);
 
         if (mGoogleMap != null){
 
