@@ -121,6 +121,11 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     }
 
     @Override
+    public void onCommonError(String msg) {
+
+    }
+
+    @Override
     public void onSearchGarageSuccess(List<GarageOnMap> garageOnMaps) {
 
     }
