@@ -1,6 +1,9 @@
 package thebrightcompany.com.kdoctor.utils;
 
 public class Contains {
+
+    public static String GPS_FILTER = "android.intent.action.BOOT_COMPLETED";
+
     public static final String PREF_DEVICE_NAME = "PREF_DEVICE_NAME";
     public static final String PREF_OBJECT_CONNECTION = "PREF_OBJECT_CONNECTION";
     public static final String PREF_USER_LOGIN = "PREF_USER_LOGIN";

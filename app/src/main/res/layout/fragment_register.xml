@@ -119,7 +119,7 @@
                 android:textSize="@dimen/txt_normal"
                 android:background="@color/bg_edit_text"
                 android:drawableLeft="@drawable/ic_pass_register"
-                android:inputType="numberPassword"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -135,7 +135,7 @@
                 android:textSize="@dimen/txt_normal"
                 android:background="@color/bg_edit_text"
                 android:drawableLeft="@drawable/ic_pass_register"
-                android:inputType="numberPassword"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
 

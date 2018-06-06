@@ -1,6 +1,7 @@
 package thebrightcompany.com.kdoctor.view.home;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -12,9 +13,11 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -53,6 +56,9 @@ import thebrightcompany.com.kdoctor.model.connection.MessageEvent;
 import thebrightcompany.com.kdoctor.pushnotification.app.Config;
 import thebrightcompany.com.kdoctor.pushnotification.utils.NotificationUtils;
 import thebrightcompany.com.kdoctor.service.BluetoothService;
+import thebrightcompany.com.kdoctor.service.GPSTracker;
+import thebrightcompany.com.kdoctor.utils.AlertDialogUtils;
+import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.view.home.fragment.connection.ConnectionFragment;
 import thebrightcompany.com.kdoctor.view.home.fragment.diagnostic.DiagnosticFragment;
 import thebrightcompany.com.kdoctor.view.home.fragment.garageonmap.FindGarageFragment;
@@ -66,8 +72,6 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeView {
 
     public static final String TAG = HomeActivity.class.getSimpleName();
-
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     private static final int REQUEST_ENABLE_BT = 2;
     public static final int UART_PROFILE_CONNECTED = 20;
@@ -89,6 +93,8 @@ public class HomeActivity extends AppCompatActivity
     private Fragment lastFragment;
     private ActionBar mActionBar;
 
+    private Dialog dlGPS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,9 +102,6 @@ public class HomeActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         initView();
-        initGoogleFirebase();
-        displayFirebaseRegId();
-
         initBLE();
         initService();
     }
@@ -235,6 +238,27 @@ public class HomeActivity extends AppCompatActivity
     };
 
     /**
+     * The method
+     */
+    private BroadcastReceiver broadcastReceiverLatLon = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            updateGPSDone();
+        }
+    };
+
+    protected void updateGPSDone() {
+        // TODO Auto-generated method stub
+        Log.d(TAG, "updateGPSDone");
+        if (dlGPS != null) {
+
+            dlGPS.dismiss();
+        }
+    }
+
+    /**
      * The method use to send data to BLE
      * @param msg
      */
@@ -287,47 +311,6 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Display firebase register
-     */
-    private void displayFirebaseRegId() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId", null);
-
-        Log.e(TAG, "Firebase reg id: " + regId);
-
-        if (!TextUtils.isEmpty(regId))
-            Log.d("Firebase Reg Id: ", " - " + regId);
-        else
-            Log.d(TAG, "Firebase Reg Id is not received yet!");
-    }
-
-    /**
-     * Init google firebase
-     */
-    private void initGoogleFirebase() {
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                // checking for type intent filter
-                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
-                    displayFirebaseRegId();
-
-                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-                    // new push notification is received
-                    String message = intent.getStringExtra("message");
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-                }
-            }
-        };
-    }
-
-
-
     @Override
     public void onBackPressed() {
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -368,6 +351,7 @@ public class HomeActivity extends AppCompatActivity
 
         try {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(UARTStatusChangeReceiver);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiverLatLon);
         } catch (Exception ignore) {
             Log.e(TAG, ignore.toString());
         }
@@ -439,33 +423,55 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
+    public boolean checkGPS() {
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-
-        // register GCM registration complete receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.REGISTRATION_COMPLETE));
-
-        // register new push message receiver
-        // by doing this, the activity will be notified each time a new message arrives
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.PUSH_NOTIFICATION));
-
-        // clear the notification area when the app is opened
-        NotificationUtils.clearNotifications(getApplicationContext());
 
         if (!mBtAdapter.isEnabled()) {
             Log.i(TAG, "onResume - BT not enabled yet");
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiverLatLon,
+                new IntentFilter(Contains.GPS_FILTER));
+
+        startService(new Intent(this, GPSTracker.class));
+        if (!checkGPS() && (dlGPS == null || !dlGPS.isShowing())) {
+            dlGPS = AlertDialogUtils.ShowDialog(this, getString(R.string.dialog_notice),
+                    getString(R.string.gps_network_not_enabled), getString(R.string.open_location_settings), true,
+                    getString(R.string.close_location_settings), new AlertDialogUtils.IOnDialogClickListener() {
+
+                        @Override
+                        public void onClickOk() {
+                            // TODO Auto-generated method stub
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+
+                        @Override
+                        public void onClickCancel() {
+                            // TODO Auto-generated method stub
+                            dlGPS.cancel();
+                        }
+                    });
+        }
     }
 
     @Override
     protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(UARTStatusChangeReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiverLatLon);
         super.onPause();
     }
 

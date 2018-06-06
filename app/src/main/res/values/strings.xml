@@ -140,4 +140,9 @@ period of time while the ECU recalibrates itself.
     <string name="error_driver_repassword">Mật khẩu nhập lại không đúng</string>
     <string name="error_driver_driver_name">Hãy nhập Họ và Tên</string>
     <string name="service">Dịch vụ</string>
+
+    <string name="gps_network_not_enabled">Please enable GPS</string>
+    <string name="dialog_notice">Notice</string>
+    <string name="open_location_settings">Setting</string>
+    <string name="close_location_settings">Cancel</string>
 </resources>

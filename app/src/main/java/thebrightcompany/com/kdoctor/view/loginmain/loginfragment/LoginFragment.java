@@ -296,9 +296,14 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @OnClick(R.id.btn_login)
     public void processLogin(){
         //todo something
-        showMessage("Process login!");
-        startActivity(new Intent(mActivity, HomeActivity.class));
-        mActivity.finish();
+        //showMessage("Process login!");
+        showProgress();
+        email = txt_email.getText().toString();
+        password = txt_password.getText().toString();
+
+        presenter.processLogin(email, password, 0, Utils.FCM_TOKEN, "", "");
+        /*startActivity(new Intent(mActivity, HomeActivity.class));
+        mActivity.finish();*/
     }
 
     @OnClick(R.id.layout_create_new_account)
@@ -321,7 +326,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
 
     @OnClick(R.id.sign_in_button)
     public void loginWithGoogle(){
-        showMessage("Login with google");
+        //showMessage("Login with google");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -349,7 +354,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
         } else {
             // Signed out, show unauthenticated UI.
             //updateUI(false);
-            showMessage("Login with google fail!");
+            //showMessage("Login with google fail!");
             Log.d(TAG, "Login with google fail");
             Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                     new ResultCallback<Status>() {

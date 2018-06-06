@@ -14,7 +14,7 @@ import thebrightcompany.com.kdoctor.model.diagnostic.Diagnostic;
 
 public class Utils {
 
-    public static final String ROOT_URL = "http://kdoctor.puma-soft.com/";
+    public static final String ROOT_URL = "http://kdoctor.puma-soft.com/api/";
     public static final String URL_FORGOT_PASSWORD = ROOT_URL + "v1/forgotpass";
     public static final String URL_LOGIN = ROOT_URL + "v1/login";
     public static final String URL_REGISTER = ROOT_URL + "v1/register";
@@ -25,6 +25,7 @@ public class Utils {
     public static final int LOGIN_GOOGLE = 2;
 
     public static String APP_TOKEN = "";
+    public static String FCM_TOKEN = "";
 
     //Email Validation pattern
     public static final String regEx = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
