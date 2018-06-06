@@ -52,6 +52,7 @@ import thebrightcompany.com.kdoctor.presenter.login.LoginPresenterImpl;
 import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.ImageHelper;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
+import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.forgotpasswordfragment.ForgotPasswordFragment;
@@ -208,6 +209,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     public void onLoginSuccess(String device_token) {
         //todo something
         if (type == 0){
+            Utils.APP_TOKEN = device_token;
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, device_token);
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_USER_LOGIN, email);
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_PASSWORD, password);

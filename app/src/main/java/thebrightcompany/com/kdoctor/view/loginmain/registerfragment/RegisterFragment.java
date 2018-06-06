@@ -100,21 +100,30 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     @Override
     public void onEmailError(String msg) {
         layout_register.startAnimation(shakeAnimation);
+        txt_email.setError(msg);
+        txt_email.requestFocus();
+
     }
 
     @Override
     public void onPasswordError(String msg) {
         layout_register.startAnimation(shakeAnimation);
+        txt_password.setError(msg);
+        txt_password.requestFocus();
     }
 
     @Override
     public void onRePasswordError(String msg) {
         layout_register.startAnimation(shakeAnimation);
+        txt_re_password.setError(msg);
+        txt_re_password.requestFocus();
     }
 
     @Override
     public void onPhoneError(String msg) {
         layout_register.startAnimation(shakeAnimation);
+        txt_phone.setError(msg);
+        txt_phone.requestFocus();
     }
 
     @Override
@@ -145,6 +154,7 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     @OnClick(R.id.btn_register)
     public void processRegister(){
         //todo something
+        showMessage("Process register");
         fullName = txt_fullName.getText().toString();
         email = txt_email.getText().toString();
         phone = txt_phone.getText().toString();

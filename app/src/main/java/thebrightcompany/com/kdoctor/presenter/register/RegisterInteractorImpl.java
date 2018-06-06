@@ -2,16 +2,13 @@ package thebrightcompany.com.kdoctor.presenter.register;
 
 import android.util.Log;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.android.volley.VolleyError;
 
 import java.io.File;
 
-import cz.msebera.android.httpclient.Header;
+import thebrightcompany.com.kdoctor.api.OnResponseListener;
+import thebrightcompany.com.kdoctor.api.register.RegisterCallAPI;
+import thebrightcompany.com.kdoctor.model.register.RegisterResponse;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.loginmain.registerfragment.RegisterFragmentView;
 /**
@@ -19,6 +16,8 @@ import thebrightcompany.com.kdoctor.view.loginmain.registerfragment.RegisterFrag
  */
 
 public class RegisterInteractorImpl implements RegisterInteractor {
+
+    public static final String TAG = RegisterInteractorImpl.class.getSimpleName();
 
     private RegisterFragmentView mViews;
     private OnRegisterFinishedListener mListener;
@@ -62,12 +61,6 @@ public class RegisterInteractorImpl implements RegisterInteractor {
             return;
         }
 
-        /*if (ValidateUtils.isTextEmpty(nameOfCompany)) {
-            mListener.onNameOfCompanyError();
-            mViews.setNameOfCompanyError(mViews.getContext().getResources().getString(R.string.error_driver_driver_company));
-            return;
-        }*/
-
         //Validate network
         if (!Utils.isNetworkAvailable(mViews.getContext())) {
             mListener.onCommonError();
@@ -79,7 +72,43 @@ public class RegisterInteractorImpl implements RegisterInteractor {
         processRegisterDriver(full_name, email, phone, password, avatar);
     }
 
+    /**
+     * The method use to process register
+     *
+     * @param full_name
+     * @param email
+     * @param phone
+     * @param password
+     * @param avatar
+     */
     private void processRegisterDriver(String full_name, String email, String phone, String password, File avatar) {
+        //todo something
+        RegisterListener listener = new RegisterListener();
+        RegisterCallAPI request = new RegisterCallAPI();
+        request.processForgotPassword(full_name, email, phone, password, listener);
+    }
+
+
+    private class RegisterListener extends OnResponseListener<RegisterResponse> {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            super.onErrorResponse(error);
+            mListener.onRegisterError(error.getMessage());
+            Log.d(TAG, error.getMessage());
+        }
+
+        @Override
+        public void onResponse(RegisterResponse response) {
+            super.onResponse(response);
+            int status_code = response.getStatus_code();
+            if (status_code == 0){
+                mListener.onRegisterSuccess(response.getMessage());
+            }else {
+                mListener.onRegisterError(response.getMessage());
+            }
+        }
+    }
+    /*private void processRegisterDriver(String full_name, String email, String phone, String password, File avatar) {
 
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         asyncHttpClient.setConnectTimeout(30000);
@@ -107,7 +136,7 @@ public class RegisterInteractorImpl implements RegisterInteractor {
                 try {
                     success = response.getBoolean("success");
                     if (success) {
-                        mListener.onRegisterSuccess("");
+                        mListener.onRegisterSuccess("Login success!");
                         //mViews.setApiMessage(response.getString("message"));
 
                     } else{
@@ -128,5 +157,5 @@ public class RegisterInteractorImpl implements RegisterInteractor {
                 Log.d("Register: ", errorResponse.toString());
             }
         });
-    }
+    }*/
 }
