@@ -146,4 +146,6 @@ period of time while the ECU recalibrates itself.
     <string name="open_location_settings">Setting</string>
     <string name="close_location_settings">Cancel</string>
     <string name="lb_get_ten_garage">Xem 10 garage gần nhất</string>
+    <string name="lb_garage_on_map_route">Chỉ đường</string>
+    <string name="lb_garage_on_map_contact">Liên hệ</string>
 </resources>
