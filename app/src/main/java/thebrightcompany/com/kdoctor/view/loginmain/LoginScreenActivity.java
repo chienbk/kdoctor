@@ -115,14 +115,6 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
     private void initView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             accessLocationPermission();
-            checkPermissionCall();
-        }
-    }
-
-    private void checkPermissionCall(){
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && this.checkSelfPermission(android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{android.Manifest.permission.CALL_PHONE}, PERMISSIONS_REQUEST_PHONE_CALL);
         }
     }
 
@@ -131,6 +123,7 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
         int accessCoarseLocation = checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION);
         int accessFineLocation   = checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
         int accessWriteToExternal = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int accessCall = checkSelfPermission(Manifest.permission.CALL_PHONE);
 
         List<String> listRequestPermission = new ArrayList<String>();
 
@@ -143,6 +136,10 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
 
         if (accessWriteToExternal != PackageManager.PERMISSION_GRANTED) {
             listRequestPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+
+        if (accessCall != PackageManager.PERMISSION_GRANTED) {
+            listRequestPermission.add(Manifest.permission.CALL_PHONE);
         }
 
         if (!listRequestPermission.isEmpty()) {
@@ -212,16 +209,6 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
 
                     //TODO - Add your code here to start Discovery
 
-                }
-                break;
-            case PERMISSIONS_REQUEST_PHONE_CALL:
-                if (requestCode == PERMISSIONS_REQUEST_PHONE_CALL) {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        // Permission is granted
-                        //call();
-                    } else {
-                        showMessage("Sorry!!! Permission Denied");
-                    }
                 }
                 break;
             default:

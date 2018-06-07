@@ -125,6 +125,8 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
      * The method use to login with facebook
      */
     private void initFaceBookSignIn() {
+        btnLoginFacebook.setReadPermissions("email");
+        btnLoginFacebook.setFragment(this);
         btnLoginFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
