@@ -190,12 +190,12 @@
 
                            <RatingBar
                                android:id="@+id/rate_garage"
-                               android:isIndicator="true"
+                               style="?android:attr/ratingBarStyleSmall"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
+                               android:rating="4"
                                android:numStars="5"
-                               android:progressDrawable="@drawable/ratingbar"
-                               android:rating="0" />
+                               android:isIndicator="false" />
 
                            <TextView
                                android:id="@+id/txt_addressOfGarage"

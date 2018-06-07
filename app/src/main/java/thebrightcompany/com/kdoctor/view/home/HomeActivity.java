@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.location.LocationManager;
 import android.os.Build;
@@ -24,7 +25,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,8 +35,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -76,8 +78,6 @@ public class HomeActivity extends AppCompatActivity
     private static final int REQUEST_ENABLE_BT = 2;
     public static final int UART_PROFILE_CONNECTED = 20;
     public static final int UART_PROFILE_DISCONNECTED = 21;
-
-    private static final int REQUEST_CODE_LOC = 22;
 
     public static int mState = UART_PROFILE_DISCONNECTED;
     public static boolean isConnected = false;
@@ -564,5 +564,27 @@ public class HomeActivity extends AppCompatActivity
 
     public void redirectToListTenGarageScreen(){
         startActivity(new Intent(HomeActivity.this, GarageListActivity.class));
+    }
+
+    /**
+     * The method used to hide the keyboard
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 }
