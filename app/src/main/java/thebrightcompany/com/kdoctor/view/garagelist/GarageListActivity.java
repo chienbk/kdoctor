@@ -84,6 +84,7 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     }
 
     private void initView() {
+        showProgress();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
