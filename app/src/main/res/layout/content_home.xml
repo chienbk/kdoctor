@@ -8,17 +8,6 @@
     tools:context=".view.home.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
-    <RelativeLayout
-        android:id="@+id/relative_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/framelayout_home"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
-
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"
@@ -26,6 +15,9 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
 
-    </RelativeLayout>
-
+        <FrameLayout
+            android:id="@+id/framelayout_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
 </RelativeLayout>
