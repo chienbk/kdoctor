@@ -17,8 +17,8 @@ public class GetTenGarageCallAPI {
         request.setLat(lat);
         request.setLng(lng);
         request.setLimit(limit);
-        request.setSortType(sortBy);
-        request.setDistance(distance);
+        //request.setSortType(sortBy);
+        //request.setDistance(distance);
         App.addRequest(request, "Get Ten Garage");
     }
 }

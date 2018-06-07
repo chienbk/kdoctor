@@ -1,6 +1,5 @@
 package thebrightcompany.com.kdoctor.adapter.tengarage;
 
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
@@ -64,6 +63,7 @@ public class TenGarageAdapter extends RecyclerView.Adapter<TenGarageAdapter.MyVi
                     listener.onItemClickListener(true, garageOnMap);
                 }
             });
+            holder.txt_addressOfGarage.setText(garageOnMap.getAddress());
 
             holder.btn_contact.setOnClickListener(new View.OnClickListener() {
                 @Override

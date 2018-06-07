@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -20,23 +21,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.adapter.tengarage.ItemSubmitGarageOnClickListener;
 import thebrightcompany.com.kdoctor.adapter.tengarage.ItemTenGarageOnClickListener;
 import thebrightcompany.com.kdoctor.adapter.tengarage.TenGarageAdapter;
 import thebrightcompany.com.kdoctor.model.garage.Garage;
 import thebrightcompany.com.kdoctor.model.garage.GarageOnMap;
+import thebrightcompany.com.kdoctor.model.garage.LatLongMessage;
 import thebrightcompany.com.kdoctor.presenter.tengarage.GetTenGaragePresenter;
 import thebrightcompany.com.kdoctor.presenter.tengarage.GetTenGaragePresenterImpl;
 import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.Utils;
+import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
 
 /**
  * Created by CongVC on 5/25/2018.
@@ -61,6 +72,7 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     private double mLat, mLng;
     private SharedPreferencesUtils sharedPreferencesUtils;
     private String mPhone = "";
+    private boolean isFirstOpen = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,16 +93,6 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
 
         setTitle("10 Garage gần nhất");
         presenter = new GetTenGaragePresenterImpl(this);
-        sharedPreferencesUtils = new SharedPreferencesUtils(this);
-        mLat = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LAT, "0"));
-        mLng = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LNG, "0"));
-
-        presenter.processGetTenGarage(Utils.APP_TOKEN, mLat, mLng, 10, "", "");
-
-        rvGarageList.setHasFixedSize(true);
-        rvGarageList.setLayoutManager(new LinearLayoutManager(this));
-        adapterGarageList = new TenGarageAdapter(mList, new LatLng(mLat, mLng), this, this);
-        rvGarageList.setAdapter(adapterGarageList);
     }
 
     @Override
@@ -101,6 +103,27 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
             rvGarageList.setVisibility(View.GONE);
             txt_no_garage.setVisibility(View.VISIBLE);
         }
+    }
+
+    //Handle the data receive from bluetooth
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(LatLongMessage event){
+        //todo something
+        mLat = event.getLat();
+        mLng = event.getLng();
+        if (isFirstOpen){
+            isFirstOpen = false;
+            presenter.processGetTenGarage(Utils.APP_TOKEN, mLat, mLng, 10, "", "");
+            adapterGarageList = new TenGarageAdapter(mList, new LatLng(mLat, mLng), this, this);
+
+            LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+            rvGarageList.setLayoutManager(mLayoutManager);
+            rvGarageList.setItemAnimator(new SlideInDownAnimator());
+            rvGarageList.setAdapter(new SlideInLeftAnimationAdapter(adapterGarageList));
+            rvGarageList.addItemDecoration(new VerticalSpaceItemDecoration(35));
+        }
+        Log.d(TAG, "Lat: " + mLat);
+        Log.d(TAG, "Lng: " + mLng);
     }
 
     @Override
@@ -132,6 +155,18 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     protected void onResume() {
         super.onResume();
         setTitle("10 Garage gần nhất");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
