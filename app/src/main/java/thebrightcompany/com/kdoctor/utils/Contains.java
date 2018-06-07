@@ -11,6 +11,8 @@ public class Contains {
     public static final String PREF_DEVICE_TOKEN = "PREF_DEVICE_TOKEN";
     public static final String PREF_GOOGLE_TOKEN = "PREF_GOOGLE_TOKEN";
     public static final String PREF_FACEBOOK_TOKEN = "PREF_FACEBOOK_TOKEN";
+    public static final String PREF_LAT = "PREF_LAT";
+    public static final String PREF_LNG = "PREF_LNG";
 
     //Tốc độ xe
     public static final String VERHICLE_SPEED = " 01 0D\n";

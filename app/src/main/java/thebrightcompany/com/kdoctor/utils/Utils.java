@@ -24,6 +24,7 @@ public class Utils {
     public static final String URL_TROUBLE_CODE = ROOT_URL + "v1/trouble-code";
     public static final String URL_GET_LIST_GARAGE = ROOT_URL + "v1/list_gara_on_map";
     public static final String URL_SEARCH_GARAGE_ON_MAP = ROOT_URL + "v1/garages/search";
+    public static final String URL_GET_TEN_GARAGE = ROOT_URL + "v1/garages";
 
     public static final int LOGIN_NORMAL = 0;
     public static final int LOGIN_FACEBOOK = 1;

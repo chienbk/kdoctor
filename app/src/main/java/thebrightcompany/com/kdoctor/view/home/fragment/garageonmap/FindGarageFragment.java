@@ -6,14 +6,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -38,18 +47,26 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.adapter.diagnostic.DiagnosticsAdapter;
+import thebrightcompany.com.kdoctor.adapter.garaonmap.ItemSearchGarageOnClickListener;
+import thebrightcompany.com.kdoctor.adapter.garaonmap.SearchGarageAdapter;
 import thebrightcompany.com.kdoctor.model.garage.GarageOnMap;
 import thebrightcompany.com.kdoctor.model.garage.LatLongMessage;
 import thebrightcompany.com.kdoctor.presenter.garageonmap.GarageOnMapPresenter;
 import thebrightcompany.com.kdoctor.presenter.garageonmap.GarageOnMapPresenterImpl;
 import thebrightcompany.com.kdoctor.utils.Utils;
+import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
+import thebrightcompany.com.kdoctor.view.garagelist.GarageListActivity;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FindGarageFragment extends Fragment implements FindGarageView, OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+public class FindGarageFragment extends Fragment implements FindGarageView, OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener, ItemSearchGarageOnClickListener{
 
     public static final String TAG = FindGarageFragment.class.getSimpleName();
     private static final int REQUEST_PHONE_CALL = 101;
@@ -67,6 +84,16 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     @BindView(R.id.txt_addressOfGarage)
     TextView txt_addressOfGarage;
 
+    @BindView(R.id.rc_search_garage)
+    RecyclerView rc_search_garage;
+    @BindView(R.id.img_search)
+    ImageView img_search;
+
+    @BindView(R.id.edit_search)
+    EditText edit_search;
+
+
+
     private HomeActivity homeActivity;
     private GoogleMap mGoogleMap;
     private List<GarageOnMap> mListGarages = new ArrayList<>();
@@ -81,6 +108,10 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     private GarageOnMapPresenter presenter;
     private GarageOnMap garageOnMap;
     private String phone = "";
+    private String key = "";
+
+    private List<GarageOnMap> searchGaras = new ArrayList<>();
+    private SearchGarageAdapter adapter;
 
     public FindGarageFragment() {
         // Required empty public constructor
@@ -103,8 +134,50 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
      * @param view
      */
     private void initView(View view) {
+
         presenter = new GarageOnMapPresenterImpl(this);
         homeActivity.setTitle("Tìm Garage");
+
+        if (searchGaras.size() == 0){
+            rc_search_garage.setVisibility(View.GONE);
+        }
+
+        edit_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String data = editable.toString();
+                if (TextUtils.isEmpty(data)){
+                    key = "";
+                    rc_search_garage.setVisibility(View.GONE);
+                    img_search.setBackground(homeActivity.getDrawable(R.drawable.ic_search_gara));
+                }else {
+                    layout_detail.setVisibility(View.GONE);
+                    img_search.setBackground(homeActivity.getDrawable(R.drawable.ic_search_close));
+                    key = data;
+                    presenter.processSearchGarageOnMap(Utils.APP_TOKEN, key, 10, 0);
+                }
+            }
+        });
+    }
+
+    private void initRecycleView(){
+        adapter = new SearchGarageAdapter(searchGaras, new LatLng(mLat, mLon), this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        rc_search_garage.setLayoutManager(mLayoutManager);
+        rc_search_garage.setItemAnimator(new SlideInDownAnimator());
+        rc_search_garage.setAdapter(new SlideInLeftAnimationAdapter(adapter));
+        rc_search_garage.addItemDecoration(new VerticalSpaceItemDecoration(35));
     }
 
     /**
@@ -170,7 +243,12 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
 
     @Override
     public void onSearchGarageSuccess(List<GarageOnMap> garageOnMaps) {
-
+        if (garageOnMaps != null){
+            this.searchGaras.clear();
+            this.searchGaras = garageOnMaps;
+            rc_search_garage.setVisibility(View.VISIBLE);
+            adapter.notifyDataSetChanged(searchGaras);
+        }
     }
 
     @Override
@@ -230,6 +308,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
             marker.setTag(-1);
             currentMarker = marker;
             if (isFirstOpen){
+                initRecycleView();
                 moveCamera(mLat, mLon);
                 isFirstOpen = false;
             }
@@ -308,7 +387,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     @OnClick(R.id.layout_get_ten_garage)
     public void getTenGarage(){
         //todo something
-        showMessage("Get Ten garage");
+        homeActivity.redirectToListTenGarageScreen();
     }
 
     @OnClick(R.id.btn_direct)
@@ -321,6 +400,18 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     public void processContactGarage(){
         //todo something
         processCallGarage(phone);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @OnClick(R.id.btn_search)
+    public void processSearch(){
+        //todo something
+        if (!TextUtils.isEmpty(key)){
+            edit_search.setText("");
+            homeActivity.hideKeyboard();
+            img_search.setBackground(homeActivity.getDrawable(R.drawable.ic_search_gara));
+        }
+
     }
 
     /**
@@ -357,5 +448,15 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
                 startActivity(callSupport);
             }
         }
+    }
+
+    @Override
+    public void onItemClickListener(int position, GarageOnMap garageOnMap) {
+        //todo something
+        searchGaras.clear();
+        rc_search_garage.setVisibility(View.GONE);
+        homeActivity.hideKeyboard();
+        moveCamera(garageOnMap.getLat(), garageOnMap.getLng());
+        processDisplayInformationOfGarage(garageOnMap);
     }
 }

@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.location.LocationManager;
 import android.os.Build;
@@ -37,12 +36,12 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -53,12 +52,13 @@ import butterknife.ButterKnife;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.model.connection.DeviceConnect;
 import thebrightcompany.com.kdoctor.model.connection.MessageEvent;
-import thebrightcompany.com.kdoctor.pushnotification.app.Config;
-import thebrightcompany.com.kdoctor.pushnotification.utils.NotificationUtils;
 import thebrightcompany.com.kdoctor.service.BluetoothService;
 import thebrightcompany.com.kdoctor.service.GPSTracker;
 import thebrightcompany.com.kdoctor.utils.AlertDialogUtils;
 import thebrightcompany.com.kdoctor.utils.Contains;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
+import thebrightcompany.com.kdoctor.utils.Utils;
+import thebrightcompany.com.kdoctor.view.garagelist.GarageListActivity;
 import thebrightcompany.com.kdoctor.view.home.fragment.connection.ConnectionFragment;
 import thebrightcompany.com.kdoctor.view.home.fragment.diagnostic.DiagnosticFragment;
 import thebrightcompany.com.kdoctor.view.home.fragment.garageonmap.FindGarageFragment;
@@ -94,6 +94,7 @@ public class HomeActivity extends AppCompatActivity
     private ActionBar mActionBar;
 
     private Dialog dlGPS;
+    private SharedPreferencesUtils sharedPreferencesUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +111,7 @@ public class HomeActivity extends AppCompatActivity
      * The method use to initView
      */
     private void initView() {
+        sharedPreferencesUtils = new SharedPreferencesUtils(this);
         setSupportActionBar(toolbar);
         mActionBar = getSupportActionBar();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -438,6 +440,12 @@ public class HomeActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
+        if (sharedPreferencesUtils != null){
+            Utils.APP_TOKEN = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_TOKEN, "");
+        }else {
+            sharedPreferencesUtils = new SharedPreferencesUtils(this);
+            Utils.APP_TOKEN = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_TOKEN, "");
+        }
         if (!mBtAdapter.isEnabled()) {
             Log.i(TAG, "onResume - BT not enabled yet");
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -538,5 +546,23 @@ public class HomeActivity extends AppCompatActivity
     private void logout() {
         startActivity(new Intent(this, LoginScreenActivity.class));
         finish();
+    }
+
+    /**
+     * The method used to hide the keyboard
+     * @param
+     * @return
+     */
+    public void hideKeyboard() {
+        // Check if no view has focus:
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    public void redirectToListTenGarageScreen(){
+        startActivity(new Intent(HomeActivity.this, GarageListActivity.class));
     }
 }

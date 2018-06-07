@@ -22,6 +22,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import thebrightcompany.com.kdoctor.model.garage.LatLongMessage;
 import thebrightcompany.com.kdoctor.utils.Contains;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 
 /**
  * Created by ChienNv9 on 3/15/2018.
@@ -34,6 +35,7 @@ public class GPSTracker extends Service implements GoogleApiClient.ConnectionCal
     public static double lng;
 
     private GoogleApiClient mGoogleApiClient;
+    private SharedPreferencesUtils sharedPreferencesUtils;
 
     @Nullable
     @Override
@@ -44,6 +46,7 @@ public class GPSTracker extends Service implements GoogleApiClient.ConnectionCal
     @Override
     public void onCreate() {
         super.onCreate();
+        sharedPreferencesUtils = new SharedPreferencesUtils(this);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -101,7 +104,10 @@ public class GPSTracker extends Service implements GoogleApiClient.ConnectionCal
         lng = location.getLongitude();
         setLat(location.getLatitude());
         setLng(location.getLongitude());
-
+        if (sharedPreferencesUtils != null){
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_LAT, lat +"");
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_LNG, lng + "");
+        }
         EventBus.getDefault().post(new LatLongMessage(lat, lng));
 
         Log.d(TAG, "Lat: " + location.getLatitude());
