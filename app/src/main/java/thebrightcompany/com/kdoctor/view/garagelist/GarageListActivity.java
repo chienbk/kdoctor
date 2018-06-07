@@ -21,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,12 +37,10 @@ import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.adapter.tengarage.ItemSubmitGarageOnClickListener;
 import thebrightcompany.com.kdoctor.adapter.tengarage.ItemTenGarageOnClickListener;
 import thebrightcompany.com.kdoctor.adapter.tengarage.TenGarageAdapter;
-import thebrightcompany.com.kdoctor.model.garage.Garage;
 import thebrightcompany.com.kdoctor.model.garage.GarageOnMap;
 import thebrightcompany.com.kdoctor.model.garage.LatLongMessage;
 import thebrightcompany.com.kdoctor.presenter.tengarage.GetTenGaragePresenter;
 import thebrightcompany.com.kdoctor.presenter.tengarage.GetTenGaragePresenterImpl;
-import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
