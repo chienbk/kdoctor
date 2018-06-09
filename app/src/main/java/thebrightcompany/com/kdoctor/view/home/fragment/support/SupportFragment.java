@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
-import thebrightcompany.com.kdoctor.model.support.CompanyInfomation;
+import thebrightcompany.com.kdoctor.model.support.Company;
+import thebrightcompany.com.kdoctor.presenter.support.SupportPresenter;
+import thebrightcompany.com.kdoctor.presenter.support.SupportPresenterImpl;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
 /**
@@ -34,6 +37,8 @@ public class SupportFragment extends Fragment implements SupportView{
     @BindView(R.id.txt_hot_line_support) TextView txt_hot_line_support;
     @BindView(R.id.txt_email_support) TextView txt_email_support;
     @BindView(R.id.txt_web) TextView txt_web;
+
+    private SupportPresenter presenter;
 
     public SupportFragment() {
         // Required empty public constructor
@@ -56,6 +61,8 @@ public class SupportFragment extends Fragment implements SupportView{
      */
     private void initView(View view) {
         homeActivity.setTitle("Hỗ trợ");
+        presenter = new SupportPresenterImpl(this);
+        presenter.processGetCompanyInformation();
     }
 
     @Override
@@ -85,11 +92,19 @@ public class SupportFragment extends Fragment implements SupportView{
         homeActivity.setTitle("Hỗ trợ");
     }
 
+    @OnClick(R.id.layout_call)
+    public void processCall(){
+        //todo something
+        Intent callSupport = new Intent(Intent.ACTION_CALL, Uri
+                .parse("tel:" + txt_hot_line_support.getText().toString()));
+        startActivity(callSupport);
+    }
+
     @Override
-    public void getInformationOfCompany(CompanyInfomation companyInfomation) {
+    public void onInformationOfCompanySuccess(Company companyInfomation) {
         if (companyInfomation != null){
             try {
-                txt_nameOfCompany.setText(companyInfomation.getName());
+                txt_nameOfCompany.setText(companyInfomation.getCompany());
                 txt_address_support.setText(companyInfomation.getAddress());
                 txt_hot_line_support.setText(companyInfomation.getPhone());
                 txt_email_support.setText(companyInfomation.getEmail());
@@ -100,11 +115,19 @@ public class SupportFragment extends Fragment implements SupportView{
         }
     }
 
-    @OnClick(R.id.layout_call)
-    public void processCall(){
-        //todo something
-        Intent callSupport = new Intent(Intent.ACTION_CALL, Uri
-                .parse("tel:" + txt_hot_line_support.getText().toString()));
-        startActivity(callSupport);
+    @Override
+    public void onInformationError(String msg) {
+        showMessage(msg);
+    }
+
+    @Override
+    public void onCommonError(String msg) {
+        showMessage(msg);
+    }
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        return super.getContext();
     }
 }

@@ -22,8 +22,6 @@ import android.widget.Button;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.Serializable;
-import java.security.cert.Extension;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +43,6 @@ import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
 import thebrightcompany.com.kdoctor.view.extensiondate.ExtensionDateActivity;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
-import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import com.google.gson.Gson;
 
@@ -212,7 +209,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     public void processScan(){
         //todo something
         homeActivity.disconnectBluetooth();
-       /* sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, "");*/
         mLists.clear();
         adapter.notifyDataSetChanged(mLists);
         scanLeDevice(true);
@@ -328,12 +324,16 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     public void onMessageEvent(DeviceConnect device){
         //todo something
         hideProgress();
+        Log.d(TAG, "isConnected: " + device.isConnected());
         if(device.isConnected()){
             mDevice.setConnected(true);
+            adapter.notifyItemChange(position, mDevice);
             Gson gson = new Gson();
             String dv = gson.toJson(device);
-            sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, dv);
-            adapter.notifyItemChange(position, mDevice);
+            if (sharedPreferencesUtils != null){
+                sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, dv);
+            }
+
         }else {
             mDevice.setConnected(false);
             try {
