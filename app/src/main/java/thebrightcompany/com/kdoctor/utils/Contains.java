@@ -14,6 +14,8 @@ public class Contains {
     public static final String PREF_LAT = "PREF_LAT";
     public static final String PREF_LNG = "PREF_LNG";
 
+    public static final String PREF_GARAGE_DETAIL = "GarageDetail";
+
     //Tốc độ xe
     public static final String VERHICLE_SPEED = " 01 0D\n";
     public static final String CONS_VERHICLE_SPEED = "410D";

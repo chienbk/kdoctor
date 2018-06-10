@@ -66,11 +66,11 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
         initView();
         sharedPreferencesUtils = new SharedPreferencesUtils(this);
         String deviceToken = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_TOKEN, "");
-        if (!TextUtils.isEmpty(deviceToken)){
-            Utils.APP_TOKEN = deviceToken;
-            startActivity(new Intent(this, HomeActivity.class));
-            finish();
-        }
+//        if (!TextUtils.isEmpty(deviceToken)){
+//            Utils.APP_TOKEN = deviceToken;
+//            startActivity(new Intent(this, HomeActivity.class));
+//            finish();
+//        }
         fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
             fragmentManager
@@ -134,6 +134,7 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
         int accessFineLocation   = checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
         int accessWriteToExternal = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int accessCall = checkSelfPermission(Manifest.permission.CALL_PHONE);
+        int accessCamera = checkSelfPermission(Manifest.permission.CAMERA);
 
         List<String> listRequestPermission = new ArrayList<String>();
 
@@ -150,6 +151,10 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
 
         if (accessCall != PackageManager.PERMISSION_GRANTED) {
             listRequestPermission.add(Manifest.permission.CALL_PHONE);
+        }
+
+        if (accessCamera != PackageManager.PERMISSION_GRANTED) {
+            listRequestPermission.add(android.Manifest.permission.CAMERA);
         }
 
         if (!listRequestPermission.isEmpty()) {

@@ -42,6 +42,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.0.2'
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.google.android.gms:play-services-location:11.0.4'
+    //add this dependency
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

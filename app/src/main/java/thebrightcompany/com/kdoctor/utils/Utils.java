@@ -26,6 +26,8 @@ public class Utils {
     public static final String URL_SEARCH_GARAGE_ON_MAP = ROOT_URL + "v1/garages/search";
     public static final String URL_GET_TEN_GARAGE = ROOT_URL + "v1/garages";
     public static final String URL_SUPPORT = "v1/support";
+    public static final String URL_RATE_GARAGE = "v1/rate_gara";
+    public static final String URRL_GARAGE_DETAI = "v1/garage/%s/comments";
 
     public static final int LOGIN_NORMAL = 0;
     public static final int LOGIN_FACEBOOK = 1;
@@ -43,6 +45,18 @@ public class Utils {
     public static final String ForgotPassword_Fragment = "ForgotPassword_Fragment";
 
 
+    /**
+     * The method use to send param to request
+     *
+     * @param url
+     * @param order_id
+     * @return
+     */
+    public static String createURL(String url, String order_id) {
+
+        String result = String.format(url, order_id);
+        return result;
+    }
 
     /**
      *

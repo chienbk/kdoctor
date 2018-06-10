@@ -163,7 +163,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
                     img_search.setBackground(homeActivity.getDrawable(R.drawable.ic_search_gara));
                 }else {
                     layout_detail.setVisibility(View.GONE);
-                    img_search.setBackground(homeActivity.getDrawable(R.drawable.ic_search_close));
+                    img_search.setBackground(homeActivity.getDrawable(R.drawable.ic_close));
                     key = data;
                     presenter.processSearchGarageOnMap(Utils.APP_TOKEN, key, 10, 0);
                 }

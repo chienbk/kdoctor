@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".App"
@@ -57,7 +58,8 @@
         <activity android:name=".view.register.RegisterActivity" />
         <activity android:name=".view.garagelist.GarageListActivity"
             android:theme="@style/AppThemeHome"/>
-        <activity android:name=".view.garagedetail.ActivityGarageDetail" />
+        <activity android:name=".view.garagedetail.ActivityGarageDetail"
+            android:theme="@style/AppThemeHome"/>
         <activity android:name=".view.loginmain.LoginScreenActivity" />
         <activity
             android:name=".view.home.HomeActivity"

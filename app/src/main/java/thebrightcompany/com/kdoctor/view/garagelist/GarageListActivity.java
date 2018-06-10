@@ -41,9 +41,11 @@ import thebrightcompany.com.kdoctor.model.garage.GarageOnMap;
 import thebrightcompany.com.kdoctor.model.garage.LatLongMessage;
 import thebrightcompany.com.kdoctor.presenter.tengarage.GetTenGaragePresenter;
 import thebrightcompany.com.kdoctor.presenter.tengarage.GetTenGaragePresenterImpl;
+import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
+import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
 
 /**
  * Created by CongVC on 5/25/2018.
@@ -213,6 +215,10 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
         //todo something
         //todo redirect to garage detail
         showMessage("You choice: " + garageOnMap.getName());
+        Intent intent = new Intent(GarageListActivity.this, ActivityGarageDetail.class);
+        intent.putExtra(Contains.PREF_GARAGE_DETAIL, garageOnMap);
+        startActivity(intent);
+
     }
 
     @Override
