@@ -124,7 +124,7 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     }
 
     @Override
-    public void onGetTenGaragesError(String msg) {
+    public void onGetTenGaragesError(int status_code, String msg) {
         showMessage(msg);
     }
 

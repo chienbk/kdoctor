@@ -6,6 +6,6 @@ import thebrightcompany.com.kdoctor.view.BaseView;
 public interface SupportView extends BaseView{
 
     void onInformationOfCompanySuccess(Company companyInfomation);
-    void onInformationError(String msg);
+    void onInformationError(int status_code, String msg);
     void onCommonError(String msg);
 }

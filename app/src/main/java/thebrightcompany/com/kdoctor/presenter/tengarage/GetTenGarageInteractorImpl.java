@@ -52,7 +52,7 @@ public class GetTenGarageInteractorImpl implements GetTenGarageInteractor {
         @Override
         public void onErrorResponse(VolleyError error) {
             super.onErrorResponse(error);
-            listener.onGetTenGarageError(error.getMessage());
+            listener.onGetTenGarageError(0, error.getMessage());
         }
 
         @Override
@@ -62,7 +62,7 @@ public class GetTenGarageInteractorImpl implements GetTenGarageInteractor {
             if(status_code == 0){
                 listener.onGetTenGarageSuccess(response.getDatasOnMap().getGarageOnMaps());
             }else {
-                listener.onGetTenGarageError(response.getMessage());
+                listener.onGetTenGarageError(response.getStatus_code(), response.getMessage());
             }
         }
     }

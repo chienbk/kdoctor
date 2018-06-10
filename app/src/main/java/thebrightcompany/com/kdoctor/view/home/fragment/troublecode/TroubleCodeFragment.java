@@ -227,4 +227,19 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView{
         if (troubleCodeAsynTask != null)
             troubleCodeAsynTask.cancel(true);
     }
+
+    @Override
+    public void onGetTroubleCodeSuccess(String msg) {
+
+    }
+
+    @Override
+    public void onGetTroubleCodeError(int status_code, String msg) {
+
+    }
+
+    @Override
+    public void onCommonError(String msg) {
+
+    }
 }

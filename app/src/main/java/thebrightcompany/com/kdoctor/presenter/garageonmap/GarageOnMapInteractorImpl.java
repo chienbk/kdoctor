@@ -60,7 +60,7 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
         @Override
         public void onErrorResponse(VolleyError error) {
             super.onErrorResponse(error);
-            listener.onGetGarageError(error.getMessage());
+            listener.onGetGarageError(0, error.getMessage());
         }
 
         @Override
@@ -71,7 +71,7 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
             if (status_code == 0){
                 listener.onGetGarageSuccess(response.getDatasOnMap().getGarageOnMaps());
             }else {
-                listener.onGetGarageError(response.getMessage());
+                listener.onGetGarageError(response.getStatus_code(), response.getMessage());
             }
         }
     }
@@ -107,7 +107,7 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
         @Override
         public void onErrorResponse(VolleyError error) {
             super.onErrorResponse(error);
-            listener.onSearchGarageError(error.getMessage());
+            listener.onSearchGarageError(0, error.getMessage());
         }
 
         @Override
@@ -118,7 +118,7 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
                 //todo something
                 listener.onSearchGarageSuccess(response.getDatasOnMap().getGarageOnMaps());
             }else {
-                listener.onSearchGarageError(response.getMessage());
+                listener.onSearchGarageError(response.getStatus_code(), response.getMessage());
             }
         }
     }

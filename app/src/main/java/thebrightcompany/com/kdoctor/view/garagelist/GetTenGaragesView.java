@@ -8,6 +8,6 @@ import thebrightcompany.com.kdoctor.view.BaseView;
 public interface GetTenGaragesView extends BaseView{
 
     void onGetTenGaragesSuccess(List<GarageOnMap> garageOnMaps);
-    void onGetTenGaragesError(String msg);
+    void onGetTenGaragesError(int status_code, String msg);
     void onCommonError(String msg);
 }

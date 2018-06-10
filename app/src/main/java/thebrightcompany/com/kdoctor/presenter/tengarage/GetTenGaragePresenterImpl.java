@@ -29,10 +29,10 @@ public class GetTenGaragePresenterImpl implements GetTenGaragePresenter, GetTenG
     }
 
     @Override
-    public void onGetTenGarageError(String msg) {
+    public void onGetTenGarageError(int status_code, String msg) {
         if (mView != null){
             mView.hideProgress();
-            mView.onCommonError(msg);
+            mView.onGetTenGaragesError(status_code, msg);
         }
     }
 

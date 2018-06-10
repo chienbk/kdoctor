@@ -26,10 +26,10 @@ public class SupportPresenterImpl implements SupportPresenter, SupportInteractor
     }
 
     @Override
-    public void onSupportError(String msg) {
+    public void onSupportError(int status_code, String msg) {
         if (mViews != null){
             mViews.hideProgress();
-            mViews.onInformationError(msg);
+            mViews.onInformationError(status_code, msg);
         }
     }
 

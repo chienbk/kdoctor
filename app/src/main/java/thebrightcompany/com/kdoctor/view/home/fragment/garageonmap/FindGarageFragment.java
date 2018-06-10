@@ -252,7 +252,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     }
 
     @Override
-    public void onSearchGarageError(String msg) {
+    public void onSearchGarageError(int status_code, String msg) {
         showMessage(msg);
     }
 
@@ -283,7 +283,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     }
 
     @Override
-    public void onGetListGaragesError(String msg) {
+    public void onGetListGaragesError(int status_code, String msg) {
         showMessage(msg);
     }
 

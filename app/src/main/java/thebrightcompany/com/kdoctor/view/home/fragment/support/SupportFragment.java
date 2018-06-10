@@ -116,7 +116,7 @@ public class SupportFragment extends Fragment implements SupportView{
     }
 
     @Override
-    public void onInformationError(String msg) {
+    public void onInformationError(int status_code, String msg) {
         showMessage(msg);
     }
 

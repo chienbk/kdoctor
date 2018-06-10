@@ -14,7 +14,7 @@ public interface GetTenGarageInteractor {
 
         void onGetTenGarageSuccess(List<GarageOnMap> garageOnMaps);
 
-        void onGetTenGarageError(String msg);
+        void onGetTenGarageError(int status_code, String msg);
 
         void onCommonError(String msg);
     }

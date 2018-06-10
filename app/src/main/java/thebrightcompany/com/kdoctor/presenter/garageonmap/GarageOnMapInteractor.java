@@ -14,11 +14,11 @@ public interface GarageOnMapInteractor {
 
         void onGetGarageSuccess(List<GarageOnMap> garageOnMaps);
 
-        void onGetGarageError(String msg);
+        void onGetGarageError(int status_code, String msg);
 
         void onSearchGarageSuccess(List<GarageOnMap> garageOnMaps);
 
-        void onSearchGarageError(String msg);
+        void onSearchGarageError(int status_code, String msg);
 
         void onCommonError(String msg);
     }

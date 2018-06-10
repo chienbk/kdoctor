@@ -52,7 +52,7 @@ public class SupportInteractorImpl implements SupportInteractor {
         @Override
         public void onErrorResponse(VolleyError error) {
             super.onErrorResponse(error);
-            mListener.onSupportError(error.getMessage());
+            mListener.onSupportError(0, error.getMessage());
         }
 
         @Override
@@ -62,7 +62,7 @@ public class SupportInteractorImpl implements SupportInteractor {
             if (status_code == 0){
                 mListener.onSupportSuccess(response.getCompany());
             }else {
-                mListener.onSupportError(response.getMessage());
+                mListener.onSupportError(response.getStatus_code(), response.getMessage());
             }
         }
     }

@@ -34,7 +34,10 @@ import butterknife.ButterKnife;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.pushnotification.app.Config;
 import thebrightcompany.com.kdoctor.pushnotification.utils.NotificationUtils;
+import thebrightcompany.com.kdoctor.utils.Contains;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.Utils;
+import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.loginfragment.LoginFragment;
 
 public class LoginScreenActivity extends AppCompatActivity implements LoginScreenView{
@@ -49,6 +52,7 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
     FrameLayout frameLayout;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private SharedPreferencesUtils sharedPreferencesUtils;
 
     private static FragmentManager fragmentManager;
 
@@ -58,7 +62,15 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
         setContentView(R.layout.activity_login_screen);
 
         ButterKnife.bind(this);
+        initGoogleFirebase();
         initView();
+        sharedPreferencesUtils = new SharedPreferencesUtils(this);
+        String deviceToken = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_TOKEN, "");
+        if (!TextUtils.isEmpty(deviceToken)){
+            Utils.APP_TOKEN = deviceToken;
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        }
         fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
             fragmentManager
@@ -66,8 +78,6 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
                     .replace(R.id.frameContainer, new LoginFragment(),
                             Utils.Login_Fragment).commit();
         }
-
-        initGoogleFirebase();
     }
 
     /**

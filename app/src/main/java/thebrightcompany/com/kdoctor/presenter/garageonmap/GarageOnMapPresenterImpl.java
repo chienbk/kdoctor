@@ -29,10 +29,10 @@ public class GarageOnMapPresenterImpl implements GarageOnMapPresenter, GarageOnM
     }
 
     @Override
-    public void onGetGarageError(String msg) {
+    public void onGetGarageError(int status_code, String msg) {
         if (mView != null){
             mView.hideProgress();
-            mView.onGetListGaragesError(msg);
+            mView.onGetListGaragesError(status_code, msg);
         }
     }
 
@@ -45,10 +45,10 @@ public class GarageOnMapPresenterImpl implements GarageOnMapPresenter, GarageOnM
     }
 
     @Override
-    public void onSearchGarageError(String msg) {
+    public void onSearchGarageError(int status_code, String msg) {
         if (mView != null){
             mView.hideProgress();
-            mView.onSearchGarageError(msg);
+            mView.onSearchGarageError(status_code, msg);
         }
     }
 

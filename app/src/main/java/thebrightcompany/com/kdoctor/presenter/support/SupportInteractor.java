@@ -11,7 +11,7 @@ public interface SupportInteractor {
     interface OnSupportFinishedListener {
 
         void onCommonError(String msg);
-        void onSupportError(String msg);
+        void onSupportError(int status_cede, String msg);
         void onSupportSuccess(Company company);
     }
 
