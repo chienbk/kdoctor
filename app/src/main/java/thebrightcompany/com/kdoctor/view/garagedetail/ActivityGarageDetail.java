@@ -1,5 +1,6 @@
 package thebrightcompany.com.kdoctor.view.garagedetail;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -8,8 +9,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +27,7 @@ import thebrightcompany.com.kdoctor.view.garagedetail.inforgarage.InformationOfG
  * Created by ChienNv9 on 6/5/2018.
  */
 
-public class ActivityGarageDetail extends AppCompatActivity implements ActionBar.TabListener{
+public class ActivityGarageDetail extends AppCompatActivity implements ActionBar.TabListener, GarageDetailView{
 
     public static final String TAG = ActivityGarageDetail.class.getSimpleName();
 
@@ -105,5 +108,30 @@ public class ActivityGarageDetail extends AppCompatActivity implements ActionBar
     @Override
     public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
 
+    }
+
+    @Override
+    public void onCommonError(String msg) {
+        showMessage(msg);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

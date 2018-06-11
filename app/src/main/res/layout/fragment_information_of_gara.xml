@@ -1,14 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.garagedetail.inforgarage.InformationOfGaraFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpSlideImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="175dp">
+    </android.support.v4.view.ViewPager>
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/layout_scroll"
+            android:layout_margin="16dp"
+            android:background="@drawable/border_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#01687c">
+
+                    <TextView
+                        android:id="@+id/tvGarageName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/magin_default"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/txt_tittle"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/magin_default"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/magin_default"
+                        android:src="@drawable/ic_address_garage_detail" />
+
+                    <TextView
+                        android:id="@+id/txt_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/magin_default"
+                        android:layout_marginRight="@dimen/magin_default"
+                        android:text="Hà Nội, Việt Nam"
+                        android:textSize="@dimen/txt_normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="@dimen/magin_default"
+                    android:background="#C0C0C0"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/magin_default"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/magin_default"
+                        android:src="@drawable/ic_phone_garage_detail" />
+
+                    <TextView
+                        android:id="@+id/txt_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/magin_default"
+                        android:layout_marginRight="@dimen/magin_default"
+                        android:text="123456"
+                        android:textSize="@dimen/txt_normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="@dimen/magin_default"
+                    android:background="#C0C0C0"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/magin_default"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/magin_default"
+                        android:src="@drawable/ic_email_garage_detail" />
+
+                    <TextView
+                        android:id="@+id/txt_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/magin_default"
+                        android:layout_marginRight="@dimen/magin_default"
+                        android:text="mail"
+                        android:textSize="@dimen/txt_normal" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="@dimen/magin_default"
+                    android:background="#C0C0C0"></View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/magin_default"
+                    android:text="@string/service"
+                    android:textColor="#01687c"
+                    android:textSize="@dimen/txt_tittle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/magin_default"
+                    android:textSize="@dimen/txt_normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="@dimen/magin_default"
+                    android:background="#C0C0C0"></View>
+            </LinearLayout>
+
+        </ScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:weightSum="2"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_route"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_garage_detail"
+                android:text="@string/lb_garage_on_map_route"
+                android:layout_width="0dp"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"
+                android:layout_marginRight="5dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_contact"
+                android:text="@string/lb_garage_detail_contact"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_garage_detail"
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/white"
+                android:layout_width="0dp"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
