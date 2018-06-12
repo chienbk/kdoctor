@@ -2,16 +2,24 @@ package thebrightcompany.com.kdoctor.view.garagedetail.inforgarage;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.model.garagedetail.GarageDetail;
+import thebrightcompany.com.kdoctor.utils.Contains;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
 
 /**
@@ -23,8 +31,19 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     private ActivityGarageDetail homeActivity;
     private static final String ARG_ID_GARAGE = "ID_OF_GARAGE";
 
+    @BindView(R.id.vpSlideImage)
+    ViewPager viewPager;
+    @BindView(R.id.tvGarageName)
+    TextView txt_nameOfGarage;
+    @BindView(R.id.txt_address) TextView txt_addressOfGarage;
+    @BindView(R.id.txt_phone) TextView txt_phoneOfGarage;
+    @BindView(R.id.txt_email) TextView txt_emailOfGarage;
+    @BindView(R.id.txt_service) TextView txt_service;
 
     private int idOfGarage;
+    private double mLat, mLng;
+    private SharedPreferencesUtils sharedPreferencesUtils;
+    private GarageDetail mGarageDetail;
 
 
     public InformationOfGaraFragment() {
@@ -71,6 +90,9 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
      */
     private void initView(View view) {
         //todo something
+        sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
+        mLat = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LAT, "0"));
+        mLng = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LNG, "0"));
     }
 
     @Override
@@ -82,6 +104,12 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     @Override
     public void getGaraDetailSuccess(GarageDetail garageDetail) {
         //todo something
+        this.mGarageDetail = garageDetail;
+        txt_nameOfGarage.setText(mGarageDetail.getName());
+        txt_phoneOfGarage.setText(mGarageDetail.getPhone().get(0));
+        txt_addressOfGarage.setText(mGarageDetail.getAddress());
+        txt_emailOfGarage.setText(mGarageDetail.getEmail());
+        txt_service.setText(mGarageDetail.getDescriptiion());
     }
 
     @Override
@@ -107,5 +135,31 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     @Override
     public void showMessage(String message) {
         homeActivity.showMessage(message);
+    }
+
+    @OnClick(R.id.layout_phone)
+    public void processCall(){
+        //todo something
+        Intent callSupport = new Intent(Intent.ACTION_CALL, Uri
+                .parse("tel:" + txt_phoneOfGarage.getText().toString()));
+        startActivity(callSupport);
+    }
+
+    @OnClick(R.id.btn_route)
+    public void processRoute(){
+        //todo something
+        String uri = String.format("http://maps.google.com/maps?saddr=%d,%d(%s)&daddr=%d,%d(%s)", mLat, mLng, "Your location",
+                mGarageDetail.getLat(), mGarageDetail.getLng(), mGarageDetail.getName());
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse(uri));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_contact)
+    public void processContact(){
+        //todo something
+        Intent callSupport = new Intent(Intent.ACTION_CALL, Uri
+                .parse("tel:" + txt_phoneOfGarage.getText().toString()));
+        startActivity(callSupport);
     }
 }

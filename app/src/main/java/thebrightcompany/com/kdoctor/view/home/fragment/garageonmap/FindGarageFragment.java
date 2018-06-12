@@ -57,6 +57,8 @@ import thebrightcompany.com.kdoctor.model.garage.GarageOnMap;
 import thebrightcompany.com.kdoctor.model.garage.LatLongMessage;
 import thebrightcompany.com.kdoctor.presenter.garageonmap.GarageOnMapPresenter;
 import thebrightcompany.com.kdoctor.presenter.garageonmap.GarageOnMapPresenterImpl;
+import thebrightcompany.com.kdoctor.utils.Contains;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
 import thebrightcompany.com.kdoctor.view.garagelist.GarageListActivity;
@@ -99,7 +101,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     private List<GarageOnMap> mListGarages = new ArrayList<>();
 
     //Use to get my location
-    private double mLon = -34;
+    private double mLng = -34;
     private double mLat = 151;
     private Marker currentMarker;
     private boolean isFirstOpen = true;
@@ -112,6 +114,8 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
 
     private List<GarageOnMap> searchGaras = new ArrayList<>();
     private SearchGarageAdapter adapter;
+
+    private SharedPreferencesUtils sharedPreferencesUtils;
 
     public FindGarageFragment() {
         // Required empty public constructor
@@ -134,6 +138,10 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
      * @param view
      */
     private void initView(View view) {
+
+        sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
+        mLat = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LAT, "0"));
+        mLng = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LNG, "0"));
 
         presenter = new GarageOnMapPresenterImpl(this);
         homeActivity.setTitle("Tìm Garage");
@@ -172,7 +180,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     }
 
     private void initRecycleView(){
-        adapter = new SearchGarageAdapter(searchGaras, new LatLng(mLat, mLon), this);
+        adapter = new SearchGarageAdapter(searchGaras, new LatLng(mLat, mLng), this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         rc_search_garage.setLayoutManager(mLayoutManager);
         rc_search_garage.setItemAnimator(new SlideInDownAnimator());
@@ -292,9 +300,9 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     public void onMessageEvent(LatLongMessage event){
         //todo something
         mLat = event.getLat();
-        mLon = event.getLng();
+        mLng = event.getLng();
         if (mGoogleMap != null && isFirstCallAPI){
-            presenter.processGetGarageOnMap(Utils.APP_TOKEN, mLat, mLon, 5);
+            presenter.processGetGarageOnMap(Utils.APP_TOKEN, mLat, mLng, 5);
             isFirstCallAPI = false;
         }
         if (mGoogleMap != null){
@@ -303,13 +311,13 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
                 currentMarker.remove();
             }
 
-            LatLng yourLocation = new LatLng(mLat, mLon);
+            LatLng yourLocation = new LatLng(mLat, mLng);
             Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(yourLocation).title("Your location!"));
             marker.setTag(-1);
             currentMarker = marker;
             if (isFirstOpen){
                 initRecycleView();
-                moveCamera(mLat, mLon);
+                moveCamera(mLat, mLng);
                 isFirstOpen = false;
             }
         }
@@ -324,11 +332,11 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
                 currentMarker.remove();
             }
 
-            LatLng yourLocation = new LatLng(mLat, mLon);
+            LatLng yourLocation = new LatLng(mLat, mLng);
             Marker marker = mGoogleMap.addMarker(new MarkerOptions().position(yourLocation).title("Your location!"));
             marker.setTag(-1);
             currentMarker = marker;
-            moveCamera(mLat, mLon);
+            moveCamera(mLat, mLng);
         }
     }
 
@@ -370,7 +378,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         try {
             phone = garageOnMap.getPhone();
             txt_nameOfGarage.setText(garageOnMap.getName());
-            txt_distance.setText(Utils.calculationByDistance(new LatLng(mLat, mLon),
+            txt_distance.setText(Utils.calculationByDistance(new LatLng(mLat, mLng),
                     new LatLng(garageOnMap.getLat(), garageOnMap.getLng())) + " km");
             rate_garage.setRating(garageOnMap.getRate());
             txt_addressOfGarage.setText(garageOnMap.getAddress());
@@ -393,7 +401,11 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     @OnClick(R.id.btn_direct)
     public void processRedirect(){
         //todo something
-        showMessage("Chúng tôi đang hoàn thiện!");
+        String uri = String.format("http://maps.google.com/maps?saddr=%d,%d(%s)&daddr=%d,%d(%s)", mLat, mLng, "Your location",
+                garageOnMap.getLat(), garageOnMap.getLng(), garageOnMap.getName());
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse(uri));
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_contact)
@@ -453,6 +465,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     @Override
     public void onItemClickListener(int position, GarageOnMap garageOnMap) {
         //todo something
+        this.garageOnMap = garageOnMap;
         searchGaras.clear();
         rc_search_garage.setVisibility(View.GONE);
         homeActivity.hideKeyboard();

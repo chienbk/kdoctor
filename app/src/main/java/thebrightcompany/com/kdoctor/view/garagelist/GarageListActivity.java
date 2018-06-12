@@ -72,6 +72,8 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     private String mPhone = "";
     private boolean isFirstOpen = true;
 
+    private GarageOnMap mGarageOnMap;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,10 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setElevation(2);
+
+        sharedPreferencesUtils = new SharedPreferencesUtils(this);
+        mLat = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LAT, ")"));
+        mLng = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LNG, "0"));
 
         setTitle("10 Garage gần nhất");
         presenter = new GetTenGaragePresenterImpl(this);
@@ -224,7 +230,12 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     @Override
     public void onItemClickListener(boolean position, GarageOnMap garageOnMap) {
         if (position){
-            showMessage("chức năng này đang được hoàn thiện");
+            this.mGarageOnMap = garageOnMap;
+            String uri = String.format("http://maps.google.com/maps?saddr=%d,%d(%s)&daddr=%d,%d(%s)", mLat, mLng, "Your location",
+                    garageOnMap.getLat(), garageOnMap.getLng(), garageOnMap.getName());
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse(uri));
+            startActivity(intent);
         }else {
             processCallGarage(garageOnMap.getPhone());
         }

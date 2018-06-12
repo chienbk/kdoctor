@@ -27,7 +27,8 @@ public class Utils {
     public static final String URL_GET_TEN_GARAGE = ROOT_URL + "v1/garages";
     public static final String URL_SUPPORT = "v1/support";
     public static final String URL_RATE_GARAGE = "v1/rate_gara";
-    public static final String URRL_GARAGE_DETAI = "v1/garage/%s/comments";
+    public static final String URL_GARAGE_COMMENT = "v1/garage/%s/comments";
+    public static final String URL_GARAGE_DETAIL = "v1/garage/%s";
 
     public static final int LOGIN_NORMAL = 0;
     public static final int LOGIN_FACEBOOK = 1;
