@@ -84,7 +84,7 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
     }
 
     @Override
-    public void getCommentError(String msg) {
+    public void getCommentError(String msg, int status_code) {
         homeActivity.showMessage(msg);
     }
 

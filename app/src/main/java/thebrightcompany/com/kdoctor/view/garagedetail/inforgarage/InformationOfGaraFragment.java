@@ -113,7 +113,7 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     }
 
     @Override
-    public void getGaraDetailError(String msg) {
+    public void getGaraDetailError(String msg, int status_code) {
         showMessage(msg);
     }
 

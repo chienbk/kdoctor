@@ -6,5 +6,5 @@ import thebrightcompany.com.kdoctor.view.garagedetail.GarageDetailView;
 public interface InformationOfGarageView extends GarageDetailView{
 
     void getGaraDetailSuccess(GarageDetail garageDetail);
-    void getGaraDetailError(String msg);
+    void getGaraDetailError(String msg, int status_code);
 }
