@@ -231,8 +231,8 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     public void onItemClickListener(boolean position, GarageOnMap garageOnMap) {
         if (position){
             this.mGarageOnMap = garageOnMap;
-            String uri = String.format("http://maps.google.com/maps?saddr=%d,%d(%s)&daddr=%d,%d(%s)", mLat, mLng, "Your location",
-                    garageOnMap.getLat(), garageOnMap.getLng(), garageOnMap.getName());
+            String uri = String.format("http://maps.google.com/maps?saddr=%s,%s(%s)&daddr=%s,%s(%s)", mLat+"", mLng+"", "Your location",
+                    garageOnMap.getLat()+"", garageOnMap.getLng()+"", garageOnMap.getName());
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                     Uri.parse(uri));
             startActivity(intent);

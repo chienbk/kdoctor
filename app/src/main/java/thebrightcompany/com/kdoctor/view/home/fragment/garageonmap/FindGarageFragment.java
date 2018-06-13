@@ -374,6 +374,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
      * @param garageOnMap
      */
     private void processDisplayInformationOfGarage(GarageOnMap garageOnMap) {
+        this.garageOnMap = garageOnMap;
         layout_detail.setVisibility(View.VISIBLE);
         try {
             phone = garageOnMap.getPhone();
@@ -401,8 +402,8 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     @OnClick(R.id.btn_direct)
     public void processRedirect(){
         //todo something
-        String uri = String.format("http://maps.google.com/maps?saddr=%d,%d(%s)&daddr=%d,%d(%s)", mLat, mLng, "Your location",
-                garageOnMap.getLat(), garageOnMap.getLng(), garageOnMap.getName());
+        String uri = String.format("http://maps.google.com/maps?saddr=%s,%s(%s)&daddr=%s,%s(%s)", mLat+"", mLng+"", "Your location",
+                garageOnMap.getLat()+"", garageOnMap.getLng()+"", garageOnMap.getName());
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse(uri));
         startActivity(intent);
