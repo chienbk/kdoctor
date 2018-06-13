@@ -10,7 +10,7 @@ import thebrightcompany.com.kdoctor.model.commentgarage.CommentResponse;
 
 public class CommentOfGarageCallAPI {
 
-    public void processForgotPassword(String token, String idOfGarage, String limit, String start, String rating,
+    public void processGetCommentOfGarage(String token, String idOfGarage, String limit, String start, String rating,
                                       OnResponseListener<CommentResponse> listener){
         CommentOfGarageRequest request = new CommentOfGarageRequest(listener, idOfGarage);
         request.setToken(token);

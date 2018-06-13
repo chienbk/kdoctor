@@ -11,11 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.model.commentgarage.Comment;
 import thebrightcompany.com.kdoctor.model.commentgarage.DataOfComment;
+import thebrightcompany.com.kdoctor.presenter.commentofgarage.CommentOfGaragePresentor;
+import thebrightcompany.com.kdoctor.presenter.commentofgarage.CommentOfGaragePresentorImpl;
 import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
 
 /**
@@ -37,8 +43,12 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
 
     @BindView(R.id.rc_listComment)
     RecyclerView rc_listComment;
+    private DataOfComment mDataOfComment;
+    private List<Comment> mList = new ArrayList<>();
 
     private int idOfGarage;
+
+    private CommentOfGaragePresentor presentor;
 
     public CommentOfGaraFragment() {
         // Required empty public constructor
@@ -84,6 +94,7 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
      */
     private void initView(View view) {
         //todo something
+        presentor = new CommentOfGaragePresentorImpl(this);
     }
 
     @Override
@@ -95,6 +106,15 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
     @Override
     public void getCommentSuccess(DataOfComment dataOfComment) {
         //todo something
+        this.mDataOfComment = dataOfComment;
+        this.mList.clear();
+        this.mList = mDataOfComment.getComments();
+        //todo update view
+        try {
+
+        }catch (NullPointerException e){
+            Log.d(TAG, e.toString());
+        }
     }
 
     @Override
