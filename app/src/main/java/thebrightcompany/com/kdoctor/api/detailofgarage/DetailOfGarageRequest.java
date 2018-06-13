@@ -14,7 +14,9 @@ import thebrightcompany.com.kdoctor.utils.Utils;
 
 public class DetailOfGarageRequest extends BasePostRequest<GarageDetailResponse> {
 
+
     public DetailOfGarageRequest(OnResponseListener<GarageDetailResponse> listener, String idOfGarage) {
+
         super(String.format(Utils.URL_GARAGE_DETAIL, idOfGarage), new TypeToken<GarageDetailResponse>() {
         }.getType(), listener);
     }

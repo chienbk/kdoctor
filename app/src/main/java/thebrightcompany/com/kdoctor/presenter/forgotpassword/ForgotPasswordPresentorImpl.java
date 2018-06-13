@@ -1,6 +1,6 @@
 package thebrightcompany.com.kdoctor.presenter.forgotpassword;
 
-import thebrightcompany.com.kdoctor.view.loginmain.forgotpasswordfragment.ForgotPasswordFragment;
+import thebrightcompany.com.kdoctor.view.loginmain.forgotpasswordfragment.ForgotPasswordFragmentView;
 
 /**
  * Created by ChienNV on 11/24/16.
@@ -8,10 +8,10 @@ import thebrightcompany.com.kdoctor.view.loginmain.forgotpasswordfragment.Forgot
 
 public class ForgotPasswordPresentorImpl implements ForgotPasswordPresentor, ForgotPasswordInteractor.OnFinishedListener {
 
-    private ForgotPasswordFragment mView;
+    private ForgotPasswordFragmentView mView;
     private ForgotPasswordInteractor interactor;
 
-    public ForgotPasswordPresentorImpl(ForgotPasswordFragment mView) {
+    public ForgotPasswordPresentorImpl(ForgotPasswordFragmentView mView) {
         this.mView = mView;
         interactor = new ForgotPasswordInteractorImpl(mView, this);
     }

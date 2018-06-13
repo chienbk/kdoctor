@@ -2,17 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ripple_select_device"
     android:orientation="vertical"
     tools:context=".view.home.fragment.setting.SettingFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:textSize="30sp"
-        android:gravity="center"
-        android:textColor="@android:color/black"
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/layout_device"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Đang hoàn thiện" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:textSize="20sp"
+            android:textColor="#007c89"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Quản lý thiết bị" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#999999"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Quản lý thông tin thiết bị" />
+    </LinearLayout>
+
+    <View
+        android:background="#d9d9d9"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
 </LinearLayout>

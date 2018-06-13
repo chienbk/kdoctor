@@ -18,8 +18,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.model.garagedetail.GarageDetail;
+import thebrightcompany.com.kdoctor.presenter.detailofgarage.DetailOfGaragePresentor;
+import thebrightcompany.com.kdoctor.presenter.detailofgarage.DetailOfGaragePresentorImpl;
 import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
+import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
 
 /**
@@ -44,6 +47,7 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     private double mLat, mLng;
     private SharedPreferencesUtils sharedPreferencesUtils;
     private GarageDetail mGarageDetail;
+    private DetailOfGaragePresentor presentor;
 
 
     public InformationOfGaraFragment() {
@@ -90,6 +94,8 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
      */
     private void initView(View view) {
         //todo something
+        presentor = new DetailOfGaragePresentorImpl(this);
+        presentor.processGetGarageDetail(Utils.APP_TOKEN, idOfGarage);
         sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
         mLat = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LAT, "0"));
         mLng = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LNG, "0"));
@@ -105,11 +111,15 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     public void getGaraDetailSuccess(GarageDetail garageDetail) {
         //todo something
         this.mGarageDetail = garageDetail;
-        txt_nameOfGarage.setText(mGarageDetail.getName());
-        txt_phoneOfGarage.setText(mGarageDetail.getPhone().get(0));
-        txt_addressOfGarage.setText(mGarageDetail.getAddress());
-        txt_emailOfGarage.setText(mGarageDetail.getEmail());
-        txt_service.setText(mGarageDetail.getDescriptiion());
+       try {
+           txt_nameOfGarage.setText(mGarageDetail.getName());
+           txt_phoneOfGarage.setText(mGarageDetail.getPhone().get(0));
+           txt_addressOfGarage.setText(mGarageDetail.getAddress());
+           txt_emailOfGarage.setText(mGarageDetail.getEmail());
+           txt_service.setText(mGarageDetail.getDescriptiion());
+       }catch (NullPointerException e){
+           Log.d(TAG, e.toString());
+       }
     }
 
     @Override
@@ -148,8 +158,8 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     @OnClick(R.id.btn_route)
     public void processRoute(){
         //todo something
-        String uri = String.format("http://maps.google.com/maps?saddr=%d,%d(%s)&daddr=%d,%d(%s)", mLat, mLng, "Your location",
-                mGarageDetail.getLat(), mGarageDetail.getLng(), mGarageDetail.getName());
+        String uri = String.format("http://maps.google.com/maps?saddr=%s,%s(%s)&daddr=%s,%s(%s)", mLat+"", mLng+"", "Your location",
+                mGarageDetail.getLat(), mGarageDetail.getLng()+"", mGarageDetail.getName()+"");
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse(uri));
         startActivity(intent);

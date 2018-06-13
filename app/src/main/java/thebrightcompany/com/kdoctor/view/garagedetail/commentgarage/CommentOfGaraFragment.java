@@ -4,12 +4,16 @@ package thebrightcompany.com.kdoctor.view.garagedetail.commentgarage;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.model.commentgarage.DataOfComment;
 import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
@@ -23,6 +27,16 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
     private ActivityGarageDetail homeActivity;
     private static final String ARG_ID_GARAGE = "ID_OF_GARAGE";
 
+    @BindView(R.id.txt_rate) TextView txt_rate;
+    @BindView(R.id.txt_all) TextView txt_all;
+    @BindView(R.id.txt_five) TextView txt_five;
+    @BindView(R.id.txt_four) TextView txt_four;
+    @BindView(R.id.txt_three) TextView txt_three;
+    @BindView(R.id.txt_two) TextView txt_two;
+    @BindView(R.id.txt_one) TextView txt_one;
+
+    @BindView(R.id.rc_listComment)
+    RecyclerView rc_listComment;
 
     private int idOfGarage;
 
@@ -107,4 +121,35 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
     public void showMessage(String message) {
         homeActivity.showMessage(message);
     }
+
+    @OnClick(R.id.layout_all)
+    public void processGetAllComment(){
+        showMessage("Get all comment");
+    }
+
+    @OnClick(R.id.layout_five)
+    public void processGetCommentFiveStar(){
+        showMessage("Get comment five star");
+    }
+
+    @OnClick(R.id.layout_four)
+    public void processGetCommentFourStar(){
+        showMessage("Get comment four star");
+    }
+
+    @OnClick(R.id.layout_three)
+    public void processGetCommentThreeStar(){
+        showMessage("Get comment three star");
+    }
+
+    @OnClick(R.id.layout_two)
+    public void processGetCommentTwoStar(){
+        showMessage("Get comment two star");
+    }
+
+    @OnClick(R.id.layout_one)
+    public void processGetCommentOneStar(){
+        showMessage("Get comment one star");
+    }
+
 }

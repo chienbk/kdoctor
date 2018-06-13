@@ -7,7 +7,7 @@
     tools:context=".view.garagedetail.inforgarage.InformationOfGaraFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v4.view.ViewPager
+      <android.support.v4.view.ViewPager
         android:id="@+id/vpSlideImage"
         android:layout_width="match_parent"
         android:layout_height="175dp">

@@ -17,5 +17,5 @@ public interface DetailOfGarageInteractor {
         void onGetGarageError(String msg, int status_code);
     }
 
-    void processgetGarageDetail(String email);
+    void processGetGarageDetail(String token, int idOfGarage);
 }
