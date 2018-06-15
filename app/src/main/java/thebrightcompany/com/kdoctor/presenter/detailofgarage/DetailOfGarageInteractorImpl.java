@@ -1,5 +1,7 @@
 package thebrightcompany.com.kdoctor.presenter.detailofgarage;
 
+import android.util.Log;
+
 import com.android.volley.VolleyError;
 
 import thebrightcompany.com.kdoctor.R;
@@ -14,6 +16,8 @@ import thebrightcompany.com.kdoctor.view.garagedetail.inforgarage.InformationOfG
  */
 
 public class DetailOfGarageInteractorImpl implements DetailOfGarageInteractor {
+
+    public static final String TAG = DetailOfGarageInteractorImpl.class.getSimpleName();
 
     private InformationOfGarageView mView;
     private OnGetDetailOfGarageFinishedListener mListener;
@@ -45,6 +49,8 @@ public class DetailOfGarageInteractorImpl implements DetailOfGarageInteractor {
         public void onErrorResponse(VolleyError error) {
             super.onErrorResponse(error);
             mListener.onGetGarageError(error.getMessage(), 0);
+
+            Log.d(TAG, error.getMessage());
         }
 
         @Override
@@ -55,6 +61,7 @@ public class DetailOfGarageInteractorImpl implements DetailOfGarageInteractor {
                 mListener.onGetGarageSuccess(response.getDataOfGarage().getGarageDetail());
             }else {
                 mListener.onGetGarageError(response.getMessage(), status_code);
+                Log.d(TAG, response.getMessage());
             }
         }
     }

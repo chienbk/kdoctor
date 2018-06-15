@@ -206,7 +206,7 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event){
         //todo something
-        showMessage(event.getMessage());
+        //showMessage(event.getMessage());
         String data = event.getMessage();
         if (data.contains(Contains.CONS_VERHICLE_SPEED)){
             data = Utils.convertDataReceiveToString(data);

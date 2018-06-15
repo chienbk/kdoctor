@@ -1,5 +1,7 @@
 package thebrightcompany.com.kdoctor.presenter.commentofgarage;
 
+import android.util.Log;
+
 import com.android.volley.VolleyError;
 
 import thebrightcompany.com.kdoctor.R;
@@ -14,6 +16,8 @@ import thebrightcompany.com.kdoctor.view.garagedetail.commentgarage.CommentOfGar
  */
 
 public class CommentOfGarageInteractorImpl implements CommentOfGarageInteractor {
+
+    public static final String TAG = CommentOfGarageInteractorImpl.class.getSimpleName();
 
     private CommentOfGaraView mView;
     private OnGetCommentOfGarageFinishedListener mListener;
@@ -44,6 +48,7 @@ public class CommentOfGarageInteractorImpl implements CommentOfGarageInteractor 
         public void onErrorResponse(VolleyError error) {
             super.onErrorResponse(error);
             mListener.onGetCommentError(error.getMessage(), 0);
+            Log.d(TAG, error.getMessage());
         }
 
         @Override
@@ -54,6 +59,7 @@ public class CommentOfGarageInteractorImpl implements CommentOfGarageInteractor 
                 mListener.onGetCommentSuccess(response.getDataOfComment());
             }else {
                 mListener.onGetCommentError(response.getMessage(), status_code);
+                Log.d(TAG, response.getMessage());
             }
         }
     }
