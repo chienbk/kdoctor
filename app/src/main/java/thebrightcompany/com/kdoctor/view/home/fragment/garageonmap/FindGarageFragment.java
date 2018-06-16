@@ -379,8 +379,10 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         try {
             phone = garageOnMap.getPhone();
             txt_nameOfGarage.setText(garageOnMap.getName());
-            txt_distance.setText(Utils.calculationByDistance(new LatLng(mLat, mLng),
-                    new LatLng(garageOnMap.getLat(), garageOnMap.getLng())) + " km");
+            /*txt_distance.setText(Utils.calculationByDistance(new LatLng(mLat, mLng),
+                    new LatLng(garageOnMap.getLat(), garageOnMap.getLng())) + " km");*/
+
+            txt_distance.setText(Utils.distFrom(new LatLng(mLat, mLng), new LatLng(garageOnMap.getLat(), garageOnMap.getLng())) + " km");
             rate_garage.setRating(garageOnMap.getRate());
             txt_addressOfGarage.setText(garageOnMap.getAddress());
         }catch (NullPointerException e){

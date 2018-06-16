@@ -56,7 +56,7 @@ public class TenGarageAdapter extends RecyclerView.Adapter<TenGarageAdapter.MyVi
         try {
 
             holder.txt_nameOfGarage.setText(garageOnMap.getName());
-            holder.txt_distance.setText(Utils.calculationByDistance(latLng, new LatLng(garageOnMap.getLat(), garageOnMap.getLng()))+ " km");
+            holder.txt_distance.setText(Utils.distFrom(latLng, new LatLng(garageOnMap.getLat(), garageOnMap.getLng()))+ " km");
             holder.btn_direct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

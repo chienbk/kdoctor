@@ -4,6 +4,9 @@ public class Contains {
 
     public static String GPS_FILTER = "android.intent.action.BOOT_COMPLETED";
     public static final String PATH = "KDoctor/";
+    public static final String PREF_URL_AVATAR = "PREF_URL_AVATAR";
+    public static final String PREF_NAME_OF_USER = "PREF_NAME_OF_USER";
+    public static final String PREF_EMAIL_OF_USER = "PREF_EMAIL_OF_USER";
 
     public static final String PREF_DEVICE_NAME = "PREF_DEVICE_NAME";
     public static final String PREF_OBJECT_CONNECTION = "PREF_OBJECT_CONNECTION";

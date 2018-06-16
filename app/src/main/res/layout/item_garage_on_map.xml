@@ -37,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:rating="4"
                 android:numStars="5"
-                android:isIndicator="false"/>
+                android:clickable="false"
+                android:isIndicator="true"/>
 
             <TextView
                 android:id="@+id/tvAddress"

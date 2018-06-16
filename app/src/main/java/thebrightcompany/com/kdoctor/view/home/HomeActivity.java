@@ -39,11 +39,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -86,6 +90,9 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
+    private ImageView imgProfile;
+    private TextView txt_nameOfUser;
+    private TextView txt_email;
 
     public static BluetoothService mService = null;
     private BluetoothDevice mDevice = null;
@@ -121,6 +128,25 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         lastFragment = new ConnectionFragment();
         replaceFragment(lastFragment);
+
+        View viewHeader = navigationView.getHeaderView(0);
+        imgProfile = (ImageView) viewHeader.findViewById(R.id.imageView);
+        txt_nameOfUser = (TextView) viewHeader.findViewById(R.id.txt_nameOfUser);
+        txt_email = (TextView) viewHeader.findViewById(R.id.txt_email);
+
+        String pathOfImageViewProfile = sharedPreferencesUtils.readStringPreference(Contains.PREF_URL_AVATAR, "");
+        String nameOfUser = sharedPreferencesUtils.readStringPreference(Contains.PREF_NAME_OF_USER, "K-Doctor");
+        String emailOfUser = sharedPreferencesUtils.readStringPreference(Contains.PREF_EMAIL_OF_USER, "k-doctor@gmail.com");
+
+        txt_nameOfUser.setText(nameOfUser);
+        txt_email.setText(emailOfUser);
+
+        Log.d(TAG, "pathOfImageViewProfile: " + pathOfImageViewProfile);
+        Glide.with(this).load(pathOfImageViewProfile)
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgProfile);
     }
 
     /**

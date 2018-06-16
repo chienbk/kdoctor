@@ -28,6 +28,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,6 +43,7 @@ import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.presenter.register.RegisterPresenter;
 import thebrightcompany.com.kdoctor.presenter.register.RegisterPresenterImpl;
 import thebrightcompany.com.kdoctor.utils.Contains;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.view.customview.Crop;
 import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 import thebrightcompany.com.kdoctor.view.loginmain.loginfragment.LoginFragment;
@@ -80,6 +84,7 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     private static Animation shakeAnimation;
     private static FragmentManager fragmentManager;
     private RegisterPresenter presenter;
+    private SharedPreferencesUtils sharedPreferencesUtils;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -98,6 +103,7 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
 
     private void initView(View view) {
         //todo something
+        sharedPreferencesUtils = new SharedPreferencesUtils(mActivity);
         presenter = new RegisterPresenterImpl(this);
         fragmentManager = getActivity().getSupportFragmentManager();
         // Load ShakeAnimation
@@ -355,7 +361,16 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
                 switch (mSelectImg) {
                     case SELECT_IMAGE_AVATAR:
                         mFileAvatar = saveBitmapToFile(imageBitmap, "image_avatar");
+                        String path = mFileAvatar.getPath();
+                        if (sharedPreferencesUtils != null){
+                            sharedPreferencesUtils.writeStringPreference(Contains.PREF_URL_AVATAR, path);
+                        }
                         //Picasso.with(getActivity()).load(mFileAvatar).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_CACHE).into(img_avatar);
+                        Glide.with(mActivity).load(mFileAvatar)
+                                .thumbnail(0.5f)
+                                .crossFade()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(imgProfile);
                         break;
                 }
             }
@@ -372,7 +387,7 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     private File saveBitmapToFile(Bitmap bitmap, String name) {
         String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
         OutputStream outStream = null;
-        File file = new File(extStorageDirectory, "VantaiDriver/");
+        File file = new File(extStorageDirectory, Contains.PATH);
         if (!file.exists()) {
             file.mkdir();
         }

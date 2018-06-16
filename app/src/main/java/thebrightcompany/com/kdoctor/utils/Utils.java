@@ -9,7 +9,10 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -44,6 +47,9 @@ public class Utils {
     public static final String Login_Fragment = "Login_Fragment";
     public static final String SignUp_Fragment = "SignUp_Fragment";
     public static final String ForgotPassword_Fragment = "ForgotPassword_Fragment";
+
+    private static SimpleDateFormat currentFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static SimpleDateFormat afterFormat = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
 
 
     /**
@@ -443,5 +449,45 @@ public class Utils {
                 + " Meter   " + meterInDec);
 
         return kmInDec;
+    }
+
+    /**
+     * The method use to get distance
+     *
+     * @param latLng_1
+     * @param latLng_2
+     * @return
+     */
+    public static String distFrom(LatLng latLng_1, LatLng latLng_2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(latLng_2.latitude - latLng_1.latitude);
+        double dLng = Math.toRadians(latLng_2.longitude - latLng_1.longitude);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(latLng_1.latitude)) * Math.cos(Math.toRadians(latLng_2.latitude)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        float dist = (float) (earthRadius * c)/1000;
+        DecimalFormat newFormat = new DecimalFormat("#.##");
+        //dist = Float.parseFloat(newFormat.format(dist));
+        String result = newFormat.format(dist);
+
+        return result;
+    }
+
+    /**
+     * The method use to convert time to display
+     *
+     * @param time
+     * @return
+     */
+    public static String convertTime(String time){
+        try {
+            Date newDate = currentFormat.parse(time);
+            String dateConvert = afterFormat.format(newDate);
+            return dateConvert;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

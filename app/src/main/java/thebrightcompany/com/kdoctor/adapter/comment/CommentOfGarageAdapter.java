@@ -13,6 +13,7 @@ import java.util.List;
 
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.model.commentgarage.Comment;
+import thebrightcompany.com.kdoctor.utils.Utils;
 
 /**
  * Created by ChienNv9 on 1/24/2018.
@@ -42,7 +43,7 @@ public class CommentOfGarageAdapter extends RecyclerView.Adapter<CommentOfGarage
             holder.txt_nameOfUser.setText(comment.getCustomer_name());
             holder.rate_comment.setRating(comment.getRating());
             holder.txt_description.setText(comment.getComment());
-            holder.txt_date.setText(comment.getTime());
+            holder.txt_date.setText(Utils.convertTime(comment.getTime()));
 
         }catch (NullPointerException e){
             Log.d("Diagnostic Adapter: ", e.toString());

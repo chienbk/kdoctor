@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:11.0.4'
     //add this dependency
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+    // glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
