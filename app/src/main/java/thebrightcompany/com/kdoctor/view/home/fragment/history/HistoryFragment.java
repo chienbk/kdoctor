@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,6 +33,7 @@ public class HistoryFragment extends Fragment implements HistoryView{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
+        setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
         initView(view);
         return view;
@@ -64,5 +68,23 @@ public class HistoryFragment extends Fragment implements HistoryView{
     public void onResume() {
         super.onResume();
         homeActivity.setTitle("Lịch sử sửa chữa");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Do something that differs the Activity's menu here
+        inflater.inflate(R.menu.add_device, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add_history:
+                showMessage("We will come back soon!");
+                break;
+        }
+        return true;
+
     }
 }

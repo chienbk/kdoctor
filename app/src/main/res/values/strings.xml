@@ -157,4 +157,7 @@ period of time while the ECU recalibrates itself.
     <string name="crop__done">DONE</string>
     <string name="crop__cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="str_registerning">Đang đăng ký...</string>
+
+    <string name="action_add_history">Thêm lịch sử</string>
+    <string name="action_add_device">Thêm thiết bị</string>
 </resources>
