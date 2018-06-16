@@ -3,6 +3,7 @@ package thebrightcompany.com.kdoctor.utils;
 public class Contains {
 
     public static String GPS_FILTER = "android.intent.action.BOOT_COMPLETED";
+    public static final String PATH = "KDoctor/";
 
     public static final String PREF_DEVICE_NAME = "PREF_DEVICE_NAME";
     public static final String PREF_OBJECT_CONNECTION = "PREF_OBJECT_CONNECTION";
@@ -13,6 +14,7 @@ public class Contains {
     public static final String PREF_FACEBOOK_TOKEN = "PREF_FACEBOOK_TOKEN";
     public static final String PREF_LAT = "PREF_LAT";
     public static final String PREF_LNG = "PREF_LNG";
+    public static final String PREF_RATE = "PREF_RATE";
 
     public static final String PREF_GARAGE_DETAIL = "GarageDetail";
 

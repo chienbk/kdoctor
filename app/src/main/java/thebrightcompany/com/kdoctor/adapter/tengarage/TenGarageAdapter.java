@@ -64,6 +64,7 @@ public class TenGarageAdapter extends RecyclerView.Adapter<TenGarageAdapter.MyVi
                 }
             });
             holder.txt_addressOfGarage.setText(garageOnMap.getAddress());
+            holder.rate_garage.setRating(garageOnMap.getRate());
 
             holder.btn_contact.setOnClickListener(new View.OnClickListener() {
                 @Override

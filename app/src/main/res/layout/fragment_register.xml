@@ -140,6 +140,7 @@
                 android:singleLine="true" />
 
             <LinearLayout
+                android:id="@+id/layoutProfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dimen_button"
@@ -173,6 +174,7 @@
                     android:layout_weight="5">
 
                     <ImageView
+                        android:id="@+id/imgProfile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingBottom="8dp"

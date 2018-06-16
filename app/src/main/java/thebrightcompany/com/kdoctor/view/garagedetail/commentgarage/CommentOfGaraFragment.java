@@ -4,6 +4,7 @@ package thebrightcompany.com.kdoctor.view.garagedetail.commentgarage;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,11 +18,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.adapter.comment.CommentOfGarageAdapter;
 import thebrightcompany.com.kdoctor.model.commentgarage.Comment;
 import thebrightcompany.com.kdoctor.model.commentgarage.DataOfComment;
 import thebrightcompany.com.kdoctor.presenter.commentofgarage.CommentOfGaragePresentor;
 import thebrightcompany.com.kdoctor.presenter.commentofgarage.CommentOfGaragePresentorImpl;
+import thebrightcompany.com.kdoctor.utils.Contains;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
+import thebrightcompany.com.kdoctor.utils.Utils;
+import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
 import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
 
 /**
@@ -45,10 +53,13 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
     RecyclerView rc_listComment;
     private DataOfComment mDataOfComment;
     private List<Comment> mList = new ArrayList<>();
+    private CommentOfGarageAdapter adapter;
 
     private int idOfGarage;
 
     private CommentOfGaragePresentor presentor;
+    private SharedPreferencesUtils sharedPreferencesUtils;
+    private String rate = "0";
 
     public CommentOfGaraFragment() {
         // Required empty public constructor
@@ -94,7 +105,19 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
      */
     private void initView(View view) {
         //todo something
+        sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
+        rate = sharedPreferencesUtils.readStringPreference(Contains.PREF_RATE, "0");
+        txt_rate.setText(rate);
         presentor = new CommentOfGaragePresentorImpl(this);
+        presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "all");
+
+        adapter = new CommentOfGarageAdapter(mList);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        rc_listComment.setLayoutManager(mLayoutManager);
+        rc_listComment.setItemAnimator(new SlideInDownAnimator());
+        rc_listComment.setAdapter(new SlideInLeftAnimationAdapter(adapter));
+        rc_listComment.addItemDecoration(new VerticalSpaceItemDecoration(35));
+
     }
 
     @Override
@@ -111,7 +134,15 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
         this.mList = mDataOfComment.getComments();
         //todo update view
         try {
-
+            txt_all.setText("Tất cả (" + dataOfComment.getSummaryStar().getTotal_of_comments() +")");
+            txt_five.setText("5 sao (" + dataOfComment.getSummaryStar().getTotal_of_5_star_comments() +")");
+            txt_four.setText("4 sao (" + dataOfComment.getSummaryStar().getTotal_of_4_star_comments() +")");
+            txt_three.setText("3 sao (" + dataOfComment.getSummaryStar().getTotal_of_3_star_comments() +")");
+            txt_two.setText("2 sao (" + dataOfComment.getSummaryStar().getTotal_of_2_star_comments() +")");
+            txt_one.setText("1 sao (" + dataOfComment.getSummaryStar().getTotal_of_1_star_comments() +")");
+            mList.clear();
+            mList = dataOfComment.getComments();
+            adapter.notifyDataSetChanged(mList);
         }catch (NullPointerException e){
             Log.d(TAG, e.toString());
         }
@@ -145,31 +176,37 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
     @OnClick(R.id.layout_all)
     public void processGetAllComment(){
         showMessage("Get all comment");
+        presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "all");
     }
 
     @OnClick(R.id.layout_five)
     public void processGetCommentFiveStar(){
         showMessage("Get comment five star");
+        presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "5");
     }
 
     @OnClick(R.id.layout_four)
     public void processGetCommentFourStar(){
         showMessage("Get comment four star");
+        presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "4");
     }
 
     @OnClick(R.id.layout_three)
     public void processGetCommentThreeStar(){
         showMessage("Get comment three star");
+        presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "3");
     }
 
     @OnClick(R.id.layout_two)
     public void processGetCommentTwoStar(){
         showMessage("Get comment two star");
+        presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "2");
     }
 
     @OnClick(R.id.layout_one)
     public void processGetCommentOneStar(){
         showMessage("Get comment one star");
+        presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "1");
     }
 
 }

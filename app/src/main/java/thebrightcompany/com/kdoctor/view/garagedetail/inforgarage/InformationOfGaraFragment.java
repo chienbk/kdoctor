@@ -111,6 +111,9 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     public void getGaraDetailSuccess(GarageDetail garageDetail) {
         //todo something
         this.mGarageDetail = garageDetail;
+        if (sharedPreferencesUtils != null){
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_RATE, garageDetail.getRate() + "");
+        }
        try {
            txt_nameOfGarage.setText(mGarageDetail.getName());
            txt_phoneOfGarage.setText(mGarageDetail.getPhone().get(0));

@@ -20,4 +20,10 @@
     <color name="color_diagnostic_less">#dd971a</color>
     <color name="color_diagnostic_greater">#f04937</color>
     <color name="color_border_frame">#C0C0C0</color>
+
+    <!--crop-->
+    <color name="crop__button_bar">#f3f3f3</color>
+    <color name="crop__button_text">#666666</color>
+    <color name="crop__selector_pressed">#1a000000</color>
+    <color name="crop__selector_focused">#77000000</color>
 </resources>

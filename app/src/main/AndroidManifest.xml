@@ -52,20 +52,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.login.LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".view.register.RegisterActivity" />
         <activity android:name=".view.garagelist.GarageListActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeHome"/>
         <activity android:name=".view.garagedetail.ActivityGarageDetail"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeHome"/>
-        <activity android:name=".view.loginmain.LoginScreenActivity" />
+        <activity android:name=".view.loginmain.LoginScreenActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.home.HomeActivity"
             android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeHome" />
-
+        <activity android:name=".view.customview.CropImageActivity" />
         <!-- Firebase Notifications -->
         <service android:name=".pushnotification.service.MyFirebaseMessagingService">
             <intent-filter>
@@ -99,6 +99,7 @@
             android:name=".view.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".view.extensiondate.ExtensionDateActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeHome"></activity>
 
         <service

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">KDoctor</string>
     <string name="title_activity_login">Sign in</string>
 
@@ -149,4 +149,12 @@ period of time while the ECU recalibrates itself.
     <string name="lb_garage_on_map_route">Chỉ đường</string>
     <string name="lb_garage_on_map_contact">Liên hệ</string>
     <string name="lb_garage_detail_contact">Cứu hộ</string>
+
+    <!--crop-->
+    <string name="crop__saving">Saving picture…</string>
+    <string name="crop__wait">Please wait…</string>
+    <string name="crop__pick_error">No image sources available</string>
+    <string name="crop__done">DONE</string>
+    <string name="crop__cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="str_registerning">Đang đăng ký...</string>
 </resources>

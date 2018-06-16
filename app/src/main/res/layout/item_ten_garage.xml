@@ -77,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:numStars="5"
                     android:rating="4"
+                    android:clickable="false"
                     android:isIndicator="false"/>
 
                 <TextView
