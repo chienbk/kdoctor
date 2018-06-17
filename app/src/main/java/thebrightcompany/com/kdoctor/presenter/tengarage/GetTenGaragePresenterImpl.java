@@ -21,10 +21,10 @@ public class GetTenGaragePresenterImpl implements GetTenGaragePresenter, GetTenG
     }
 
     @Override
-    public void onGetTenGarageSuccess(List<GarageOnMap> garageOnMaps) {
+    public void onGetTenGarageSuccess(String token, List<GarageOnMap> garageOnMaps) {
         if (mView != null){
             mView.hideProgress();
-            mView.onGetTenGaragesSuccess(garageOnMaps);
+            mView.onGetTenGaragesSuccess(token, garageOnMaps);
         }
     }
 

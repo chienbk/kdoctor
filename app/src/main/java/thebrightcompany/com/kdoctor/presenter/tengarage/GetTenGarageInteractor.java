@@ -12,7 +12,7 @@ public interface GetTenGarageInteractor {
 
     interface OnGetTenGarageListener{
 
-        void onGetTenGarageSuccess(List<GarageOnMap> garageOnMaps);
+        void onGetTenGarageSuccess(String token, List<GarageOnMap> garageOnMaps);
 
         void onGetTenGarageError(int status_code, String msg);
 

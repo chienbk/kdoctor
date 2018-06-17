@@ -12,7 +12,7 @@ public interface DetailOfGarageInteractor {
 
         void onCommonError(String msg);
 
-        void onGetGarageSuccess(GarageDetail garageDetail);
+        void onGetGarageSuccess(String token, GarageDetail garageDetail);
 
         void onGetGarageError(String msg, int status_code);
     }

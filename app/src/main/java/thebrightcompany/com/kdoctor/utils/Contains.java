@@ -8,7 +8,7 @@ public class Contains {
     public static final String PREF_NAME_OF_USER = "PREF_NAME_OF_USER";
     public static final String PREF_EMAIL_OF_USER = "PREF_EMAIL_OF_USER";
 
-    public static final String PREF_DEVICE_NAME = "PREF_DEVICE_NAME";
+    public static final String PREF_MAC_ADDRESS = "PREF_MAC_ADDRESS";
     public static final String PREF_OBJECT_CONNECTION = "PREF_OBJECT_CONNECTION";
     public static final String PREF_USER_LOGIN = "PREF_USER_LOGIN";
     public static final String PREF_PASSWORD = "PREF_PASSWORD";

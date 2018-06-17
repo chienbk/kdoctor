@@ -73,7 +73,7 @@ public class HistoryFragment extends Fragment implements HistoryView{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Do something that differs the Activity's menu here
-        inflater.inflate(R.menu.add_device, menu);
+        inflater.inflate(R.menu.add_history, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

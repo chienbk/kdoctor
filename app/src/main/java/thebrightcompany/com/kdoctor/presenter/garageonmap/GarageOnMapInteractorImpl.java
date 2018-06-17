@@ -69,7 +69,7 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
 
             int status_code = response.getStatus_code();
             if (status_code == 0){
-                listener.onGetGarageSuccess(response.getDatasOnMap().getGarageOnMaps());
+                listener.onGetGarageSuccess(response.getDatasOnMap().getToken(), response.getDatasOnMap().getGarageOnMaps());
             }else {
                 listener.onGetGarageError(response.getStatus_code(), response.getMessage());
             }
@@ -116,7 +116,7 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
             int status_code = response.getStatus_code();
             if (status_code == 0){
                 //todo something
-                listener.onSearchGarageSuccess(response.getDatasOnMap().getGarageOnMaps());
+                listener.onSearchGarageSuccess(response.getDatasOnMap().getToken(), response.getDatasOnMap().getGarageOnMaps());
             }else {
                 listener.onSearchGarageError(response.getStatus_code(), response.getMessage());
             }

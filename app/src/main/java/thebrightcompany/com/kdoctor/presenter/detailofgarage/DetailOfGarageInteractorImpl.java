@@ -58,7 +58,7 @@ public class DetailOfGarageInteractorImpl implements DetailOfGarageInteractor {
             super.onResponse(response);
             int status_code = response.getStatus_code();
             if (status_code == 0){
-                mListener.onGetGarageSuccess(response.getDataOfGarage().getGarageDetail());
+                mListener.onGetGarageSuccess(response.getDataOfGarage().getToken(), response.getDataOfGarage().getGarageDetail());
             }else {
                 mListener.onGetGarageError(response.getMessage(), status_code);
                 Log.d(TAG, response.getMessage());

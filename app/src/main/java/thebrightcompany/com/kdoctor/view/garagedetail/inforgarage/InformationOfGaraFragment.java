@@ -108,8 +108,10 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     }
 
     @Override
-    public void getGaraDetailSuccess(GarageDetail garageDetail) {
+    public void getGaraDetailSuccess(String token, GarageDetail garageDetail) {
         //todo something
+        homeActivity.updateToken(token);
+        Utils.APP_TOKEN = token;
         this.mGarageDetail = garageDetail;
         if (sharedPreferencesUtils != null){
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_RATE, garageDetail.getRate() + "");

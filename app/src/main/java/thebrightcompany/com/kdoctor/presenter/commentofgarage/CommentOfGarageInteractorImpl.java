@@ -56,7 +56,7 @@ public class CommentOfGarageInteractorImpl implements CommentOfGarageInteractor 
             super.onResponse(response);
             int status_code = response.getStatus_code();
             if (status_code == 0){
-                mListener.onGetCommentSuccess(response.getDataOfComment());
+                mListener.onGetCommentSuccess(response.getDataOfComment().getToken(), response.getDataOfComment());
             }else {
                 mListener.onGetCommentError(response.getMessage(), status_code);
                 Log.d(TAG, response.getMessage());

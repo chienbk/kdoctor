@@ -250,7 +250,9 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     }
 
     @Override
-    public void onSearchGarageSuccess(List<GarageOnMap> garageOnMaps) {
+    public void onSearchGarageSuccess(String token, List<GarageOnMap> garageOnMaps) {
+        homeActivity.updateToken(token);
+        Utils.APP_TOKEN = token;
         if (garageOnMaps != null){
             this.searchGaras.clear();
             this.searchGaras = garageOnMaps;
@@ -265,7 +267,9 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     }
 
     @Override
-    public void onGetListGaragesSuccess(List<GarageOnMap> garageOnMaps) {
+    public void onGetListGaragesSuccess(String token, List<GarageOnMap> garageOnMaps) {
+        homeActivity.updateToken(token);
+        Utils.APP_TOKEN = token;
         if (mGoogleMap != null){
             this.mListGarages = garageOnMaps;
             addGarageToMap(mListGarages);

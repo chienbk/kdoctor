@@ -20,6 +20,7 @@ import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.adapter.garagedetail.GarageTabPagerAdapter;
 import thebrightcompany.com.kdoctor.model.garage.GarageOnMap;
 import thebrightcompany.com.kdoctor.utils.Contains;
+import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.view.garagedetail.commentgarage.CommentOfGaraFragment;
 import thebrightcompany.com.kdoctor.view.garagedetail.inforgarage.InformationOfGaraFragment;
 
@@ -39,6 +40,7 @@ public class ActivityGarageDetail extends AppCompatActivity implements ActionBar
 
     private int idOfGarage;
     private GarageOnMap mGarageOnMap;
+    private SharedPreferencesUtils sharedPreferencesUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class ActivityGarageDetail extends AppCompatActivity implements ActionBar
      * The method use to initView
      */
     private void initView() {
+        sharedPreferencesUtils = new SharedPreferencesUtils(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (mGarageOnMap != null){
@@ -133,5 +136,20 @@ public class ActivityGarageDetail extends AppCompatActivity implements ActionBar
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * The method use to update token device
+     *
+     * @param token is token of device
+     */
+    public void updateToken(String token){
+        //todo something
+        if (sharedPreferencesUtils != null){
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, token);
+        }else {
+            sharedPreferencesUtils = new SharedPreferencesUtils(this);
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, token);
+        }
     }
 }

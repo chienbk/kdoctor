@@ -60,7 +60,7 @@ public class GetTenGarageInteractorImpl implements GetTenGarageInteractor {
             super.onResponse(response);
             int status_code = response.getStatus_code();
             if(status_code == 0){
-                listener.onGetTenGarageSuccess(response.getDatasOnMap().getGarageOnMaps());
+                listener.onGetTenGarageSuccess(response.getDatasOnMap().getToken(), response.getDatasOnMap().getGarageOnMaps());
             }else {
                 listener.onGetTenGarageError(response.getStatus_code(), response.getMessage());
             }

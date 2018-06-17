@@ -30,10 +30,10 @@ public class DetailOfGaragePresentorImpl implements DetailOfGaragePresentor, Det
     }
 
     @Override
-    public void onGetGarageSuccess(GarageDetail garageDetail) {
+    public void onGetGarageSuccess(String token, GarageDetail garageDetail) {
         if (mView != null){
             mView.hideProgress();
-            mView.getGaraDetailSuccess(garageDetail);
+            mView.getGaraDetailSuccess(token, garageDetail);
         }
     }
 

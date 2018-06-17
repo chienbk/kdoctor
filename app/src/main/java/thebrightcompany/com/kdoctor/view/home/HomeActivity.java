@@ -613,4 +613,19 @@ public class HomeActivity extends AppCompatActivity
         }
         return super.dispatchTouchEvent(event);
     }
+
+    /**
+     * The method use to update token device
+     *
+     * @param token is token of device
+     */
+    public void updateToken(String token){
+        //todo something
+        if (sharedPreferencesUtils != null){
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, token);
+        }else {
+            sharedPreferencesUtils = new SharedPreferencesUtils(this);
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, token);
+        }
+    }
 }

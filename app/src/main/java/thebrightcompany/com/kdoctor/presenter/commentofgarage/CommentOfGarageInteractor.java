@@ -12,7 +12,7 @@ public interface CommentOfGarageInteractor {
 
         void onCommonError(String msg);
 
-        void onGetCommentSuccess(DataOfComment dataOfComment);
+        void onGetCommentSuccess(String token, DataOfComment dataOfComment);
 
         void onGetCommentError(String msg, int status_code);
     }

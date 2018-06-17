@@ -12,11 +12,11 @@ public interface GarageOnMapInteractor {
 
     interface OnGetGarageOnMapListener{
 
-        void onGetGarageSuccess(List<GarageOnMap> garageOnMaps);
+        void onGetGarageSuccess(String token, List<GarageOnMap> garageOnMaps);
 
         void onGetGarageError(int status_code, String msg);
 
-        void onSearchGarageSuccess(List<GarageOnMap> garageOnMaps);
+        void onSearchGarageSuccess(String token, List<GarageOnMap> garageOnMaps);
 
         void onSearchGarageError(int status_code, String msg);
 

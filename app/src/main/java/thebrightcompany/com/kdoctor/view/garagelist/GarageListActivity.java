@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import thebrightcompany.com.kdoctor.App;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.adapter.tengarage.ItemSubmitGarageOnClickListener;
 import thebrightcompany.com.kdoctor.adapter.tengarage.ItemTenGarageOnClickListener;
@@ -101,7 +102,9 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     }
 
     @Override
-    public void onGetTenGaragesSuccess(List<GarageOnMap> garageOnMaps) {
+    public void onGetTenGaragesSuccess(String token, List<GarageOnMap> garageOnMaps) {
+        updateToken(token);
+        Utils.APP_TOKEN = token;
         if (garageOnMaps.size() > 0){
             adapterGarageList.notifyDataSetChanged(garageOnMaps);
         }else {
@@ -254,5 +257,20 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
             return true;
         }
         return false;
+    }
+
+    /**
+     * The method use to update token device
+     *
+     * @param token is token of device
+     */
+    public void updateToken(String token){
+        //todo something
+        if (sharedPreferencesUtils != null){
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, token);
+        }else {
+            sharedPreferencesUtils = new SharedPreferencesUtils(this);
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, token);
+        }
     }
 }

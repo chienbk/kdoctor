@@ -127,8 +127,10 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
     }
 
     @Override
-    public void getCommentSuccess(DataOfComment dataOfComment) {
+    public void getCommentSuccess(String token, DataOfComment dataOfComment) {
         //todo something
+        homeActivity.updateToken(token);
+        Utils.APP_TOKEN = token;
         this.mDataOfComment = dataOfComment;
         this.mList.clear();
         this.mList = mDataOfComment.getComments();

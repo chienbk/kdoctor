@@ -21,10 +21,10 @@ public class GarageOnMapPresenterImpl implements GarageOnMapPresenter, GarageOnM
     }
 
     @Override
-    public void onGetGarageSuccess(List<GarageOnMap> garageOnMaps) {
+    public void onGetGarageSuccess(String token, List<GarageOnMap> garageOnMaps) {
         if (mView != null){
             mView.hideProgress();
-            mView.onGetListGaragesSuccess(garageOnMaps);
+            mView.onGetListGaragesSuccess(token, garageOnMaps);
         }
     }
 
@@ -37,10 +37,10 @@ public class GarageOnMapPresenterImpl implements GarageOnMapPresenter, GarageOnM
     }
 
     @Override
-    public void onSearchGarageSuccess(List<GarageOnMap> garageOnMaps) {
+    public void onSearchGarageSuccess(String token, List<GarageOnMap> garageOnMaps) {
         if (mView != null){
             mView.hideProgress();
-            mView.onSearchGarageSuccess(garageOnMaps);
+            mView.onSearchGarageSuccess(token, garageOnMaps);
         }
     }
 

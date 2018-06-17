@@ -26,10 +26,10 @@ public class CommentOfGaragePresentorImpl implements CommentOfGaragePresentor, C
     }
 
     @Override
-    public void onGetCommentSuccess(DataOfComment dataOfComment) {
+    public void onGetCommentSuccess(String token, DataOfComment dataOfComment) {
         if (mView != null){
             mView.hideProgress();
-            mView.getCommentSuccess(dataOfComment);
+            mView.getCommentSuccess(token, dataOfComment);
         }
     }
 

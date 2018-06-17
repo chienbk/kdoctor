@@ -7,7 +7,7 @@ import thebrightcompany.com.kdoctor.view.BaseView;
 
 public interface GetTenGaragesView extends BaseView{
 
-    void onGetTenGaragesSuccess(List<GarageOnMap> garageOnMaps);
+    void onGetTenGaragesSuccess(String token, List<GarageOnMap> garageOnMaps);
     void onGetTenGaragesError(int status_code, String msg);
     void onCommonError(String msg);
 }
