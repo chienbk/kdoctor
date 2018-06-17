@@ -66,11 +66,11 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
         initView();
         sharedPreferencesUtils = new SharedPreferencesUtils(this);
         String deviceToken = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_TOKEN, "");
-//        if (!TextUtils.isEmpty(deviceToken)){
-//            Utils.APP_TOKEN = deviceToken;
-//            startActivity(new Intent(this, HomeActivity.class));
-//            finish();
-//        }
+        if (!TextUtils.isEmpty(deviceToken)){
+            Utils.APP_TOKEN = deviceToken;
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
+        }
         fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
             fragmentManager

@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -42,6 +43,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import java.io.InputStream;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,14 +127,26 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
      * The method use to login with facebook
      */
     private void initFaceBookSignIn() {
-        btnLoginFacebook.setReadPermissions("email");
+        btnLoginFacebook.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday", "user_friends"));
         btnLoginFacebook.setFragment(this);
         btnLoginFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
+                String token = loginResult.getAccessToken().getToken();
+                Profile profile = Profile.getCurrentProfile();
+
+                String fullName = profile.getFirstName() + " " + profile.getLastName();
+                String email = loginResult.getAccessToken().getUserId();
                 Log.d(TAG, "User ID: " + loginResult.getAccessToken().getUserId() + "\n" +
-                        "Auth Token: " + loginResult.getAccessToken().getToken());
+                        "Auth Token: " + loginResult.getAccessToken().getToken() + "\n" +
+                "Profile: " + profile.getFirstName() + profile.getFirstName());
+
+                Log.d(TAG, "Auth Token: " + token + "\n" +
+                "fullName: " + fullName);
+
+                //todo process call api
             }
 
             @Override
@@ -339,6 +353,12 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             txt_email.setText(acct.getEmail());
+            String token = result.getSignInAccount().getServerAuthCode();
+            Log.d(TAG, "Token: " + token +"\n" +
+            "email: " + acct.getEmail()+ "\n"
+            + "fullName: " + acct.getDisplayName());
+
+            //todo process call api login
 
             //Similarly you can get the email and photourl using acct.getEmail() and  acct.getPhotoUrl()
 
