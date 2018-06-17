@@ -130,6 +130,9 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     @Override
     public void getGaraDetailError(String msg, int status_code) {
         showMessage(msg);
+        if (status_code == Contains.TOKEN_EXPIRED){
+            homeActivity.logout();
+        }
     }
 
     @Override

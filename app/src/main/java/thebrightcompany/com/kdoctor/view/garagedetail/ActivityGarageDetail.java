@@ -1,6 +1,7 @@
 package thebrightcompany.com.kdoctor.view.garagedetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -23,6 +24,7 @@ import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.view.garagedetail.commentgarage.CommentOfGaraFragment;
 import thebrightcompany.com.kdoctor.view.garagedetail.inforgarage.InformationOfGaraFragment;
+import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 
 /**
  * Created by ChienNv9 on 6/5/2018.
@@ -151,5 +153,15 @@ public class ActivityGarageDetail extends AppCompatActivity implements ActionBar
             sharedPreferencesUtils = new SharedPreferencesUtils(this);
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, token);
         }
+    }
+
+    /**
+     * The method use to logout
+     */
+    public void logout() {
+        updateToken("");
+        startActivity(new Intent(ActivityGarageDetail.this, LoginScreenActivity.class));
+        updateToken("");
+        finish();
     }
 }

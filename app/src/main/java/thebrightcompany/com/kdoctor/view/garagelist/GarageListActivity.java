@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,7 +34,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
-import thebrightcompany.com.kdoctor.App;
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.adapter.tengarage.ItemSubmitGarageOnClickListener;
 import thebrightcompany.com.kdoctor.adapter.tengarage.ItemTenGarageOnClickListener;
@@ -47,6 +47,7 @@ import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
 import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
+import thebrightcompany.com.kdoctor.view.loginmain.LoginScreenActivity;
 
 /**
  * Created by CongVC on 5/25/2018.
@@ -137,6 +138,9 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     @Override
     public void onGetTenGaragesError(int status_code, String msg) {
         showMessage(msg);
+        if (status_code == Contains.TOKEN_EXPIRED){
+            logout();
+        }
     }
 
     @Override
@@ -272,5 +276,15 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
             sharedPreferencesUtils = new SharedPreferencesUtils(this);
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, token);
         }
+    }
+
+    /**
+     * The method use to logout
+     */
+    public void logout() {
+        updateToken("");
+        startActivity(new Intent(GarageListActivity.this, LoginScreenActivity.class));
+        updateToken("");
+        finish();
     }
 }

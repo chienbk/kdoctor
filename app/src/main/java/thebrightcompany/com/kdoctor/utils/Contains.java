@@ -20,6 +20,7 @@ public class Contains {
     public static final String PREF_RATE = "PREF_RATE";
 
     public static final String PREF_GARAGE_DETAIL = "GarageDetail";
+    public static final int TOKEN_EXPIRED = 2;
 
     //Tốc độ xe
     public static final String VERHICLE_SPEED = " 01 0D\n";

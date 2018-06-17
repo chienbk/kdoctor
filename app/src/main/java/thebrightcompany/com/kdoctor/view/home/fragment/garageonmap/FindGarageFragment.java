@@ -264,6 +264,9 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     @Override
     public void onSearchGarageError(int status_code, String msg) {
         showMessage(msg);
+        if (status_code == Contains.TOKEN_EXPIRED){
+            homeActivity.logout();
+        }
     }
 
     @Override

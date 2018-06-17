@@ -569,7 +569,8 @@ public class HomeActivity extends AppCompatActivity
     /**
      * The method use to logout
      */
-    private void logout() {
+    public void logout() {
+        updateToken("");
         startActivity(new Intent(HomeActivity.this, LoginScreenActivity.class));
         finish();
     }
