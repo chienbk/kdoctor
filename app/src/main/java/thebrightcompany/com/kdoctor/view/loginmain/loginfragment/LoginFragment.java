@@ -49,6 +49,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.model.login.Customer;
 import thebrightcompany.com.kdoctor.presenter.login.LoginPresenter;
 import thebrightcompany.com.kdoctor.presenter.login.LoginPresenterImpl;
 import thebrightcompany.com.kdoctor.utils.Contains;
@@ -222,13 +223,19 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     }
 
     @Override
-    public void onLoginSuccess(String device_token) {
+    public void onLoginSuccess(String device_token, Customer customer) {
         //todo something
         if (type == 0){
             Utils.APP_TOKEN = device_token;
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, device_token);
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_USER_LOGIN, email);
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_PASSWORD, password);
+        }
+
+        try {
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_NAME_OF_USER, customer.getFullName());
+        }catch (Exception e){
+            Log.e(TAG, e.toString());
         }
         startActivity(new Intent(mActivity, HomeActivity.class));
         mActivity.finish();

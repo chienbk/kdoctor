@@ -10,7 +10,7 @@ import thebrightcompany.com.kdoctor.model.garagedetail.GarageDetailResponse;
 
 public class DetailOfGarageCallAPI {
 
-    public void processForgotPassword(String token, String idOfGarage, OnResponseListener<GarageDetailResponse> listener){
+    public void processGetGarageDetail(String token, String idOfGarage, OnResponseListener<GarageDetailResponse> listener){
         DetailOfGarageRequest request = new DetailOfGarageRequest(listener, idOfGarage);
         request.setToken(token);
         App.addRequest(request, "Detail Garage");

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import thebrightcompany.com.kdoctor.model.diagnostic.Diagnostic;
+import thebrightcompany.com.kdoctor.utils.ecu.ObdCodeList;
 
 public class Utils {
 
@@ -24,7 +25,7 @@ public class Utils {
     public static final String URL_FORGOT_PASSWORD = ROOT_URL + "v1/forgotpass";
     public static final String URL_LOGIN = ROOT_URL + "v1/login";
     public static final String URL_REGISTER = ROOT_URL + "v1/register";
-    public static final String URL_TROUBLE_CODE = ROOT_URL + "v1/trouble-code";
+    public static final String URL_TROUBLE_CODE = ROOT_URL + "v1/trouble_code_multi";
     public static final String URL_GET_LIST_GARAGE = ROOT_URL + "v1/list_gara_on_map";
     public static final String URL_SEARCH_GARAGE_ON_MAP = ROOT_URL + "v1/garages/search";
     public static final String URL_GET_TEN_GARAGE = ROOT_URL + "v1/garages";
@@ -490,4 +491,58 @@ public class Utils {
             return "";
         }
     }
+
+    /**
+     * The method use to convert hex to integer
+     * @param data
+     * @return
+     */
+    public static List<Integer> getIntergerOfError(String data){
+        List<String> mList = new ArrayList<>();
+        mList = getStringOfError(data);
+
+        List<Integer> mListError = new ArrayList<>();
+        for (int i = 0; i < mList.size(); i++){
+            int dt;
+            dt = convertHexToDecimal(mList.get(i));
+            mListError.add(dt);
+
+            Log.d("getIntergerOfError: ", dt + "" );
+        }
+
+        return mListError;
+    }
+
+    /**
+     * The method use to get list string of error
+     *
+     * @param data
+     * @return mList
+     */
+    public static List<String> getStringOfError(String data){
+        List<String> mList = new ArrayList<>();
+        Log.d("Data: ", data);
+        //data = data.substring(0, data.length());
+        Log.d("Data: ", data);
+        for (int i = 0; i < data.length(); ){
+            String dt = "";
+            try {
+                dt = data.substring(i, i + 4);
+            }catch (Exception e){
+                Log.d(TAG, "getStringOfError: " + e.toString());
+                break;
+            }
+            if (!dt.equals("0000")){
+                mList.add(dt);
+            }
+            i = i + 4;
+            Log.d("getStringOfError: ", dt +" ");
+
+        }
+
+        return mList;
+    }
+
+    public static ObdCodeList obdCodeList  = new ObdCodeList();
+    public static String getErrorPCode(Number value) { return obdCodeList.getCodeError(value);}
 }

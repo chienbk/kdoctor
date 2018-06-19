@@ -1,6 +1,7 @@
 package thebrightcompany.com.kdoctor.presenter.login;
 
 
+import thebrightcompany.com.kdoctor.model.login.Customer;
 import thebrightcompany.com.kdoctor.view.loginmain.loginfragment.LoginFragmentView;
 
 /**
@@ -54,10 +55,10 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
     }
 
     @Override
-    public void onLoginSuccess(String token) {
+    public void onLoginSuccess(String token, Customer customer) {
         if (mViews != null){
             mViews.hideProgress();
-            mViews.onLoginSuccess(token);
+            mViews.onLoginSuccess(token, customer);
         }
     }
 }

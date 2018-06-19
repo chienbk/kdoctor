@@ -40,7 +40,7 @@ public class DetailOfGarageInteractorImpl implements DetailOfGarageInteractor {
     private void processGetGarage(String token, int idOfGarage) {
         OnGetGarageDetailListener listener = new OnGetGarageDetailListener();
         DetailOfGarageCallAPI callAPI = new DetailOfGarageCallAPI();
-        callAPI.processForgotPassword(token, String.valueOf(idOfGarage), listener);
+        callAPI.processGetGarageDetail(token, String.valueOf(idOfGarage), listener);
     }
 
 

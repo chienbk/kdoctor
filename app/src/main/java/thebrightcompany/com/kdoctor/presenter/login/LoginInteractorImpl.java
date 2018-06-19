@@ -85,7 +85,7 @@ public class LoginInteractorImpl implements LoginInteractor {
 
             if (status_code == 0){
                 Utils.APP_TOKEN = response.getData().getToken();
-                mListener.onLoginSuccess(response.getData().getToken());
+                mListener.onLoginSuccess(response.getData().getToken(), response.getData().getCustomer());
             }else {
                 mListener.onLoginError(response.getMessage());
                 return;
