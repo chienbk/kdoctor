@@ -234,6 +234,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
 
         try {
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_NAME_OF_USER, customer.getFullName());
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_EMAIL_OF_USER, customer.getEmail());
         }catch (Exception e){
             Log.e(TAG, e.toString());
         }
