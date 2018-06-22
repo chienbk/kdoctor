@@ -227,7 +227,7 @@ public class GarageListActivity extends AppCompatActivity implements GetTenGarag
     public void onItemClickListener(int position, GarageOnMap garageOnMap) {
         //todo something
         //todo redirect to garage detail
-        showMessage("You choice: " + garageOnMap.getName());
+        //showMessage("You choice: " + garageOnMap.getName());
         Intent intent = new Intent(GarageListActivity.this, ActivityGarageDetail.class);
         intent.putExtra(Contains.PREF_GARAGE_DETAIL, garageOnMap);
         startActivity(intent);

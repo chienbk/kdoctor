@@ -130,12 +130,12 @@
                            android:layout_height="130dp"
                            android:background="@mipmap/ic_launcher" >
 
-                           <ImageView
+                           <!--<ImageView
                                android:id="@+id/img_exit"
                                android:layout_gravity="top|left"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
-                               android:src="@drawable/ic_search_close"/>
+                               android:src="@drawable/ic_search_close"/>-->
 
                        </FrameLayout>
 
@@ -182,7 +182,6 @@
                                        android:layout_width="wrap_content"
                                        android:layout_height="wrap_content"
                                        android:textColor="@android:color/black"
-                                       android:maxLines="1"
                                        android:text="30 km/h"
                                        android:textSize="@dimen/txt_normal" />
                                </LinearLayout>
@@ -200,7 +199,7 @@
 
                            <TextView
                                android:id="@+id/txt_addressOfGarage"
-                               android:text="Hello android fffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                               android:text=""
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
                                android:textSize="@dimen/txt_normal"

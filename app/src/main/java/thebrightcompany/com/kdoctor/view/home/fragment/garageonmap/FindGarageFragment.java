@@ -61,6 +61,7 @@ import thebrightcompany.com.kdoctor.utils.Contains;
 import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
+import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
 import thebrightcompany.com.kdoctor.view.garagelist.GarageListActivity;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
@@ -116,6 +117,8 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     private SearchGarageAdapter adapter;
 
     private SharedPreferencesUtils sharedPreferencesUtils;
+    private boolean isChoice = false;
+    private int idOfGarage = -100;
 
     public FindGarageFragment() {
         // Required empty public constructor
@@ -366,8 +369,22 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
             GarageOnMap garageOnMap = new GarageOnMap();
             for (int i = 0; i < mListGarages.size(); i ++){
                 if (id == mListGarages.get(i).getId()){
+                    //idOfGarage = id;
                     garageOnMap = mListGarages.get(i);
-                    processDisplayInformationOfGarage(garageOnMap);
+                    /*if (!isChoice){
+                        processDisplayInformationOfGarage(garageOnMap);
+                    }else {
+                        layout_detail.setVisibility(View.GONE);
+                        isChoice = false;
+                    }*/
+
+                    if (isChoice && idOfGarage == id){
+                        layout_detail.setVisibility(View.GONE);
+                        isChoice = false;
+                    }else {
+                        processDisplayInformationOfGarage(garageOnMap);
+                    }
+
                     break;
                 }
 
@@ -382,6 +399,8 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
      */
     private void processDisplayInformationOfGarage(GarageOnMap garageOnMap) {
         this.garageOnMap = garageOnMap;
+        isChoice = true;
+        idOfGarage =  garageOnMap.getId();
         layout_detail.setVisibility(View.VISIBLE);
         try {
             phone = garageOnMap.getPhone();
@@ -397,9 +416,12 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         }
     }
 
-    @OnClick(R.id.img_exit)
+    @OnClick(R.id.imgAvatar)
     public void processExit(){
-        layout_detail.setVisibility(View.GONE);
+        //layout_detail.setVisibility(View.GONE);
+        Intent intent = new Intent(homeActivity, ActivityGarageDetail.class);
+        intent.putExtra(Contains.PREF_GARAGE_DETAIL, garageOnMap);
+        startActivity(intent);
     }
 
     @OnClick(R.id.layout_get_ten_garage)
