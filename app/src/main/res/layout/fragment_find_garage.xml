@@ -162,7 +162,6 @@
                                    android:text="Garage otô Vĩnh Tín"
                                    android:textSize="@dimen/txt_normal"
                                    android:layout_alignParentLeft="true"
-                                   android:maxLines="1"
                                    android:ellipsize="end"
                                    android:layout_centerVertical="true"
                                    android:layout_toLeftOf="@+id/layout_distance"

@@ -117,9 +117,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:weightSum="2"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="horizontal">

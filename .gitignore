@@ -1,0 +1,10 @@
+.gradle/
+.idea/
+app/src/androidTest/java/thebrightcompany/com/kdoctor/ExampleInstrumentedTest.java
+local.properties
+gradlew.bat
+gradlew
+gradle/wrapper/gradle-wrapper.jar
+app/src/test/java/thebrightcompany/com/kdoctor/ExampleUnitTest.java
+app/app.iml
+KDoctor.iml

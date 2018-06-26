@@ -76,8 +76,8 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
 
     @BindView(R.id.layout_detail)
     LinearLayout layout_detail;
-    @BindView(R.id.img_exit)
-    ImageView img_exit;
+    /*@BindView(R.id.img_exit)
+    ImageView img_exit;*/
     @BindView(R.id.txt_nameOfGarage)
     TextView txt_nameOfGarage;
     @BindView(R.id.txt_distance)

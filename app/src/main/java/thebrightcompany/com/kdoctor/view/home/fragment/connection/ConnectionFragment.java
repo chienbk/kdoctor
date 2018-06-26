@@ -148,17 +148,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         mLisView.setItemAnimator(new SlideInDownAnimator());
         mLisView.setAdapter(new SlideInLeftAnimationAdapter(adapter));
         mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));
-
-        if (homeActivity.isConnected){
-            Gson gson = new Gson();
-            BluetoothConnection connection;
-            String device = sharedPreferencesUtils.readStringPreference(Contains.PREF_OBJECT_CONNECTION, "");
-            if (!TextUtils.isEmpty(device)){
-                connection = gson.fromJson(device, BluetoothConnection.class);
-                mLists.add(connection);
-                adapter.notifyDataSetChanged(mLists);
-            }
-        }
     }
 
     @Override
@@ -169,12 +158,14 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     @Override
     public void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart");
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        Log.d(TAG, "onStop");
         EventBus.getDefault().unregister(this);
     }
 
@@ -307,12 +298,24 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume");
+        if (homeActivity.isConnected){
+            Gson gson = new Gson();
+            BluetoothConnection connection;
+            String device = sharedPreferencesUtils.readStringPreference(Contains.PREF_OBJECT_CONNECTION, "");
+            if (!TextUtils.isEmpty(device)){
+                connection = gson.fromJson(device, BluetoothConnection.class);
+                mLists.add(connection);
+                adapter.notifyDataSetChanged(mLists);
+            }
+        }
+
         if (sharedPreferencesUtils != null){
             lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_MAC_ADDRESS, "");
         }
-        if (homeActivity.isConnected){
+       /* if (homeActivity.isConnected){
            //todo something
-        }
+        }*/
 
         homeActivity.setTitle("Kết nối thiết bị");
     }
@@ -338,7 +341,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
             lastDeviceConnected = mDevice.getMacAddress();
 
             Gson gson = new Gson();
-            String dv = gson.toJson(device);
+            String dv = gson.toJson(mDevice);
             if (sharedPreferencesUtils != null){
                 sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, dv);
                 sharedPreferencesUtils.writeStringPreference(Contains.PREF_MAC_ADDRESS, lastDeviceConnected);

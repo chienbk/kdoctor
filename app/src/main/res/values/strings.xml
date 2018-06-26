@@ -84,10 +84,10 @@
     <string name="msg_ble_is_not_available">Bluetooth không khả dụng</string>
     <string name="msg_ble_do_not_support">Device does not support UART. Disconnecting</string>
 
-    <string name="popup_title">Quit nRF UART</string>
-    <string name="popup_message">Do you want to quit this Application?</string>
-    <string name="popup_yes">YES</string>
-    <string name="popup_no">NO</string>
+    <string name="popup_title">Thoát ứng dụng</string>
+    <string name="popup_message">Bạn có muốn thoát ứng dụng không?</string>
+    <string name="popup_yes">Có</string>
+    <string name="popup_no">KLhông</string>
 
     <string name="ble_not_supported">Bluetooth Low Energy không được hỗ trợ</string>
     <string name="msg_logout">Bạn có muốn thoát chương trình?</string>

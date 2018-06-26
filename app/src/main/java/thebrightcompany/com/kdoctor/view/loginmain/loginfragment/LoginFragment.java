@@ -129,7 +129,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
      */
     private void initFaceBookSignIn() {
         btnLoginFacebook.setReadPermissions(Arrays.asList(
-                "public_profile", "email", "user_birthday", "user_friends"));
+                "public_profile", "email"));
         btnLoginFacebook.setFragment(this);
         btnLoginFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -148,6 +148,8 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
                 "fullName: " + fullName);
 
                 //todo process call api
+                presenter.processLogin(null, null, 1, Utils.FCM_TOKEN, token, fullName);
+
             }
 
             @Override
@@ -169,6 +171,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
      */
     private void initGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.google_maps_key))
                 .requestEmail()
                 .build();
 
@@ -245,11 +248,24 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume");
         email = sharedPreferencesUtils.readStringPreference(Contains.PREF_USER_LOGIN, "");
         password = sharedPreferencesUtils.readStringPreference(Contains.PREF_PASSWORD, "");
 
         txt_email.setText(email);
         txt_password.setText(password);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
     }
 
     @Override
@@ -360,13 +376,18 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            txt_email.setText(acct.getEmail());
+            //txt_email.setText(acct.getEmail());
             String token = result.getSignInAccount().getServerAuthCode();
+            String tk = result.getSignInAccount().getIdToken();
+            Log.d(TAG, "Token: " + tk +"\n" +
+                    "email: " + acct.getEmail()+ "\n"
+                    + "fullName: " + acct.getDisplayName());
             Log.d(TAG, "Token: " + token +"\n" +
             "email: " + acct.getEmail()+ "\n"
             + "fullName: " + acct.getDisplayName());
 
             //todo process call api login
+            presenter.processLogin(acct.getEmail(), null, 2, Utils.FCM_TOKEN, token, acct.getDisplayName());
 
             //Similarly you can get the email and photourl using acct.getEmail() and  acct.getPhotoUrl()
 
@@ -400,7 +421,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @Override
     public void onStart() {
         super.onStart();
-
+        Log.d(TAG, "onStart");
         try {
             OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
             if (opr.isDone()) {

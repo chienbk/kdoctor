@@ -354,7 +354,6 @@ public class HomeActivity extends AppCompatActivity
             startMain.addCategory(Intent.CATEGORY_HOME);
             startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(startMain);
-            //showMessage("nRFUART's running in background.\n             Disconnect to exit");
         } else {
             new AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
