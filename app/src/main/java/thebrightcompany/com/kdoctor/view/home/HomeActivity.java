@@ -402,14 +402,14 @@ public class HomeActivity extends AppCompatActivity
             if (isConnected){
                 fragment = new DiagnosticFragment();
             }else {
-                showMessage("Please connect to device");
+                showMessage(getString(R.string.msg_alert_connection));
             }
         } else if (id == R.id.nav_trouble_code) {
 
             if (isConnected){
                 fragment = new TroubleCodeFragment();
             }else {
-                showMessage("Please connect to device");
+                showMessage(getString(R.string.msg_alert_connection));
             }
         } else if (id == R.id.nav_add_of_garage) {
 
@@ -481,6 +481,10 @@ public class HomeActivity extends AppCompatActivity
                 new IntentFilter(Contains.GPS_FILTER));
 
         startService(new Intent(this, GPSTracker.class));
+
+    }
+
+    public void showDialogAskEnableGPS(){
         if (!checkGPS() && (dlGPS == null || !dlGPS.isShowing())) {
             dlGPS = AlertDialogUtils.ShowDialog(this, getString(R.string.dialog_notice),
                     getString(R.string.gps_network_not_enabled), getString(R.string.open_location_settings), true,

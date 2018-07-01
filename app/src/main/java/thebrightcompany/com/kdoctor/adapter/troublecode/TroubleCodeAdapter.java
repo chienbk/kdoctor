@@ -1,8 +1,5 @@
 package thebrightcompany.com.kdoctor.adapter.troublecode;
 
-import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,8 +70,11 @@ public class TroubleCodeAdapter extends RecyclerView.Adapter<TroubleCodeAdapter.
 
         public MyViewHolder(View view) {
             super(view);
-
-        }
+            txt_code = (TextView) view.findViewById(R.id.txt_code);
+            txt_level = (TextView) view.findViewById(R.id.txt_level);
+            txt_detailOfError = (TextView) view.findViewById(R.id.txt_detailOfError);
+            btn_viewDetail = (Button) view.findViewById(R.id.btn_viewDetail);
+            }
     }
 
     public void notifyDataSetChanged(List<TroubleCode> troubleCodes) {

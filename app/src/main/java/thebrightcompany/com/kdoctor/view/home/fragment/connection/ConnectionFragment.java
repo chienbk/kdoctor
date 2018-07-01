@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -129,9 +130,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     private void initView(View view) {
 
         sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
-        if (sharedPreferencesUtils != null){
-            lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_MAC_ADDRESS, "");
-        }
 
         homeActivity.setTitle("Kết nối thiết bị");
 
@@ -148,6 +146,19 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
         mLisView.setItemAnimator(new SlideInDownAnimator());
         mLisView.setAdapter(new SlideInLeftAnimationAdapter(adapter));
         mLisView.addItemDecoration(new VerticalSpaceItemDecoration(35));
+
+        if (homeActivity.isConnected){
+            Gson gson = new Gson();
+            BluetoothConnection connection;
+            lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_MAC_ADDRESS, "");
+            String device = sharedPreferencesUtils.readStringPreference(Contains.PREF_OBJECT_CONNECTION, "");
+            Log.d(TAG, "device - after connection: " + device);
+            if (!TextUtils.isEmpty(device)){
+                connection = gson.fromJson(device, BluetoothConnection.class);
+                mLists.add(connection);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
@@ -222,8 +233,12 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
                 }
             }, SCAN_PERIOD);
             homeActivity.connectBluetooth(bluetoothConnection.getMacAddress());
-        }else {
+        } else if(homeActivity.isConnected && lastDeviceConnected != bluetoothConnection.getMacAddress()){
+            homeActivity.disconnectBluetooth();
+            homeActivity.connectBluetooth(bluetoothConnection.getMacAddress());
 
+        } else {
+            lastDeviceConnected = "";
             homeActivity.disconnectBluetooth();
             mDevice.setConnected(false);
         }
@@ -299,24 +314,6 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        if (homeActivity.isConnected){
-            Gson gson = new Gson();
-            BluetoothConnection connection;
-            String device = sharedPreferencesUtils.readStringPreference(Contains.PREF_OBJECT_CONNECTION, "");
-            if (!TextUtils.isEmpty(device)){
-                connection = gson.fromJson(device, BluetoothConnection.class);
-                mLists.add(connection);
-                adapter.notifyDataSetChanged(mLists);
-            }
-        }
-
-        if (sharedPreferencesUtils != null){
-            lastDeviceConnected = sharedPreferencesUtils.readStringPreference(Contains.PREF_MAC_ADDRESS, "");
-        }
-       /* if (homeActivity.isConnected){
-           //todo something
-        }*/
-
         homeActivity.setTitle("Kết nối thiết bị");
     }
 
@@ -342,6 +339,7 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
 
             Gson gson = new Gson();
             String dv = gson.toJson(mDevice);
+            Log.d(TAG, "Ble connected: " + dv);
             if (sharedPreferencesUtils != null){
                 sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, dv);
                 sharedPreferencesUtils.writeStringPreference(Contains.PREF_MAC_ADDRESS, lastDeviceConnected);
@@ -349,12 +347,16 @@ public class ConnectionFragment extends Fragment implements ConnectionView, Item
 
         }else {
             mDevice.setConnected(false);
+            if (sharedPreferencesUtils != null){
+                sharedPreferencesUtils.writeStringPreference(Contains.PREF_OBJECT_CONNECTION, "");
+                sharedPreferencesUtils.writeStringPreference(Contains.PREF_MAC_ADDRESS, "");
+            }
             try {
                 adapter.notifyItemChange(position, mDevice);
             }catch (Exception extension){
                 Log.d(TAG, extension.toString());
             }
-            showMessage(device.getMsg());
+            //showMessage(device.getMsg());
         }
     }
 }

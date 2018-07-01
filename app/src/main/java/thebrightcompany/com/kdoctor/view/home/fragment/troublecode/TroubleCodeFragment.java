@@ -34,7 +34,6 @@ import butterknife.OnClick;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import thebrightcompany.com.kdoctor.R;
-import thebrightcompany.com.kdoctor.adapter.diagnostic.DiagnosticsAdapter;
 import thebrightcompany.com.kdoctor.adapter.troublecode.ItemTroubleCodeOnClickListener;
 import thebrightcompany.com.kdoctor.adapter.troublecode.TroubleCodeAdapter;
 import thebrightcompany.com.kdoctor.model.connection.MessageEvent;
@@ -100,7 +99,7 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView, It
             troubleCodeAsynTask = new GetTroubleCodeAsynTask(homeActivity, mList);
             troubleCodeAsynTask.execute();
         }else {
-            showMessage("Please connect device...");
+            showMessage(getString(R.string.msg_alert_connection));
         }
         createTimeOut(5000);
     }
@@ -163,7 +162,7 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView, It
             showProgress();
             homeActivity.sendDataToBLE("01 01");
         }else {
-            showMessage("Please connect device...");
+            showMessage(getString(R.string.msg_alert_connection));
         }
         createTimeOut(5000);
     }
@@ -189,17 +188,20 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView, It
             txt_totalsOfErrors.setText(Utils.convertToTotalCErrorCode(data) + "");
             //hideProgress();
         }else if (data.contains(Contains.DETAIL_ERROR_CODE)){
+            Log.d(TAG, "getTroubleCodeDetail");
             isReceiveDetailError = true;
             List<Integer> listOfErrorCode = new ArrayList<>();
             listOfErrorCode = Utils.getIntergerOfError(data);
             List<String> pCode = new ArrayList<>();
             for (int i = 0; i < listOfErrorCode.size(); i++){
                 pCode.add(Utils.getErrorPCode(listOfErrorCode.get(i)));
+                Log.d(TAG, "pCode:" + Utils.getErrorPCode(listOfErrorCode.get(i)));
 
             }
             //process get error code detail
             Gson gson = new Gson();
             String json = gson.toJson(pCode);
+            Log.d(TAG, "json: " + json);
             presentor.processGetTroubleCodeDetail(Utils.APP_TOKEN, json);
 
         }
@@ -247,7 +249,7 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView, It
                                 if (homeActivity.isConnected){
                                     homeActivity.sendDataToBLE("04");
                                 }else {
-                                    showMessage("Please connect device...");
+                                    showMessage(getString(R.string.msg_alert_connection));
                                 }
                             }
                         })
@@ -261,7 +263,6 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView, It
         {
             @Override
             public void run() {
-                //todo something
                 hideProgress();
             }
         }, time );
@@ -277,7 +278,7 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView, It
     @Override
     public void onGetTroubleCodeSuccess(String token, List<TroubleCode> troubleCodes) {
         this.mListTroubleCodes.addAll(troubleCodes);
-        adapter.notifyDataSetChanged(mListTroubleCodes);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

@@ -159,7 +159,7 @@
                                    android:layout_height="wrap_content"
                                    android:textColor="@android:color/black"
                                    android:textStyle="bold"
-                                   android:text="Garage otô Vĩnh Tín"
+                                   android:text=""
                                    android:textSize="@dimen/txt_normal"
                                    android:layout_alignParentLeft="true"
                                    android:ellipsize="end"
@@ -181,7 +181,7 @@
                                        android:layout_width="wrap_content"
                                        android:layout_height="wrap_content"
                                        android:textColor="@android:color/black"
-                                       android:text="30 km/h"
+                                       android:text=""
                                        android:textSize="@dimen/txt_normal" />
                                </LinearLayout>
                            </RelativeLayout>

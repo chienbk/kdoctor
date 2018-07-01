@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/txt_normal"
                 android:background="@color/color_disable_edit_text"
-                android:text="HG:45:RT:45:TG:67"
+                android:text=""
                 android:clickable="false"
                 android:editable="false"
                 android:maxLines="1"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/txt_normal"
                 android:background="@color/color_disable_edit_text"
-                android:text="HG:45:RT:45:TG:67"
+                android:text=""
                 android:clickable="false"
                 android:editable="false"
                 android:maxLines="1"
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/txt_normal"
                 android:background="@color/bg_edit_text"
-                android:text="HG:45:RT:45:TG:67"
+                android:text=""
                 android:maxLines="1"
                 android:singleLine="true" />
 

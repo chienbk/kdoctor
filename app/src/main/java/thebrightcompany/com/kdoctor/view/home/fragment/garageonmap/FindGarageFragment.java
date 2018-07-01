@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -50,7 +49,6 @@ import butterknife.OnClick;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 import thebrightcompany.com.kdoctor.R;
-import thebrightcompany.com.kdoctor.adapter.diagnostic.DiagnosticsAdapter;
 import thebrightcompany.com.kdoctor.adapter.garaonmap.ItemSearchGarageOnClickListener;
 import thebrightcompany.com.kdoctor.adapter.garaonmap.SearchGarageAdapter;
 import thebrightcompany.com.kdoctor.model.garage.GarageOnMap;
@@ -62,7 +60,6 @@ import thebrightcompany.com.kdoctor.utils.SharedPreferencesUtils;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.utils.VerticalSpaceItemDecoration;
 import thebrightcompany.com.kdoctor.view.garagedetail.ActivityGarageDetail;
-import thebrightcompany.com.kdoctor.view.garagelist.GarageListActivity;
 import thebrightcompany.com.kdoctor.view.home.HomeActivity;
 
 /**
@@ -141,7 +138,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
      * @param view
      */
     private void initView(View view) {
-
+        homeActivity.showDialogAskEnableGPS();
         sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
         mLat = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LAT, "0"));
         mLng = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LNG, "0"));
@@ -211,6 +208,8 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         mGoogleMap.clear();
         if (mGoogleMap != null){
             mGoogleMap.setOnMarkerClickListener(this);
+            moveCamera(mLat, mLng);
+            presenter.processGetGarageOnMap(Utils.APP_TOKEN, mLat, mLng, 5);
         }
     }
 
@@ -244,7 +243,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     @Override
     public void onResume() {
         super.onResume();
-        homeActivity.setTitle("Địa chỉ garage");
+        homeActivity.setTitle("Tìm Garage");
     }
 
     @Override
@@ -312,6 +311,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         mLat = event.getLat();
         mLng = event.getLng();
         if (mGoogleMap != null && isFirstCallAPI){
+            mGoogleMap.clear();
             presenter.processGetGarageOnMap(Utils.APP_TOKEN, mLat, mLng, 5);
             isFirstCallAPI = false;
         }

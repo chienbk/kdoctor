@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
     android:background="?android:attr/selectableItemBackground">
 
     <LinearLayout
@@ -28,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:text="P1106"
+                android:text=""
                 android:textSize="18sp"
                 android:layout_alignParentLeft="true"
                 android:maxLines="1"
@@ -43,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:maxLines="1"
-                android:text="Lỗi quan trọng"
+                android:text=""
                 android:textSize="18sp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"/>
@@ -71,7 +70,7 @@
 
                 <TextView
                     android:id="@+id/txt_detailOfError"
-                    android:text="Mạch cảm biến vị trí chân ga/ Công tắc A đầu vào thấp"
+                    android:text=""
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/txt_normal"
                     android:layout_width="match_parent"
@@ -84,7 +83,6 @@
                     android:textColor="@android:color/white"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
                     android:background="@color/color_diagnostic_normal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

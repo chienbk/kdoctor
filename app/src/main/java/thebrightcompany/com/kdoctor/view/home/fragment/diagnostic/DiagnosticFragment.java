@@ -135,7 +135,7 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
                 getDiagnosticAsynTask.cancel(true);
             }
         }else {
-            showMessage("Please connect to device!");
+            showMessage(getString(R.string.msg_alert_connection));
         }
     }
 
@@ -323,7 +323,7 @@ public class DiagnosticFragment extends Fragment implements DiagnosticView, Item
         if (homeActivity.isConnected){
             homeActivity.sendDataToBLE(msg);
         }else {
-            showMessage("Please connect to device!");
+            showMessage(getString(R.string.msg_alert_connection));
         }
     }
 

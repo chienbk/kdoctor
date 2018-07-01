@@ -7,7 +7,7 @@ import android.content.SharedPreferences.Editor;
 
 public class SharedPreferencesUtils {
 
-    private static final String SHARED_PREFERENCE_NAME = "VantaiClientPrefernce";
+    private static final String SHARED_PREFERENCE_NAME = "KDoctor";
     private SharedPreferences mPreferences;
 
     public SharedPreferencesUtils(Context context) {

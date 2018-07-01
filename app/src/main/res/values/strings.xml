@@ -82,7 +82,7 @@
     <string name="lb_trouble_code_find_garage">Tìm garage</string>
 
     <string name="msg_ble_is_not_available">Bluetooth không khả dụng</string>
-    <string name="msg_ble_do_not_support">Device does not support UART. Disconnecting</string>
+    <string name="msg_ble_do_not_support">Thiết bị không hỗ trợ UART. Ngắt kết nối...</string>
 
     <string name="popup_title">Thoát ứng dụng</string>
     <string name="popup_message">Bạn có muốn thoát ứng dụng không?</string>
@@ -110,8 +110,8 @@
     <string name="lb_diagnostic_less">Dưới hạn mức</string>
 
     <string name="lb_totals_errors">Số mã lỗi:</string>
-    <string name="action_clear_codes">Clear Codes</string>
-    <string name="obd_clearcodes">Clear fault codes</string>
+    <string name="action_clear_codes">Xóa mã lỗi</string>
+    <string name="obd_clearcodes">Xóa mã lỗi</string>
     <string name="lb_trouble_code_view_detail">Xem chi tiết</string>
     <string name="str_msg_network_fail">Vui lòng kiểm tra kết nối mạng</string>
     <string name="obd_clear_info">
@@ -141,23 +141,24 @@ period of time while the ECU recalibrates itself.
     <string name="error_driver_driver_name">Hãy nhập Họ và Tên</string>
     <string name="service">Dịch vụ</string>
 
-    <string name="gps_network_not_enabled">Please enable GPS</string>
-    <string name="dialog_notice">Notice</string>
-    <string name="open_location_settings">Setting</string>
-    <string name="close_location_settings">Cancel</string>
+    <string name="gps_network_not_enabled">Bạn cần bật GPS</string>
+    <string name="dialog_notice">Chú ý</string>
+    <string name="open_location_settings">Cài đặt</string>
+    <string name="close_location_settings">Thoát</string>
     <string name="lb_get_ten_garage">Xem 10 garage gần nhất</string>
     <string name="lb_garage_on_map_route">Chỉ đường</string>
     <string name="lb_garage_on_map_contact">Liên hệ</string>
     <string name="lb_garage_detail_contact">Cứu hộ</string>
 
     <!--crop-->
-    <string name="crop__saving">Saving picture…</string>
-    <string name="crop__wait">Please wait…</string>
-    <string name="crop__pick_error">No image sources available</string>
+    <string name="crop__saving">Đang lưu ảnh…</string>
+    <string name="crop__wait">Hãy chờ…</string>
+    <string name="crop__pick_error">Không có hình ảnh khả dụng</string>
     <string name="crop__done">DONE</string>
-    <string name="crop__cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="crop__cancel" tools:ignore="ButtonCase">Thoát</string>
     <string name="str_registerning">Đang đăng ký...</string>
 
     <string name="action_add_history">Thêm lịch sử</string>
     <string name="action_add_device">Thêm thiết bị</string>
+    <string name="msg_alert_connection">Vui lòng kết nối tới thiết bị trước khi sử dụng chức năng này!</string>
 </resources>

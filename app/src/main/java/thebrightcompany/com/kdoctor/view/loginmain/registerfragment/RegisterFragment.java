@@ -189,7 +189,7 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
     @OnClick(R.id.btn_register)
     public void processRegister(){
         //todo something
-        showMessage("Process register");
+        //showMessage("Process register");
         fullName = txt_fullName.getText().toString();
         email = txt_email.getText().toString();
         phone = txt_phone.getText().toString();
@@ -236,7 +236,7 @@ public class RegisterFragment extends Fragment implements RegisterFragmentView{
                 // Permission is granted
                 isStoragePermissionGranted();
             } else {
-                showMessage("Sorry!!! Permission Denied");
+                showMessage("Bạn vui lòng cấp quyền cho ứng dụng trước!");
             }
         }
     }

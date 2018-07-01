@@ -53,7 +53,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/magin_default"
                 android:layout_marginRight="@dimen/magin_default"
-                android:text="hà nội, việt nam"
+                android:text=""
                 android:textSize="@dimen/txt_normal" />
         </LinearLayout>
 
@@ -82,7 +82,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/magin_default"
                 android:layout_marginRight="@dimen/magin_default"
-                android:text="123456"
+                android:text=""
                 android:textSize="@dimen/txt_normal" />
         </LinearLayout>
 
@@ -111,7 +111,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/magin_default"
                 android:layout_marginRight="@dimen/magin_default"
-                android:text="mail"
+                android:text=""
                 android:textSize="@dimen/txt_normal" />
         </LinearLayout>
 

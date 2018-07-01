@@ -38,7 +38,7 @@
             android:textStyle="bold"
             android:textSize="@dimen/txt_tittle"
             android:textColor="@android:color/black"
-            android:text="Công ty CP The Bright" />
+            android:text="" />
 
         <View
             android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                         android:id="@+id/txt_address_support"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="P13B1, CC Văn Phòng Quốc Hội, Xuân Phương, Mỹ Đình, Hà Nội"
+                        android:text=""
                         android:textColor="#000000" />
                 </LinearLayout>
 
@@ -156,7 +156,7 @@
                         android:id="@+id/txt_hot_line_support"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0969298682"
+                        android:text=""
                         android:textColor="#000000" />
                 </LinearLayout>
 
@@ -209,7 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="nvc.hut@gmail.com"
+                        android:text=""
                         android:textColor="#000000" />
                 </LinearLayout>
 
@@ -260,7 +260,7 @@
                         android:id="@+id/txt_web"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="thebrightcompany.com.vn"
+                        android:text=""
                         android:textColor="#000000" />
                 </LinearLayout>
 

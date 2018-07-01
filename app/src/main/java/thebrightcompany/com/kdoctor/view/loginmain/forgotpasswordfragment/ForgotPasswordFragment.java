@@ -113,7 +113,7 @@ public class ForgotPasswordFragment extends Fragment implements ForgotPasswordFr
     @OnClick(R.id.btn_getPassword)
     public void processGetPassword(){
         //todo something
-        showMessage("Process forgot password");
+        //showMessage("Process forgot password");
         String email = txt_email.getText().toString();
         presentor.processForgotPassword(email);
     }

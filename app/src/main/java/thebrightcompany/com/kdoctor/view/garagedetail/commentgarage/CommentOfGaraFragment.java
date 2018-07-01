@@ -181,37 +181,37 @@ public class CommentOfGaraFragment extends Fragment implements CommentOfGaraView
 
     @OnClick(R.id.layout_all)
     public void processGetAllComment(){
-        showMessage("Get all comment");
+        //showMessage("Get all comment");
         presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "all");
     }
 
     @OnClick(R.id.layout_five)
     public void processGetCommentFiveStar(){
-        showMessage("Get comment five star");
+        //showMessage("Get comment five star");
         presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "5");
     }
 
     @OnClick(R.id.layout_four)
     public void processGetCommentFourStar(){
-        showMessage("Get comment four star");
+        //showMessage("Get comment four star");
         presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "4");
     }
 
     @OnClick(R.id.layout_three)
     public void processGetCommentThreeStar(){
-        showMessage("Get comment three star");
+        //showMessage("Get comment three star");
         presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "3");
     }
 
     @OnClick(R.id.layout_two)
     public void processGetCommentTwoStar(){
-        showMessage("Get comment two star");
+        //showMessage("Get comment two star");
         presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "2");
     }
 
     @OnClick(R.id.layout_one)
     public void processGetCommentOneStar(){
-        showMessage("Get comment one star");
+        //showMessage("Get comment one star");
         presentor.processGetCommentDetail(Utils.APP_TOKEN, String.valueOf(idOfGarage), "10", 0, "1");
     }
 
