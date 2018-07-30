@@ -87,7 +87,7 @@
     <string name="popup_title">Thoát ứng dụng</string>
     <string name="popup_message">Bạn có muốn thoát ứng dụng không?</string>
     <string name="popup_yes">Có</string>
-    <string name="popup_no">KLhông</string>
+    <string name="popup_no">Không</string>
 
     <string name="ble_not_supported">Bluetooth Low Energy không được hỗ trợ</string>
     <string name="msg_logout">Bạn có muốn thoát chương trình?</string>
