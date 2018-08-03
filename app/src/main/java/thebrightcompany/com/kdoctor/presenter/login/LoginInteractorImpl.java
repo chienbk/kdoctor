@@ -74,7 +74,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     private class LoginListener extends OnResponseListener<LoginResponse> {
         @Override
         public void onErrorResponse(VolleyError error) {
-            mListener.onLoginError(error.toString());
+            mListener.onLoginError("Đã có lỗi xảy ra, vui lòng thử lại sau!");
             Log.d("Error: ", error.toString());
             return;
         }

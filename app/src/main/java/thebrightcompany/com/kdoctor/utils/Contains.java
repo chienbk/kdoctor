@@ -2,6 +2,8 @@ package thebrightcompany.com.kdoctor.utils;
 
 public class Contains {
 
+    public static final String PLATFORM_ANDROID = "2";
+
     public static String GPS_FILTER = "android.intent.action.BOOT_COMPLETED";
     public static final String PATH = "KDoctor/";
     public static final String PREF_URL_AVATAR = "PREF_URL_AVATAR";

@@ -78,8 +78,10 @@ public class NotificationUtils {
 
                 if (bitmap != null) {
                     showBigNotification(bitmap, mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+                    playNotificationSound();
                 } else {
                     showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+                    playNotificationSound();
                 }
             }
         } else {
@@ -154,10 +156,12 @@ public class NotificationUtils {
     }
 
     // Playing notification sound
+
+    /**
+     * The method use to playing notification sound
+     */
     public void playNotificationSound() {
         try {
-            /*Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
-                    + "://" + mContext.getPackageName() + "/raw/notification");*/
             Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(mContext, alarmSound);
             r.play();

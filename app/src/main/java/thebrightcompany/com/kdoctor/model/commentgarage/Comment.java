@@ -21,6 +21,13 @@ public class Comment implements Serializable{
     @SerializedName("time")
     private String time;
 
+    public Comment(String customer_name, float rating, String comment, String time) {
+        this.customer_name = customer_name;
+        this.rating = rating;
+        this.comment = comment;
+        this.time = time;
+    }
+
     public int getId() {
         return id;
     }

@@ -51,6 +51,7 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
     public void onLoginError(String msg) {
         if (mViews != null){
             mViews.hideProgress();
+            mViews.onLoginError(msg);
         }
     }
 

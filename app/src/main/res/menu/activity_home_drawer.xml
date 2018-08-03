@@ -20,10 +20,10 @@
             android:id="@+id/nav_add_of_garage"
             android:icon="@drawable/nav_gara"
             android:title="@string/nav_add_of_garage"  />
-        <item
+       <!-- <item
             android:id="@+id/nav_history"
             android:icon="@drawable/nav_history"
-            android:title="@string/nav_history"  />
+            android:title="@string/nav_history"  />-->
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/nav_setting"

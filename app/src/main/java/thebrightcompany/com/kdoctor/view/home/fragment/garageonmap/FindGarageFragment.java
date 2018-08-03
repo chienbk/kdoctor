@@ -66,7 +66,7 @@ import thebrightcompany.com.kdoctor.view.home.HomeActivity;
  * A simple {@link Fragment} subclass.
  */
 public class FindGarageFragment extends Fragment implements FindGarageView, OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener, ItemSearchGarageOnClickListener{
+        GoogleMap.OnMarkerClickListener, ItemSearchGarageOnClickListener, GoogleMap.OnMapClickListener{
 
     public static final String TAG = FindGarageFragment.class.getSimpleName();
     private static final int REQUEST_PHONE_CALL = 101;
@@ -501,5 +501,10 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         homeActivity.hideKeyboard();
         moveCamera(garageOnMap.getLat(), garageOnMap.getLng());
         processDisplayInformationOfGarage(garageOnMap);
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        layout_detail.setVisibility(View.GONE);
     }
 }

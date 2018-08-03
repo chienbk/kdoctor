@@ -33,6 +33,7 @@ public class Utils {
     public static final String URL_RATE_GARAGE = ROOT_URL + "v1/rate_gara";
     public static final String URL_GARAGE_COMMENT = ROOT_URL + "v1/garage/%s/comments";
     public static final String URL_GARAGE_DETAIL = ROOT_URL + "v1/garage/%s";
+    public static final String URL_LOGOUT = ROOT_URL + "v1/customer/logout";
 
     public static final int LOGIN_NORMAL = 0;
     public static final int LOGIN_FACEBOOK = 1;

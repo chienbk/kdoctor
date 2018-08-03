@@ -37,5 +37,8 @@ public class LoginRequest extends BasePostRequest<LoginResponse> {
     public void setFullName(String fullName){
         setParam("full_name", fullName);
     }
+    public void setPlatform(String platform){
+        setParam("platform", platform);
+    }
 
 }

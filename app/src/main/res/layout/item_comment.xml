@@ -59,7 +59,8 @@
                     android:layout_height="wrap_content"
                     android:numStars="5"
                     android:rating="4"
-                    android:isIndicator="false"/>
+                    android:clickable="false"
+                    android:isIndicator="true"/>
 
                 <TextView
                     android:id="@+id/txt_description"

@@ -46,6 +46,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
@@ -56,8 +57,11 @@ import java.io.UnsupportedEncodingException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import thebrightcompany.com.kdoctor.R;
+import thebrightcompany.com.kdoctor.api.OnResponseListener;
+import thebrightcompany.com.kdoctor.api.logout.LogoutCallAPI;
 import thebrightcompany.com.kdoctor.model.connection.DeviceConnect;
 import thebrightcompany.com.kdoctor.model.connection.MessageEvent;
+import thebrightcompany.com.kdoctor.model.login.LoginResponse;
 import thebrightcompany.com.kdoctor.service.BluetoothService;
 import thebrightcompany.com.kdoctor.service.GPSTracker;
 import thebrightcompany.com.kdoctor.utils.AlertDialogUtils;
@@ -126,7 +130,7 @@ public class HomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        lastFragment = new ConnectionFragment();
+        lastFragment = new FindGarageFragment();
         replaceFragment(lastFragment);
 
         View viewHeader = navigationView.getHeaderView(0);
@@ -414,10 +418,10 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_add_of_garage) {
 
             fragment = new FindGarageFragment();
-        } else if (id == R.id.nav_history) {
+        } /*else if (id == R.id.nav_history) {
 
             fragment = new HistoryFragment();
-        } else if (id == R.id.nav_setting) {
+        }*/ else if (id == R.id.nav_setting) {
 
             fragment = new SettingFragment();
         } else if (id == R.id.nav_support) {
@@ -471,17 +475,25 @@ public class HomeActivity extends AppCompatActivity
             sharedPreferencesUtils = new SharedPreferencesUtils(this);
             Utils.APP_TOKEN = sharedPreferencesUtils.readStringPreference(Contains.PREF_DEVICE_TOKEN, "");
         }
-        if (!mBtAdapter.isEnabled()) {
+       /* if (!mBtAdapter.isEnabled()) {
             Log.i(TAG, "onResume - BT not enabled yet");
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        }
+        }*/
 
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiverLatLon,
                 new IntentFilter(Contains.GPS_FILTER));
 
         startService(new Intent(this, GPSTracker.class));
 
+    }
+
+    public void checkBLE(){
+        if (!mBtAdapter.isEnabled()) {
+            Log.i(TAG, "onResume - BT not enabled yet");
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        }
     }
 
     public void showDialogAskEnableGPS(){
@@ -557,7 +569,7 @@ public class HomeActivity extends AppCompatActivity
         builder.setPositiveButton(getString(R.string.msg_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                logout();
+                processLogout(Utils.APP_TOKEN, Utils.FCM_TOKEN);
             }
         });
         builder.setNegativeButton(getString(R.string.msg_cancel), new DialogInterface.OnClickListener() {
@@ -567,6 +579,38 @@ public class HomeActivity extends AppCompatActivity
             }
         });
         builder.create().show();
+    }
+
+    /**
+     * The method use to logout
+     * @param appToken
+     * @param fcmToken
+     */
+    private void processLogout(String appToken, String fcmToken) {
+        LogoutListener listener = new LogoutListener();
+        LogoutCallAPI callAPI = new LogoutCallAPI();
+        callAPI.processLogout(appToken, fcmToken, listener);
+    }
+
+    private class LogoutListener extends OnResponseListener<LoginResponse> {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            super.onErrorResponse(error);
+            redirectToLoginScreen();
+        }
+
+        @Override
+        public void onResponse(LoginResponse response) {
+            super.onResponse(response);
+            redirectToLoginScreen();
+        }
+    }
+
+    /**
+     * The method use to process logout
+     */
+    private void redirectToLoginScreen() {
+        logout();
     }
 
     /**

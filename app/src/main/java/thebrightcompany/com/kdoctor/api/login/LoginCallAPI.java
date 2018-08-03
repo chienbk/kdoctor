@@ -3,6 +3,7 @@ package thebrightcompany.com.kdoctor.api.login;
 import thebrightcompany.com.kdoctor.App;
 import thebrightcompany.com.kdoctor.api.OnResponseListener;
 import thebrightcompany.com.kdoctor.model.login.LoginResponse;
+import thebrightcompany.com.kdoctor.utils.Contains;
 
 /**
  * Created by ChienNV on 10/25/16.
@@ -18,6 +19,7 @@ public class LoginCallAPI {
         request.setDeviceToken(token);
         request.setThirdToken(thirdToken);
         request.setFullName(fullName);
+        request.setPlatform(Contains.PLATFORM_ANDROID);
         App.addRequest(request, "Login");
     }
 }

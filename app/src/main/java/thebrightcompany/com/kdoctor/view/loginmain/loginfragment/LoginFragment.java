@@ -340,7 +340,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
         showProgress();
         email = txt_email.getText().toString();
         password = txt_password.getText().toString();
-
+        Log.d(TAG, "token_fcm: " + Utils.FCM_TOKEN);
         presenter.processLogin(email, password, 0, Utils.FCM_TOKEN, "", "");
         /*startActivity(new Intent(mActivity, HomeActivity.class));
         mActivity.finish();*/

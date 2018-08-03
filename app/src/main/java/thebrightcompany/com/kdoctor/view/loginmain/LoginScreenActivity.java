@@ -181,8 +181,8 @@ public class LoginScreenActivity extends AppCompatActivity implements LoginScree
 
     @Override
     protected void onPause() {
-        super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
     }
 
     @Override

@@ -7,11 +7,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,9 +38,10 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
     public static String TAG = InformationOfGaraFragment.class.getSimpleName();
     private ActivityGarageDetail homeActivity;
     private static final String ARG_ID_GARAGE = "ID_OF_GARAGE";
+    public static final String URL = "https://www.chotot.com/kinhnghiem/wp-content/uploads/2017/01/1336427909389350.jpg";
 
     @BindView(R.id.vpSlideImage)
-    ViewPager viewPager;
+    ImageView imgProfile;
     @BindView(R.id.tvGarageName)
     TextView txt_nameOfGarage;
     @BindView(R.id.txt_address) TextView txt_addressOfGarage;
@@ -94,6 +100,7 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
      */
     private void initView(View view) {
         //todo something
+
         presentor = new DetailOfGaragePresentorImpl(this);
         presentor.processGetGarageDetail(Utils.APP_TOKEN, idOfGarage);
         sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
@@ -115,6 +122,19 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
         this.mGarageDetail = garageDetail;
         if (sharedPreferencesUtils != null){
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_RATE, garageDetail.getRate() + "");
+        }
+        if (garageDetail.getGallery().size() > 0 && !TextUtils.isEmpty(garageDetail.getGallery().get(0))){
+            Glide.with(this).load(garageDetail.getGallery().get(0))
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgProfile);
+        } else {
+            Glide.with(this).load(URL)
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgProfile);
         }
        try {
            txt_nameOfGarage.setText(mGarageDetail.getName());
