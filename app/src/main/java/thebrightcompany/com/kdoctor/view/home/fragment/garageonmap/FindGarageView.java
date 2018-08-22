@@ -11,4 +11,6 @@ public interface FindGarageView extends BaseView{
     void onSearchGarageError(int status_code, String msg);
     void onGetListGaragesSuccess(String token, List<GarageOnMap> garageOnMaps);
     void onGetListGaragesError(int status_code, String msg);
+    void onCreateOrderSuccess(String msg);
+    void onCreateOrderError(String msg);
 }

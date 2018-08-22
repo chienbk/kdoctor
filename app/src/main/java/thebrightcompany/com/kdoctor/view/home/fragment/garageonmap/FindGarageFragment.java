@@ -2,6 +2,7 @@ package thebrightcompany.com.kdoctor.view.home.fragment.garageonmap;
 
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,6 +22,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -114,6 +118,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     private SharedPreferencesUtils sharedPreferencesUtils;
     private boolean isChoice = false;
     private int idOfGarage = -100;
+    private String mLocation = "";
 
     public FindGarageFragment() {
         // Required empty public constructor
@@ -140,6 +145,9 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         sharedPreferencesUtils = new SharedPreferencesUtils(homeActivity);
         mLat = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LAT, "0"));
         mLng = Double.parseDouble(sharedPreferencesUtils.readStringPreference(Contains.PREF_LNG, "0"));
+        Utils.NAME_CUSTOMER = sharedPreferencesUtils.readStringPreference(Contains.PREF_NAME_CUSTOMER, "0");
+        Utils.EMAIL_CUSTOMER = sharedPreferencesUtils.readStringPreference(Contains.PREF_EMAIL_CUSTOMER, "0");
+        Utils.PHONE_CUSTOMER = sharedPreferencesUtils.readStringPreference(Contains.PREF_PHONE_CUSTOMER, "0");
 
         presenter = new GarageOnMapPresenterImpl(this);
         homeActivity.setTitle("Tìm Garage");
@@ -302,12 +310,24 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         showMessage(msg);
     }
 
+    @Override
+    public void onCreateOrderSuccess(String msg) {
+        showMessage(msg);
+    }
+
+    @Override
+    public void onCreateOrderError(String msg) {
+        showMessage(msg);
+    }
+
     //Handle the data receive from bluetooth
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(LatLongMessage event){
         //todo something
         mLat = event.getLat();
         mLng = event.getLng();
+        Utils.LAT = String.valueOf(mLat);
+        Utils.LNG = String.valueOf(mLng);
         if (mGoogleMap != null && isFirstCallAPI){
             mGoogleMap.clear();
             presenter.processGetGarageOnMap(Utils.APP_TOKEN, mLat, mLng, 5);
@@ -369,12 +389,6 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
                 if (id == mListGarages.get(i).getId()){
                     //idOfGarage = id;
                     garageOnMap = mListGarages.get(i);
-                    /*if (!isChoice){
-                        processDisplayInformationOfGarage(garageOnMap);
-                    }else {
-                        layout_detail.setVisibility(View.GONE);
-                        isChoice = false;
-                    }*/
 
                     if (isChoice && idOfGarage == id){
                         layout_detail.setVisibility(View.GONE);
@@ -403,9 +417,6 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
         try {
             phone = garageOnMap.getPhone();
             txt_nameOfGarage.setText(garageOnMap.getName());
-            /*txt_distance.setText(Utils.calculationByDistance(new LatLng(mLat, mLng),
-                    new LatLng(garageOnMap.getLat(), garageOnMap.getLng())) + " km");*/
-
             txt_distance.setText(Utils.distFrom(new LatLng(mLat, mLng), new LatLng(garageOnMap.getLat(), garageOnMap.getLng())) + " km");
             rate_garage.setRating(garageOnMap.getRate());
             txt_addressOfGarage.setText(garageOnMap.getAddress());
@@ -442,6 +453,7 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     public void processContactGarage(){
         //todo something
         processCallGarage(phone);
+        showDialog(garageOnMap);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -506,5 +518,88 @@ public class FindGarageFragment extends Fragment implements FindGarageView, OnMa
     @Override
     public void onMapClick(LatLng latLng) {
         layout_detail.setVisibility(View.GONE);
+    }
+
+    private void showDialog(GarageOnMap garageOnMap) {
+
+        final Dialog dialog = new Dialog(homeActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_dialog_choice_garage);
+
+        TextView txt_nameOfGarage = (TextView) dialog.findViewById(R.id.txt_nameOfGarage);
+        TextView txt_distance = (TextView) dialog.findViewById(R.id.txt_distance);
+        RatingBar rate_garage = (RatingBar) dialog.findViewById(R.id.rate_garage);
+        TextView txt_addressOfGarage = (TextView) dialog.findViewById(R.id.txt_addressOfGarage);
+        TextView txt_phone = (TextView) dialog.findViewById(R.id.txt_phone);
+        CheckBox chk_location = (CheckBox) dialog.findViewById(R.id.chk_location);
+        final EditText edit_location = (EditText) dialog.findViewById(R.id.edit_location);
+
+
+        Button btn_sm = (Button) dialog.findViewById(R.id.btn_ok);
+        Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+
+        try {
+            txt_nameOfGarage.setText(garageOnMap.getName());
+            txt_distance.setText(Utils.distFrom(new LatLng(mLat, mLng), new LatLng(garageOnMap.getLat(), garageOnMap.getLng())) + " km");
+            txt_addressOfGarage.setText(garageOnMap.getAddress());
+            txt_phone.setText(garageOnMap.getPhone());
+        } catch (NullPointerException e) {
+            Log.d(TAG, e.toString());
+        }
+
+        chk_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (((CheckBox) view).isChecked()) {
+                    edit_location.setEnabled(false);
+                } else {
+                    edit_location.setEnabled(true);
+                }
+            }
+        });
+
+        btn_sm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLocation = edit_location.getText().toString();
+                processAddOrder();
+                dialog.dismiss();
+            }
+        });
+
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    /**
+     * Process add order
+     */
+    private void processAddOrder() {
+        if (idOfGarage < 0) {
+            if (TextUtils.isEmpty(mLocation)){
+                presenter.processCreateOrder("", Utils.NAME_CUSTOMER, Utils.PHONE_CUSTOMER, Utils.EMAIL_CUSTOMER,
+                        "", "", "", Utils.URL_TROUBLE_CODE, Utils.APP_TOKEN, Utils.LAT, Utils.LNG);
+            } else {
+                presenter.processCreateOrderWithLocation("", Utils.NAME_CUSTOMER, Utils.PHONE_CUSTOMER, Utils.EMAIL_CUSTOMER,
+                        "", "", "", Utils.URL_TROUBLE_CODE, Utils.APP_TOKEN, mLocation);
+            }
+        } else {
+            if (TextUtils.isEmpty(mLocation)) {
+                presenter.processCreateOrder(String.valueOf(idOfGarage), Utils.NAME_CUSTOMER, Utils.PHONE_CUSTOMER, Utils.EMAIL_CUSTOMER,
+                        "", "", "", Utils.URL_TROUBLE_CODE, Utils.APP_TOKEN, Utils.LAT, Utils.LNG);
+            } else {
+                presenter.processCreateOrderWithLocation(String.valueOf(idOfGarage), Utils.NAME_CUSTOMER, Utils.PHONE_CUSTOMER, Utils.EMAIL_CUSTOMER,
+                        "", "", "", Utils.URL_TROUBLE_CODE, Utils.APP_TOKEN, mLocation);
+            }
+        }
+
     }
 }

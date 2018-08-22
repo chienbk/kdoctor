@@ -20,6 +20,9 @@ public class Contains {
     public static final String PREF_LAT = "PREF_LAT";
     public static final String PREF_LNG = "PREF_LNG";
     public static final String PREF_RATE = "PREF_RATE";
+    public static String PREF_PHONE_CUSTOMER = "PHONE_CUSTOMER";
+    public static String PREF_EMAIL_CUSTOMER = "EMAIL_CUSTOMER";
+    public static String PREF_NAME_CUSTOMER = "NAME_CUSTOMER";
 
     public static final String PREF_GARAGE_DETAIL = "GarageDetail";
     public static final int TOKEN_EXPIRED = 2;

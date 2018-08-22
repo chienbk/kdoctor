@@ -21,8 +21,18 @@ public interface GarageOnMapInteractor {
         void onSearchGarageError(int status_code, String msg);
 
         void onCommonError(String msg);
+
+        void onCreateOrderSuccess(String msg);
+
+        void onCreateOrderError(String msg);
     }
 
     void processGetGarageOnMap(String token, double lat, double lng, int distance);
     void processSearchGarageOnMap(String token, String key, int limit, int start);
+    void processCreateOrder(String garage_id, String name, String phone, String email,
+                            String typeOfCar, String licenseOfCar, String note, String troubleCode,
+                            String token, String lat, String lng);
+    void processCreateOrderWithLocation(String garage_id, String name, String phone, String email,
+                            String typeOfCar, String licenseOfCar, String note, String troubleCode,
+                            String token, String location);
 }

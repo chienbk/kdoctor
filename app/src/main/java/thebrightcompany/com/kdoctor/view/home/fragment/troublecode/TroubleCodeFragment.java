@@ -106,7 +106,6 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView, It
 
     private void initView(View view) {
         homeActivity.setTitle("Mã lỗi");
-
         adapter = new TroubleCodeAdapter(mListTroubleCodes, this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         listTroubleCode.setLayoutManager(mLayoutManager);
@@ -195,6 +194,7 @@ public class TroubleCodeFragment extends Fragment implements TroubleCodeView, It
             List<String> pCode = new ArrayList<>();
             for (int i = 0; i < listOfErrorCode.size(); i++){
                 pCode.add(Utils.getErrorPCode(listOfErrorCode.get(i)));
+                Utils.ERROR_CODE += Utils.getErrorPCode(listOfErrorCode.get(i)) + ", ";
                 Log.d(TAG, "pCode:" + Utils.getErrorPCode(listOfErrorCode.get(i)));
 
             }

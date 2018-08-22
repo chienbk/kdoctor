@@ -4,9 +4,11 @@ import com.android.volley.VolleyError;
 
 import thebrightcompany.com.kdoctor.R;
 import thebrightcompany.com.kdoctor.api.OnResponseListener;
+import thebrightcompany.com.kdoctor.api.garageonmap.CreateOrderCallAPI;
 import thebrightcompany.com.kdoctor.api.garageonmap.GetListGarageCallAPI;
 import thebrightcompany.com.kdoctor.api.garageonmap.SearchGarageCallAPI;
 import thebrightcompany.com.kdoctor.model.garage.GarageOnMapResponse;
+import thebrightcompany.com.kdoctor.model.register.RegisterResponse;
 import thebrightcompany.com.kdoctor.utils.Utils;
 import thebrightcompany.com.kdoctor.view.home.fragment.garageonmap.FindGarageView;
 
@@ -88,6 +90,75 @@ public class GarageOnMapInteractorImpl implements GarageOnMapInteractor {
         processSearchGarage(token, key, limit, start);
     }
 
+    @Override
+    public void processCreateOrder(String garage_id, String name, String phone, String email, String typeOfCar, String licenseOfCar, String note, String troubleCode, String token, String lat, String lng) {
+        //Validate network
+        if (!Utils.isNetworkAvailable(mViews.getContext())) {
+            listener.onCommonError(mViews.getContext().getResources().getString(R.string.error_network));
+            //mView.onLoginError(mViews.getContext().getResources().getString(R.string.error_network));
+            return;
+        }
+
+        processCreateOrderOnMap(garage_id, name, phone, email, typeOfCar, licenseOfCar, note, troubleCode, token, lat, lng);
+    }
+
+    @Override
+    public void processCreateOrderWithLocation(String garage_id, String name, String phone, String email, String typeOfCar, String licenseOfCar, String note, String troubleCode, String token, String location) {
+        if (!Utils.isNetworkAvailable(mViews.getContext())) {
+            listener.onCommonError(mViews.getContext().getResources().getString(R.string.error_network));
+            //mView.onLoginError(mViews.getContext().getResources().getString(R.string.error_network));
+            return;
+        }
+
+        processCreateOrderOnMapWithLocation(garage_id, name, phone, email, typeOfCar, licenseOfCar, note, troubleCode, token, location);
+    }
+
+    private void processCreateOrderOnMapWithLocation(String garage_id, String name, String phone, String email, String typeOfCar, String licenseOfCar, String note, String troubleCode, String token, String location) {
+        CreateOrderListener listener = new CreateOrderListener();
+        CreateOrderCallAPI callAPI = new CreateOrderCallAPI();
+        callAPI.processCreateOrderWithLocation(garage_id, name, phone, email, typeOfCar, licenseOfCar, note, troubleCode, token, location, listener);
+    }
+
+    /**
+     *
+     * @param garage_id
+     * @param name
+     * @param phone
+     * @param email
+     * @param typeOfCar
+     * @param licenseOfCar
+     * @param note
+     * @param troubleCode
+     * @param token
+     * @param lat
+     * @param lng
+     */
+    private void processCreateOrderOnMap(String garage_id, String name, String phone, String email, String typeOfCar, String licenseOfCar, String note, String troubleCode, String token, String lat, String lng) {
+        CreateOrderListener listener = new CreateOrderListener();
+        CreateOrderCallAPI callAPI = new CreateOrderCallAPI();
+        callAPI.processCreateOrder(garage_id, name, phone, email, typeOfCar, licenseOfCar, note, troubleCode, token, lat,
+                lng, listener);
+    }
+
+    private class CreateOrderListener extends OnResponseListener<RegisterResponse> {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            super.onErrorResponse(error);
+            listener.onCommonError("Đã có lỗi xảy ra, vui lòng thử lại!");
+        }
+
+        @Override
+        public void onResponse(RegisterResponse response) {
+            super.onResponse(response);
+            int status_code = response.getStatus_code();
+            if (status_code == 0){
+                //todo something
+                listener.onCreateOrderSuccess("Tạo đơn hàng thành công!");
+            }else {
+                listener.onSearchGarageError(response.getStatus_code(), response.getMessage());
+            }
+        }
+    }
     /**
      * The method use to search garage on maps
      *

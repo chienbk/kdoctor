@@ -21,7 +21,7 @@ import thebrightcompany.com.kdoctor.utils.ecu.ObdCodeList;
 
 public class Utils {
 
-    public static final String ROOT_URL = "http://kdoctor.puma-soft.com/api/";
+    public static final String ROOT_URL = "http://18.191.213.77/api/";
     public static final String URL_FORGOT_PASSWORD = ROOT_URL + "v1/forgotpass";
     public static final String URL_LOGIN = ROOT_URL + "v1/login";
     public static final String URL_REGISTER = ROOT_URL + "v1/register";
@@ -34,6 +34,7 @@ public class Utils {
     public static final String URL_GARAGE_COMMENT = ROOT_URL + "v1/garage/%s/comments";
     public static final String URL_GARAGE_DETAIL = ROOT_URL + "v1/garage/%s";
     public static final String URL_LOGOUT = ROOT_URL + "v1/customer/logout";
+    public static final String URL_CREATE_ORDER = ROOT_URL + "v1/customer/order";
 
     public static final int LOGIN_NORMAL = 0;
     public static final int LOGIN_FACEBOOK = 1;
@@ -41,6 +42,12 @@ public class Utils {
 
     public static String APP_TOKEN = "";
     public static String FCM_TOKEN = "";
+    public static String ERROR_CODE = "";
+    public static String LAT = "";
+    public static String LNG = "";
+    public static String PHONE_CUSTOMER = "";
+    public static String EMAIL_CUSTOMER = "";
+    public static String NAME_CUSTOMER = "";
 
     //Email Validation pattern
     public static final String regEx = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";

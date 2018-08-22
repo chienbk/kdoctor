@@ -123,19 +123,29 @@ public class InformationOfGaraFragment extends Fragment implements InformationOf
         if (sharedPreferencesUtils != null){
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_RATE, garageDetail.getRate() + "");
         }
-        if (garageDetail.getGallery().size() > 0 && !TextUtils.isEmpty(garageDetail.getGallery().get(0))){
-            Glide.with(this).load(garageDetail.getGallery().get(0))
-                    .thumbnail(0.5f)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgProfile);
-        } else {
+
+        try {
+            if (garageDetail.getGallery().size() > 0 && !TextUtils.isEmpty(garageDetail.getGallery().get(0))){
+                Glide.with(this).load(garageDetail.getGallery().get(0))
+                        .thumbnail(0.5f)
+                        .crossFade()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imgProfile);
+            } else {
+                Glide.with(this).load(URL)
+                        .thumbnail(0.5f)
+                        .crossFade()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imgProfile);
+            }
+        } catch (Exception e){
             Glide.with(this).load(URL)
                     .thumbnail(0.5f)
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfile);
         }
+
        try {
            txt_nameOfGarage.setText(mGarageDetail.getName());
            txt_phoneOfGarage.setText(mGarageDetail.getPhone().get(0));

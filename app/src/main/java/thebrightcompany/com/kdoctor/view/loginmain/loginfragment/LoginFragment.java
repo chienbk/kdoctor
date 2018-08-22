@@ -228,6 +228,14 @@ public class LoginFragment extends Fragment implements LoginFragmentView, Google
     @Override
     public void onLoginSuccess(String device_token, Customer customer) {
         //todo something
+        try {
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_PHONE_CUSTOMER, customer.getPhone());
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_EMAIL_CUSTOMER, customer.getEmail());
+            sharedPreferencesUtils.writeStringPreference(Contains.PREF_NAME_CUSTOMER, customer.getFullName());
+
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+        }
         if (type == 0){
             Utils.APP_TOKEN = device_token;
             sharedPreferencesUtils.writeStringPreference(Contains.PREF_DEVICE_TOKEN, device_token);
